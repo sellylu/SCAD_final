@@ -82,7 +82,7 @@ DATABASES = {
         'USER': 'scad',
 	    'PASSWORD': 'scad',
 	    'HOST': '140.114.194.9',# Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
-		'PORT': '5060',
+		'PORT': '3306',
 
     }
 }
