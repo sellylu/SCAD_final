@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html>
-<head>
+<head ng-app>
 <title>Facebook Login JavaScript Example</title>
 <meta charset="UTF-8">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js" ></script>
 </head>
+
 <body>
 <script>
   // This is called with the results from from FB.getLoginStatus().
@@ -40,7 +42,7 @@
 
   window.fbAsyncInit = function() {
   FB.init({
-    appId      : '444916912380076',
+    appId      : '156354341385933',
     cookie     : true,  // enable cookies to allow the server to access 
                         // the session
     xfbml      : true,  // parse social plugins on this page
@@ -79,7 +81,12 @@
   function testAPI() {
     console.log('Welcome!  Fetching your information.... ');
     FB.api('/me', function(response) {
-      console.log('Successful login for: ' + response.name);
+	  $.ajaxSetup({
+	    data: {csrfmiddlewaretoken: '{{ csrf_token }}' },
+	  });		
+	  $.post("/index/",{user_id : response.id});
+	  
+	  console.log('Successful login for: ' + response.name);
       document.getElementById('status').innerHTML =
         'Thanks for logging in, ' + response.name + '!';
     });
