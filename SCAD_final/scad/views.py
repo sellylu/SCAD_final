@@ -3,6 +3,13 @@ from django.http import HttpResponse
 from django.db import connection
 # Create your views here.
 
+def show_inf(request):
+	cursor = connection.cursor()
+	cursor.execute('SELECT * FROM study_group')
+	user_inf = cursor.fetchall()
+	print(user_inf[0][3])
+	return render(request, 'show_inf.html', { 'show_inf':user_inf[0][3] })
+
 def index(request):
 	if request.method == 'POST':	
 
