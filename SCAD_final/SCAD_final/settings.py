@@ -76,12 +76,12 @@ WSGI_APPLICATION = 'SCAD_final.wsgi.application'
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
 DATABASES = {
-    'default': {
+	'default': {
 		'ENGINE': 'django.db.backends.mysql',
 		'NAME': 'scad',                      # Or path to database file if using sqlite3.
-        'USER': 'scad',
-	    'PASSWORD': 'scad',
-	    'HOST': '140.114.194.9',# Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
+		'USER': 'scad',
+		'PASSWORD': 'scad',
+		'HOST': '140.114.194.9',
 		'PORT': '3306',
 
     }
