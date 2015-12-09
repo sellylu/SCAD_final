@@ -7,3 +7,4 @@ urlpatterns = [
 	url(r'^index/$', index),
 	url(r'^show_inf/$',show_inf),
 ]
+
