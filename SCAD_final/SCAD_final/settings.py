@@ -69,6 +69,8 @@ TEMPLATES = [
     },
 ]
 
+MEDIA_ROOT = (os.path.join(os.path.dirname(__file__), '..', 'scad/Static').replace('\\', '/'))
+
 WSGI_APPLICATION = 'SCAD_final.wsgi.application'
 
 

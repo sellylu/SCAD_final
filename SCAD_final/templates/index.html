@@ -1,12 +1,20 @@
 <!DOCTYPE html>
 <html>
-<head ng-app>
+<head>
 <title>Facebook Login JavaScript Example</title>
 <meta charset="UTF-8">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js" ></script>
 </head>
 
 <body>
+{% for a in group_data %}
+    {{ a.group_id }}
+{% endfor %}
+
+<!---
+    {% load staticfiles %}
+<img src = {% static 'tmp_pic/001.png' %} />
+-->
 <script>
   // This is called with the results from from FB.getLoginStatus().
   function statusChangeCallback(response) {
