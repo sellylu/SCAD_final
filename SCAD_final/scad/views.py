@@ -1,21 +1,23 @@
 from django.shortcuts import render
 from django.db import connection
+from django.views.decorators.csrf import csrf_exempt
+from django.http import HttpResponseRedirect
 
 # Create your views here.
 
 
-
+@csrf_exempt
 def index(request):
 
 	if request.method == 'POST':
 
-
-		id = request.POST['user_id']
-		cursor = connection.cursor()
-		cursor.execute("INSERT INTO user(user_id) VALUES (%s)", [id])
-
+		print('hehe')
+		#id = request.POST['user_id']
+		#cursor = connection.cursor()
+		#cursor.execute("INSERT INTO user(user_id) VALUES (%s)", [id])
+		return HttpResponseRedirect("/index/")
 	if request.method == 'GET':
-		print('hello')
+
 		cursor = connection.cursor()
 		cursor.execute("SELECT * FROM study_group")
 		group_data = cursor.fetchall()
