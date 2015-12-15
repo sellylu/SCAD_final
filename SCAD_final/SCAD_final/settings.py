@@ -14,7 +14,7 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
+STATIC_ROOT = os.path.join(BASE_DIR, 'scad').replace('\\', '/')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
@@ -37,7 +37,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-	'scad'
+	'scad',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -69,7 +69,6 @@ TEMPLATES = [
     },
 ]
 
-MEDIA_ROOT = (os.path.join(os.path.dirname(__file__), '..', 'scad/Static').replace('\\', '/'))
 
 WSGI_APPLICATION = 'SCAD_final.wsgi.application'
 
@@ -108,3 +107,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
+

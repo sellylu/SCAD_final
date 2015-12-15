@@ -1,117 +1,64 @@
 <!DOCTYPE html>
 <html>
-<head>
-<title>Facebook Login JavaScript Example</title>
-<meta charset="UTF-8">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js" ></script>
-</head>
+    <head>
+		<meta charset="utf-8">
+        <title>Study Group</title>
+        {% load staticfiles %}
+        <link href="{% static "stylesheets/bootstrap.css" %}" rel="stylesheet" type="text/css">
+        <link href="{% static "stylesheets/index.css" %}" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    </head>
+    <body>
+        <nav class="sg-nav">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a href="/" class="navbar-brand" style="color: #dddddd;"><b>Study Group</b></a>
+                </div>
+            </div>
+        </nav>
 
-<body>
-{% for a in group_data %}
-    {{ a.group_id }}
-{% endfor %}
+        <header id="about-us" align="center">
+            <div class="header-mask"></div>
+            <br id="space">
+            <br id="space">
+            <div class="header-slogan center">
+                <h1>Work Hard And Play Hard</h1>
+                <hr>
+                <p>We come up with an idea that will help you and your group members to engage in learning together. We provide a platform you can invite your friends or meet someone you do not know to join the study groups and share the same interests. There are some factors related to gamification such as achievement badges, ranking and levels.</p>
+            </div>
 
-<!---
-    {% load staticfiles %}
-<img src = {% static 'tmp_pic/001.png' %} />
--->
-<script>
-  // This is called with the results from from FB.getLoginStatus().
-  function statusChangeCallback(response) {
-    console.log('statusChangeCallback');
-    console.log(response);
-    // The response object is returned with a status field that lets the
-    // app know the current login status of the person.
-    // Full docs on the response object can be found in the documentation
-    // for FB.getLoginStatus().
-    if (response.status === 'connected') {
-      // Logged into your app and Facebook.
-      testAPI();
-    } else if (response.status === 'not_authorized') {
-      // The person is logged into Facebook, but not your app.
-      document.getElementById('status').innerHTML = 'Please log ' +
-        'into this app.';
-    } else {
-      // The person is not logged into Facebook, so we're not sure if
-      // they are logged into this app or not.
-      document.getElementById('status').innerHTML = 'Please log ' +
-        'into Facebook.';
-    }
-  }
+			<button class="btn btn-success" onclick="checkLoginState();">以FB登入</button>
+            <!--div class="fb-login-button" data-max-rows="1" data-size="xlarge" data-show-faces="false" data-auto-logout-link="false" scope="user_profile,email" ></div-->
+            <div class="arrow-down center" style="margin-top: 24px;">
+                <i class="material-icons">keyboard_arrow_down</i></br>
+                <i class="material-icons" style="margin-top: -20px;">keyboard_arrow_down</i>
+            </div>
+        </header>
 
-  // This function is called when someone finishes with the Login
-  // Button.  See the onlogin handler attached to it in the sample
-  // code below.
-  function checkLoginState() {
-    FB.getLoginStatus(function(response) {
-      statusChangeCallback(response);
-    });
-  }
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h2>Recommended Groups</h2>
+                    <br id="space">
+                </div>
+                <div class="col-md-12" id="sg-list" align="center">
+                </div>
+                <!--div class="col-md-12" align="center">
+                    <button class="btn btn-success" id="more">Show More</button>
+                </div-->
+            </div>
+        </div>
 
-  window.fbAsyncInit = function() {
-  FB.init({
-    appId      : '444916912380076',
-    cookie     : true,  // enable cookies to allow the server to access 
-                        // the session
-    xfbml      : true,  // parse social plugins on this page
-    version    : 'v2.5' // use version 2.5
-  });
+        <footer>
+            <ul>
+                <li class="copyright" type="none" align="center" style="color: #eee;vertical-align:middle;">Copyright © 2015 Study Group ALL Rights Reserved.</li>
+            </ul>
+            <br clear="space">
+        </footer>
 
-  // Now that we've initialized the JavaScript SDK, we call 
-  // FB.getLoginStatus().  This function gets the state of the
-  // person visiting this page and can return one of three states to
-  // the callback you provide.  They can be:
-  //
-  // 1. Logged into your app ('connected')
-  // 2. Logged into Facebook, but not your app ('not_authorized')
-  // 3. Not logged into Facebook and can't tell if they are logged into
-  //    your app or not.
-  //
-  // These three cases are handled in the callback function.
+    </body>
 
-  FB.getLoginStatus(function(response) {
-    statusChangeCallback(response);
-  });
-
-  };
-
-  // Load the SDK asynchronously
-  (function(d, s, id) {
-    var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) return;
-    js = d.createElement(s); js.id = id;
-    js.src = "//connect.facebook.net/en_US/sdk.js";
-    fjs.parentNode.insertBefore(js, fjs);
-  }(document, 'script', 'facebook-jssdk'));
-
-  // Here we run a very simple test of the Graph API after login is
-  // successful.  See statusChangeCallback() for when this call is made.
-  function testAPI() {
-    console.log('Welcome!  Fetching your information.... ');
-    FB.api('/me', function(response) {
-	  $.ajaxSetup({
-	    data: {csrfmiddlewaretoken: '{{ csrf_token }}' },
-	  });		
-	  $.post("/index/",{user_id : response.id});
-	  
-	  console.log('Successful login for: ' + response.name);
-      document.getElementById('status').innerHTML =
-        'Thanks for logging in, ' + response.name + '!';
-    });
-  }
-</script>
-
-<!--
-  Below we include the Login Button social plugin. This button uses
-  the JavaScript SDK to present a graphical Login button that triggers
-  the FB.login() function when clicked.
--->
-
-<fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
-</fb:login-button>
-
-<div id="status">
-</div>
-
-</body>
+    <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="{% static "javascript/index.js" %}"></script>
+    <script src="{% static "javascripts/bootstrap.js" %}"></script>
 </html>
