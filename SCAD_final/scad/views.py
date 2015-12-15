@@ -11,11 +11,15 @@ def index(request):
 
 	if request.method == 'POST':
 
-		print('hehe')
-		#id = request.POST['user_id']
-		#cursor = connection.cursor()
+		print('ffff')
+		id = request.POST['user_id']
+		cursor = connection.cursor()
+		cursor.execute("SELECT * FROM user")
+		group_data = cursor.fetchall()
+		print(group_data)
 		#cursor.execute("INSERT INTO user(user_id) VALUES (%s)", [id])
 		return HttpResponseRedirect("/index/")
+
 	if request.method == 'GET':
 
 		cursor = connection.cursor()
