@@ -23,6 +23,29 @@
         </div>
 
 
+        <!--
+
+           需要去判斷 group_private
+           是否顯示等等
+
+           -->
+        {% if group_data %}
+            {% for group in group_data %}
+                <ul>
+
+                    <li> {{ group.group_id }}</li>
+                    <li> {{ group.created_time }}</li>
+                    <li> {{ group.finish_time }}</li>
+                    <li> {{ group.member_num }}</li>
+                    <li> {{ group.info }}</li>
+                    <li> {{ group.private }}</li>
+                    <li> {{ group.creator }}</li>
+                </ul>
+
+            {% endfor %}
+        {% endif %}
+
+
 
         <nav class="sg-nav">
             <div class="container-fluid">
