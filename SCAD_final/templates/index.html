@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/html">
     <head>
 		<meta charset="utf-8">
         <title>Study Group</title>
@@ -31,8 +31,10 @@
            -->
         {% if group_data %}
             {% for group in group_data %}
+                {% csrf_token %}
+                <form action="/group/{{ group.group_id }}" method="POST">
                 <ul>
-
+                    <input type="submit" value="Go to this">
                     <li> {{ group.group_id }}</li>
                     <li> {{ group.created_time }}</li>
                     <li> {{ group.finish_time }}</li>
@@ -41,7 +43,7 @@
                     <li> {{ group.private }}</li>
                     <li> {{ group.creator }}</li>
                 </ul>
-
+                </form>
             {% endfor %}
         {% endif %}
 

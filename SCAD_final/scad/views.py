@@ -74,3 +74,12 @@ def index(request):
 
 		form = NameForm()
 		return render(request, 'index.html', {'group_data':data_list ,'form' : form})
+
+
+@csrf_exempt
+def group_page(request,group_id):
+
+	if request.method == 'POST':
+		print('hh')
+
+		return render(request,'group_page.html')
