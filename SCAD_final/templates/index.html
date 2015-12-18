@@ -9,6 +9,21 @@
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     </head>
     <body>
+        <button type="button" onclick="creategroup()" >
+            create_group
+        </button>
+
+        <div id="create_group_form" style="display: none">
+          <form action="/index/" method="POST">
+            {% csrf_token %}
+            {{ form }}
+            <input type="submit" value="創建group"/>
+        </form>
+
+        </div>
+
+
+
         <nav class="sg-nav">
             <div class="container-fluid">
                 <div class="navbar-header">
