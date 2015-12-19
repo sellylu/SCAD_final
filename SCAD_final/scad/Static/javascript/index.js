@@ -3,6 +3,8 @@ $.ajaxSetup({
 });
 
 function creategroup() {
+    var created_group_user_id = Cookies.get('user_id');
+    $("#created_group_user_id").attr("value", created_group_user_id);
     $('#create_group_form').show();
 }
 function saveUserInfo() {
@@ -14,6 +16,7 @@ function saveUserInfo() {
                    user_id : response.id, user_name: response.name, user_email: response.email})
                    .then(function(){
                        $('#about-us').hide();
+                       Cookies.set('user_id',response.id);
                        console.log('Successful login for: ' + response.name + ' with ' + response.id + ' and ' + response.email);
                    });
 

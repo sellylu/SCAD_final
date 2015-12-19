@@ -20,16 +20,19 @@ def index(request):
 			cursor.execute(selectsql)
 			user_data = cursor.fetchall()
 			if(len(user_data)) > 0:
-				#group_name = request.POST['group_name']
-				#intro = request.POST['intro']
-				#private = request.POST['private']
-				#t = time.time()
-				#created_time = datetime.datetime.fromtimestamp(t).strftime('%Y%m%d%H%M')
-				#member_limit = request.POST['member_limit']
-				#group_num = 1
-				#group_id = creator + '_' + created_time
+				group_name = request.POST['group_name']
+				intro = request.POST['intro']
+				private = int(request.POST['private'])
+				t = time.time()
+				created_time = datetime.datetime.fromtimestamp(t).strftime('%Y%m%d%H%M')
+				member_limit = int(request.POST['member_limit'])
+				member_num = 1
+				group_id = creator + '_' + created_time
+				insertsql = "INSERT INTO study_group(group_id,group_name,created_time,member_limit,member_num,intro,private,creator) VALUES ('%s','%s','%s','%d','%d','%s','%d','%s')" %(group_id,group_name,created_time,member_limit,member_num,intro,private,creator)
+				cursor.execute(insertsql)
 
-				print(request.POST)
+
+
 
 
 		# login
