@@ -2,41 +2,38 @@ from django.shortcuts import render
 from django.db import connection
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponseRedirect
+import time
+import datetime
 
-# Create your views here.
-
-from django import forms
-
-class NameForm(forms.Form):
-	group_name = forms.CharField(label='Group name', max_length=20)
-	CHOICES = (('YES', 'Yes',), ('NO', 'No',))
-	finished_time = forms.ChoiceField(label='Finished time', widget=forms.RadioSelect, choices=CHOICES,required=False)
-	# handle if it is 'Yes' -> show Calandar
-    # my_field = DateField(widget = AdminDateWidget)
-	member_limit = forms.CharField(label='Member limit', required=False)
-	# handle if it is 'Yes' -> show an inputbox
-	intro = forms.CharField(label='Introduction', max_length=50)
-	state = forms.ChoiceField(label='Private or not', widget=forms.RadioSelect, choices=CHOICES)
-	'''
-	def __init__(self,*args, **kwargs):
-
-		super(NameForm, self).__init__(*args, **kwargs)
-
-		if self.fields['finished_time'].has_changed('NO', 'YES'):
-			print('keke')
-	'''
 @csrf_exempt
 def index(request):
 
 	if request.method == 'POST':
 
-		form = NameForm(request.POST)
-		if form.is_valid():
-			print('haha')
-		else: #something is blank
-			print('qq')
 
-		if 'user_id' in request.POST:
+		# build a group
+		if 'group_name' in request.POST:
+
+			creator = request.POST['user_id']
+			cursor = connection.cursor()
+			selectsql = "SELECT * FROM user WHERE user_id = '%s'" %(creator)
+			cursor.execute(selectsql)
+			user_data = cursor.fetchall()
+			if(len(user_data)) > 0:
+				#group_name = request.POST['group_name']
+				#intro = request.POST['intro']
+				#private = request.POST['private']
+				#t = time.time()
+				#created_time = datetime.datetime.fromtimestamp(t).strftime('%Y%m%d%H%M')
+				#member_limit = request.POST['member_limit']
+				#group_num = 1
+				#group_id = creator + '_' + created_time
+
+				print(request.POST)
+
+
+		# login
+		elif 'user_id' in request.POST:
 			id = request.POST['user_id']
 			email = request.POST['user_email']
 			name = request.POST['user_name']
@@ -72,8 +69,7 @@ def index(request):
 			}
 			data_list.append(group)
 
-		form = NameForm()
-		return render(request, 'index.html', {'group_data':data_list ,'form' : form})
+		return render(request, 'index.html', {'group_data':data_list})
 
 
 @csrf_exempt

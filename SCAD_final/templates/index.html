@@ -7,19 +7,64 @@
         <link href="{% static "stylesheets/bootstrap.css" %}" rel="stylesheet" type="text/css">
         <link href="{% static "stylesheets/index.css" %}" rel="stylesheet" type="text/css">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <script src="{% static "javascript/js_cookie.js"  %}"></script>
+        <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+        <script src="{% static "javascript/index.js" %}"></script>
+        <script src="{% static "javascript/bootstrap.js" %}"></script>
     </head>
     <body>
         <button type="button" onclick="creategroup()" >
             create_group
         </button>
 
-        <div id="create_group_form" style="display: none">
-          <form action="/index/" method="POST">
-            {% csrf_token %}
-            {{ form }}
-            <input type="submit" value="創建group"/>
-        </form>
 
+        <div id="create_group_form" style="display: none">
+        {% csrf_token %}
+            <form action="/index/" method="POST">
+              <fieldset class="form-group">
+                <label for="group_name">讀書會名字</label>
+                <input type="text" class="form-control" name="group_name" id="group_name" placeholder="要將讀書會取做什麼呢？">
+              </fieldset>
+
+              <fieldset class="form-group">
+                <label for="introTextarea">Introduction</label>
+                <textarea class="form-control" name="intro" id="intro" rows="3"></textarea>
+              </fieldset>
+
+              <fieldset class="form-group">
+                <label>隱私性</label>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="private" id="optionsRadios1" value="0">
+                        public
+                    </label>
+                    <label>
+                        <input type="radio" name="private" id="optionsRadios2" value="1">
+                        private
+                    </label>
+                </div>
+              </fieldset>
+              <fieldset>
+                  <label for="sel1">人數上限</label>
+                  <select name="member_limit" class="form-control" id="sel1">
+                    <option>無限制</option>
+                    <option>5</option>
+                    <option>10</option>
+                    <option>15</option>
+                    <option>20</option>
+                  </select>
+              </fieldset>
+              <fieldset>
+
+                  <input id="created_group_user_id" type="hidden" name="user_id">
+
+
+                  <input type="submit" class="btn btn-primary" value="Submit">
+                  <a href="/index/">
+                    <input type="button" value="Cancel" class="btn btn-primary"/>
+                  </a>
+              </fieldset>
+            </form>
         </div>
 
 
@@ -98,7 +143,5 @@
 
     </body>
 
-    <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
-    <script src="{% static "javascript/index.js" %}"></script>
-    <script src="{% static "javascript/bootstrap.js" %}"></script>
+
 </html>
