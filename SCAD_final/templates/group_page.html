@@ -1,9 +1,142 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/html">
     <head>
+		<meta charset="utf-8">
+        <title>Study Group</title>
+        {% load static %}
+        <link href="{% static "stylesheets/bootstrap.css" %}" rel="stylesheet" type="text/css">
+        <link href="{% static "stylesheets/group.css" %}" rel="stylesheet" type="text/css">
+        <link href="{% static "stylesheets/fullcalendar.css" %}" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    
+        <script src="{% static "javascript/jquery.min.js" %}"></script>
+        <script src="{% static "javascript/moment.min.js" %}"></script>
+        <script src="{% static "javascript/fullcalendar.js" %}"></script>
+        <script src="{% static "javascript/index.js" %}"></script>
+        <script src="{% static "javascript/bootstrap.js" %}"></script>    
+        <script type="text/javascript">
+            $(document).ready(function() {
+                // page is now ready, initialize the calendar...
+                $('#calendar').fullCalendar({
+                    // put your options and callbacks here
+                    events: [
+                        {
+                            title  : 'event1',
+                            start  : '2015-12-01'
+                        },
+                        {
+                            title  : 'event2',
+                            start  : '2015-12-05',
+                            end    : '2015-12-07'
+                        },
+                        {
+                            title  : 'event3',
+                            start  : '2015-12-09T12:30:00',
+                            allDay : false // will make the time show
+                        }
+                    ],
+                    eventClick: function(calEvent, jsEvent, view) {
+
+                        alert('Event: ' + calEvent.title);
+
+                        // change the border color just for fun
+                        $(this).css('border-color', 'red');
+
+                    }                                               
+                })
+
+            });
+        </script>
     </head>
     <body>
+        <div id="myHeader">
+            <nav class="sg-nav">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <a href="/" class="title"><b>Study Group</b></a>
+                    </div>
+                    <div id="navbar-user">
+                        <a href="#" class="navbar-text">My Information</a>
+                        <a href="#" class="navbar-text">Log out</a>
+                    </div>
+                </div>
+            </nav>
+            <!-- Another style of navbar -->
+            <!--<nav class="navbar navbar-inverse">
+              <div class="container-fluid">
+                <div class="navbar-header">
+                  <a class="navbar-brand" href="#">WebSiteName</a>
+                </div>
+                <div>
+                  <ul class="nav navbar-nav">
+                    <li class="active"><a href="#">Home</a></li>
+                    <li><a href="#">Page 1</a></li>
+                    <li><a href="#">Page 2</a></li> 
+                    <li><a href="#">Page 3</a></li> 
+                  </ul>
+                  <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                    <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                  </ul>
+                </div>
+              </div>
+            </nav>-->
+        </div>
+        <br>
+        <div class="exp">
+            <b>LV.20</b>
+            <div id="user_exp"></div>
+            
+        </div>
+        <br>
+        <div id="myContainer">
+            {% if group_page_data %}
+                {% csrf_token %}
+                <div id="mySidebar">
+                    <h3>{{group_page_data.group_name}}</h3>
+                    <p>{{group_page_data.intro}}</p>
+                    <br>
+                    <br>
+                    <p>Create at {{group_page_data.created_time}}</p>
+                    <p>Members: {{group_page_data.member_num}}</p>
+                    {% if group_page_data.private == 0 %}
+                        <p>Public group</p>
+                    {% else %}
+                        <p>Private group</p>
+                    {% endif %}
+                </div>  
 
+                <div id="myBody">
+                    <div id="myTab">
+                          <div class="col-md-1 myLink"><a href="#" class="tab">News</a></div>
+                          <div class="col-md-1 myLink"><a href="#" class="tab">Schedule</a></div>
+                          <div class="col-md-1 myLink"><a href="#" class="tab">Materials</a></div>
+                          <div class="col-md-1 myLink"><a href="#" class="tab">Thoughts</a></div>
+                          <div class="col-md-1 myLink"><a href="#" class="tab">Members</a></div>
+                    </div>
+                    <br>
+                    <div id="myContent">
+                        <p>Render content here</p>
+                        <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#demo">Simple collapsible</button>
+                        <div id="demo" class="collapse">
+                          Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+                            sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                        </div>         
+                        <div id="calendar"></div>                 
+                    </div>
+                </div>
+            {% endif %}
+
+            <div id="myFooter">
+                <br>
+                <footer>
+                    <ul>
+                        <li class="copyright" type="none" align="center" style="color: #eee;vertical-align:middle;">Copyright © 2015 Study Group ALL Rights Reserved.</li>
+                    </ul>
+                    <br clear="space">
+                </footer>          
+            </div>        
+        </div>   
     </body>
-
 </html>

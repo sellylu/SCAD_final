@@ -2,11 +2,22 @@ $.ajaxSetup({
     data: {csrfmiddlewaretoken: '{{ csrf_token }}' },
 });
 
-function creategroup() {
-    var created_group_user_id = Cookies.get('user_id');
-    $("#created_group_user_id").attr("value", created_group_user_id);
-    $('#create_group_form').show();
+function creategroup_submit() {
+
+    creator_id = Cookies.get('user_id');
+
+    group_name = document.getElementById("group_name").value;
+
+    intro = document.getElementById("intro").value;
+    private = parseInt(document.getElementsByName("private")[0].value);
+    console.log(typeof(private));
+    member_limit = parseInt(document.getElementsByName("member_limit")[0].value);
+    console.log(creator_id,group_name,intro,private,member_limit);
+    $.post( "/index/", { group_name : group_name,  member_limit :member_limit,intro:intro,private:private,creator_id:creator_id });
+
+    $("#create_group_Modal").modal('hide');
 }
+
 function saveUserInfo() {
 
 	FB.api('/me',{"fields": "name, email"}, function(response) {

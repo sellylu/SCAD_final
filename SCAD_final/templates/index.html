@@ -11,40 +11,69 @@
         <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
         <script src="{% static "javascript/index.js" %}"></script>
         <script src="{% static "javascript/bootstrap.js" %}"></script>
+
+
+
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $("#create_group_button").click(function(){
+                    $("#create_group_Modal").modal('show');
+                });
+            });
+            </script>
+            <style type="text/css">
+                #create_group_button{
+                    margin: 20px;
+                }
+            </style>
     </head>
     <body>
-        <button type="button" onclick="creategroup()" >
-            create_group
-        </button>
 
 
-        <div id="create_group_form" style="display: none">
-        {% csrf_token %}
-            <form action="/index/" method="POST">
-              <fieldset class="form-group">
-                <label for="group_name">讀書會名字</label>
-                <input type="text" class="form-control" name="group_name" id="group_name" placeholder="要將讀書會取做什麼呢？">
-              </fieldset>
 
-              <fieldset class="form-group">
-                <label for="introTextarea">Introduction</label>
-                <textarea class="form-control" name="intro" id="intro" rows="3"></textarea>
-              </fieldset>
 
-              <fieldset class="form-group">
-                <label>隱私性</label>
-                <div class="radio">
-                    <label>
-                        <input type="radio" name="private" id="optionsRadios1" value="0">
-                        public
-                    </label>
-                    <label>
-                        <input type="radio" name="private" id="optionsRadios2" value="1">
-                        private
-                    </label>
+
+<!--
+    要加入判斷使用者是否登入
+-->
+<div class="create_group">
+    <!-- Button HTML (to Trigger Modal) -->
+    <a href="#" id="create_group_button" class="btn btn-lg btn-primary">Create Group</a>
+
+    <!-- Modal HTML -->
+    <div id="create_group_Modal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Group Name</h4>
+                    <input type="text" class="form-control" name="group_name" id="group_name" placeholder="要將讀書會取做什麼呢？">
+
                 </div>
-              </fieldset>
-              <fieldset>
+                <div class="modal-body">
+                    <div>
+                        <label for="introTextarea">Introduction</label>
+                        <textarea class="form-control" name="intro" id="intro" rows="3"></textarea>
+
+                    </div>
+
+                    <fieldset>
+
+                        <div class="radio">
+                            <div>
+                                <label>隱私性</label>
+                                <input type="radio" name="private" id="optionsRadios1" value="0">
+                                    public
+                            </div>
+
+                            <div>
+                                <input type="radio" name="private" id="optionsRadios2" value="1">
+                                    private
+                            </div>
+                        </div>
+                        </fieldset>
+
+                    <fieldset>
                   <label for="sel1">人數上限</label>
                   <select name="member_limit" class="form-control" id="sel1">
                     <option>無限制</option>
@@ -54,18 +83,21 @@
                     <option>20</option>
                   </select>
               </fieldset>
-              <fieldset>
-
-                  <input id="created_group_user_id" type="hidden" name="user_id">
-
-
-                  <input type="submit" class="btn btn-primary" value="Submit">
-                  <a href="/index/">
-                    <input type="button" value="Cancel" class="btn btn-primary"/>
-                  </a>
-              </fieldset>
-            </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="creategroup_submit()">Create</button>
+                </div>
+            </div>
         </div>
+    </div>
+</div>
+
+
+
+
+
+
 
 
         <!--
@@ -77,14 +109,16 @@
         {% if group_data %}
             {% for group in group_data %}
                 {% csrf_token %}
-                <form action="/group/{{ group.group_id }}" method="POST">
+                <form action="/group/{{ group.group_id }}" method="GET">
                 <ul>
                     <input type="submit" value="Go to this">
                     <li> {{ group.group_id }}</li>
+                    <li> {{ group.group_name }}</li>
                     <li> {{ group.created_time }}</li>
-                    <li> {{ group.finish_time }}</li>
+                    <li> {{ group.finished_time }}</li>
                     <li> {{ group.member_num }}</li>
-                    <li> {{ group.info }}</li>
+                     <li> {{ group.member_limit }}</li>
+                    <li> {{ group.intro }}</li>
                     <li> {{ group.private }}</li>
                     <li> {{ group.creator }}</li>
                 </ul>

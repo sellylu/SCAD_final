@@ -1,0 +1,231 @@
+@charset "UTF-8";
+/*! normalize.css v3.0.1 | MIT License | git.io/normalize */
+/* line 3, ../sass/styles.scss */
+.navbar {
+  border-radius: 0px;
+}
+
+/* line 22, ../sass/styles.scss */
+#main-text {
+  color: #dddddd;
+  font-size: 64px;
+  text-align: center;
+}
+
+/* line 32, ../sass/styles.scss */
+#space {
+  height: 200px;
+}
+
+
+/* line 40, ../sass/styles.scss */
+.photos-padding {
+  margin-top: -21px;
+  background-color: #011C28;
+  height: 21px;
+}
+
+/* line 46, ../sass/styles.scss */
+.modal-footer {
+  word-wrap: break-word;
+}
+
+/* line 50, ../sass/styles.scss */
+.thumbnail {
+  overflow: hidden;
+  padding: 0px;
+  border: 0px solid #fff;
+  background-color: transparent;
+}
+
+/* line 57, ../sass/styles.scss */
+.image-container {
+  background-color: #011C28;
+  overflow: auto;
+}
+
+/* line 62, ../sass/styles.scss */
+.thumbnail > img, .thumbnail a > img {
+  max-width: none;
+  max-height: 200px;
+}
+
+footer {
+	background-color: #000;
+	padding-top: 15px;
+}
+/* Header */
+header {
+    min-height: 700px;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+header > .header-mask {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background-color: rgba(150, 175, 200, 0.6);
+}
+
+.arrow-down {
+    text-align: center;
+}
+
+.arrow-down > i {
+    font-size: 2em !important;
+    color: #eee;
+    position: relative;
+}
+
+/* Container */
+.container > .row > .col-md-12 > h2 {
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
+    text-align: center;
+    position: relative;
+}
+
+nav.sg-nav {
+    background-color: #000;
+    overflow: hidden;
+    height: 80px;
+    width: 90%;
+    position: fixed;
+    z-index: 998;
+}
+
+nav.colorgy-nav .nav-wrapper {
+    z-index: -1;
+    height: auto;
+    margin-top: -1px;
+    padding-left: 20px;
+    transition: all 0.18s;
+    -webkit-transition: all 0.18s;
+    -ms-transition: all 0.18s;
+    -o-transition: all 0.18s;
+    -moz-transition: all 0.18s;
+}
+
+@media screen and (min-width: 992px) {
+    nav.colorgy-nav .nav-wrapper {
+        transform: translateY(0px);
+        -webkit-transform: translateY(0px);
+        -moz-transform: translateY(0px);
+        -o-transform: translateY(0px);
+        -ms-transform: translateY(0px);
+    }
+}
+
+.title {
+  font-size: 20pt;
+  color: #dddddd;
+}
+
+.title:hover {
+  cursor: pointer;
+  text-decoration: none;
+  color: #fff;
+}
+
+.title:focus {
+  text-decoration: none;
+  color: #dddddd;
+}
+
+#navbar-user {
+  float: right;
+  margin-right: 10px;
+}
+
+#myHeader {
+  width: 90%;
+  height: 80px;
+  line-height: 80px;
+  margin: 0 auto;
+}
+
+#myContainer {
+  height: 100%;
+  width: 90%;
+  margin: 0 auto;
+}
+
+#mySidebar {
+  width: 25%;
+  height: 500px;
+  float: left;
+  background-color: #b3b3b3;
+  text-align: center;
+}
+
+.exp {
+  width: 90%;
+  height: 18px;
+  margin: 0 auto;
+  text-align: right;
+}
+
+#user_exp  {
+  width: 250px;
+  height: 18px;
+  float: right;
+  margin: 0px 20px;
+  background-color: #00995c;
+}
+
+#myBody {
+  width: 73%;
+  height: 500px;
+  float: right;
+}
+
+#myTab {
+  width: 100%;
+  height: 35px;
+  background-color: #b3b3b3;
+}
+
+.myLink {
+  height: 35px;
+  line-height: 35px;
+  text-align: center;
+  
+}
+
+.myLink:hover {
+  background-color: #808080;
+  cursor: pointer;
+}
+
+.tab {
+  font-weight: bold;
+  color: #000;
+}
+.tab:hover {
+  color: #000;
+  text-decoration: none;
+}
+.tab:focus {
+  text-decoration: none;
+  color: #000;
+}
+
+#myContent {
+  width: 100%;
+  height: 450px;
+  border-color: #000;
+  border-style: solid;
+}
+
+#myFooter {
+  clear: both;
+}
+
+#calendar {
+  width: 500px;
+  height: 500px;
+  margin: 0 auto;
+}
