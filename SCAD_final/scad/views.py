@@ -4,6 +4,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponseRedirect
 import time
 import datetime
+from django.shortcuts import redirect
 
 @csrf_exempt
 def index(request):
@@ -25,6 +26,7 @@ def index(request):
 
 				intro = request.POST['intro']
 				private = int(request.POST['private'])
+				print(private)
 				t = time.time()
 
 				created_time = datetime.datetime.fromtimestamp(t).strftime('%Y%m%d%H%M')
@@ -34,8 +36,7 @@ def index(request):
 				insertsql = "INSERT INTO study_group(group_id,group_name,created_time,member_limit,member_num,intro,private,creator) " \
 							"VALUES ('%s','%s','%s','%d','%d','%s','%d','%s')" %(group_id,group_name,created_time,member_limit,member_num,intro,private,creator)
 				cursor.execute(insertsql)
-
-
+				return HttpResponseRedirect('/group/{}'.format(group_id))
 
 
 		# login
@@ -57,8 +58,8 @@ def index(request):
 				updatesql = "UPDATE user SET login_cnt = login_cnt + 1 WHERE user_id = '%s'" % (id)
 				cursor2.execute(updatesql)
 
-		return render(request, 'index.html')
-		#return HttpResponseRedirect("/index/")
+		#return render(request, 'index.html')
+			return HttpResponseRedirect("/index/")
 
 	if request.method == 'GET':
 		cursor = connection.cursor()
@@ -87,7 +88,6 @@ def index(request):
 def group_page(request,group_id):
 
 	if request.method == 'GET':
-		print(group_id)
 		cursor = connection.cursor()
 		selectsql = "SELECT * FROM study_group WHERE group_id = '%s'" %(group_id)
 		cursor.execute(selectsql)

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/html">
+<html xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
     <head>
 		<meta charset="utf-8">
         <title>Study Group</title>
@@ -38,7 +38,7 @@
 -->
 <div class="create_group">
     <!-- Button HTML (to Trigger Modal) -->
-    <a href="#" id="create_group_button" class="btn btn-lg btn-primary">Create Group</a>
+    <button  id="create_group_button" class="btn btn-lg btn-primary">Create Group</button>
 
     <!-- Modal HTML -->
     <div id="create_group_Modal" class="modal fade">
@@ -62,8 +62,10 @@
                         <div class="radio">
                             <div>
                                 <label>隱私性</label>
-                                <input type="radio" name="private" id="optionsRadios1" value="0">
+
+                                <input type="radio" name="private" id="optionsRadios1" value="0" checked>
                                     public
+
                             </div>
 
                             <div>
