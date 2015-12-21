@@ -9,13 +9,23 @@ function creategroup_submit() {
     group_name = document.getElementById("group_name").value;
 
     intro = document.getElementById("intro").value;
-    private = parseInt(document.getElementsByName("private")[0].value);
-    console.log(typeof(private));
-    member_limit = parseInt(document.getElementsByName("member_limit")[0].value);
-    console.log(creator_id,group_name,intro,private,member_limit);
-    $.post( "/index/", { group_name : group_name,  member_limit :member_limit,intro:intro,private:private,creator_id:creator_id });
 
-    $("#create_group_Modal").modal('hide');
+    if(document.getElementById("optionsRadios1").checked){
+        private = 0;
+    }else{
+        private = 1;
+    }
+
+    date = Date.now();
+    group_id = creator_id + date;
+    member_limit = parseInt(document.getElementsByName("member_limit")[0].value);
+    $.post( "/index/", { group_id : group_id, group_name : group_name,  member_limit :member_limit,intro:intro,private:private,creator_id:creator_id })
+        .then(function () {
+            window.location = '/group/'+group_id;
+            $("#create_group_Modal").modal('hide');
+        });
+
+
 }
 
 function saveUserInfo() {
