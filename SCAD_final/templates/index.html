@@ -117,27 +117,27 @@
 
         <!--
 
-           需要去判斷 group_private
-           是否顯示等等
-
+           目前 隱私社團不會被顯示出來
+            尚未設定 管理員或成員可以看得到
            -->
         {% if group_data %}
             {% for group in group_data %}
-                {% csrf_token %}
-                <form action="/group/{{ group.group_id }}" method="GET">
-                <ul>
-                    <input type="submit" value="Go to this">
-                    <li> {{ group.group_id }}</li>
-                    <li> {{ group.group_name }}</li>
-                    <li> {{ group.created_time }}</li>
-                    <li> {{ group.finished_time }}</li>
-                    <li> {{ group.member_num }}</li>
-                     <li> {{ group.member_limit }}</li>
-                    <li> {{ group.intro }}</li>
-                    <li> {{ group.private }}</li>
-                    <li> {{ group.creator }}</li>
-                </ul>
-                </form>
+                {% if group.private == 0 %}
+                    <form action="/group/{{ group.group_id }}" method="GET">
+                    <ul>
+                        <input type="submit" value="Go to this">
+                        <li> {{ group.group_id }}</li>
+                        <li> {{ group.group_name }}</li>
+                        <li> {{ group.created_time }}</li>
+                        <li> {{ group.finished_time }}</li>
+                        <li> {{ group.member_num }}</li>
+                        <li> {{ group.member_limit }}</li>
+                        <li> {{ group.intro }}</li>
+                        <li> {{ group.private }}</li>
+                        <li> {{ group.creator }}</li>
+                    </ul>
+                    </form>
+                {% endif %}
             {% endfor %}
         {% endif %}
 
