@@ -26,15 +26,15 @@ def index(request):
 
 				intro = request.POST['intro']
 				private = int(request.POST['private'])
-
+				finished_time = request.POST['finished_time']
 				t = time.time()
 				created_time = datetime.datetime.fromtimestamp(t).strftime('%Y%m%d%H%M')
 				member_limit = int(request.POST['member_limit'])
 				member_num = 1
 				group_id = request.POST['group_id']
 				print('hhhhhhh')
-				insertsql = "INSERT INTO study_group(group_id,group_name,created_time,member_limit,member_num,intro,private,creator) " \
-							"VALUES ('%s','%s','%s','%d','%d','%s','%d','%s')" %(group_id,group_name,created_time,member_limit,member_num,intro,private,creator)
+				insertsql = "INSERT INTO study_group(group_id,group_name,created_time,member_limit,member_num,intro,private,creator,finished_time) " \
+							"VALUES ('%s','%s','%s','%d','%d','%s','%d','%s','%s')" %(group_id,group_name,created_time,member_limit,member_num,intro,private,creator,finished_time)
 				cursor.execute(insertsql)
 				return HttpResponseRedirect('/group/{}'.format(group_id))
 

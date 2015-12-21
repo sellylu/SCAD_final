@@ -19,6 +19,7 @@
                 $("#create_group_button").click(function(){
                     $("#create_group_Modal").modal('show');
                 });
+                document.getElementById('finished_time_date').valueAsDate = new Date();
             });
             </script>
             <style type="text/css">
@@ -45,36 +46,47 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Group Name</h4>
-                    <input type="text" class="form-control" name="group_name" id="group_name" placeholder="要將讀書會取做什麼呢？">
-
+                    <div id="namediv">
+                        <h4 class="modal-title">Group Name</h4>
+                        <input type="text" class="form-control" name="group_name" id="group_name" placeholder="要將讀書會取做什麼呢？">
+                    </div>
                 </div>
                 <div class="modal-body">
-                    <div>
+                    <div id="introdiv">
                         <label for="introTextarea">Introduction</label>
                         <textarea class="form-control" name="intro" id="intro" rows="3"></textarea>
-
+                        <HR>
                     </div>
 
-                    <fieldset>
-
-                        <div class="radio">
-                            <div>
-                                <label>隱私性</label>
-
-                                <input type="radio" name="private" id="optionsRadios1" value="0" checked>
+                    <div style="margin-left:20px ;width:50px ; height:100px;float:left">
+                        <label for="private" >隱私性</label>
+                        <div class="radio"  >
+                                <input type="radio" name="private" id="private_op1"  value="0" checked>
                                     public
-
-                            </div>
-
-                            <div>
-                                <input type="radio" name="private" id="optionsRadios2" value="1">
+                                </br>
+                                <input type="radio" name="private" id="private_op2"  value="1">
                                     private
-                            </div>
                         </div>
-                        </fieldset>
+                    </div>
+                    <div style="width:150px ; height:100px;float:left;margin-left: 100px">
+                        <label for="private" >是否設定結束時間</label>
+                        <div class="radio">
+                                <input type="radio" name="finished_time" id="finished_time_op1" onclick="closecal()" checked>
+                                    NO
+                                </br>
+                                <input type="radio" name="finished_time" id="finished_time_op2" onclick="opencal()" >
+                                    YES
+                        </div>
+                        <div>
+                            <input id="finished_time_date"  disabled="disabled" type="date">
+                        </div>
+                    </div>
 
+
+                    <div id="clear" style="clear: both"></div>
+
+                    <HR>
+                    <div id="member_limitdiv">
                     <fieldset>
                   <label for="sel1">人數上限 (0為無限制)</label>
                   <select name="member_limit" class="form-control" id="sel1">
@@ -85,6 +97,7 @@
                     <option>20</option>
                   </select>
               </fieldset>
+                        </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
