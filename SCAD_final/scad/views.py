@@ -19,11 +19,16 @@ def index(request):
 			cursor = connection.cursor()
 			selectsql = "SELECT * FROM user WHERE user_id = '%s'" %(creator)
 			cursor.execute(selectsql)
-			user_data = cursor.fetchall()
+			user_data = cursor.fetchone()
 
 			if(len(user_data)) > 0:
-				group_name = request.POST['group_name']
+				user_no = user_data[0]
+				print(user_no)
+				str_user_no = str(user_no)+','
+				user_join_group = user_data[4]
+				print(user_join_group)
 
+				group_name = request.POST['group_name']
 				intro = request.POST['intro']
 				private = int(request.POST['private'])
 				finished_time = request.POST['finished_time']
@@ -32,10 +37,26 @@ def index(request):
 				member_limit = int(request.POST['member_limit'])
 				member_num = 1
 				group_id = request.POST['group_id']
-				print('hhhhhhh')
-				insertsql = "INSERT INTO study_group(group_id,group_name,created_time,member_limit,member_num,intro,private,creator,finished_time) " \
-							"VALUES ('%s','%s','%s','%d','%d','%s','%d','%s','%s')" %(group_id,group_name,created_time,member_limit,member_num,intro,private,creator,finished_time)
-				cursor.execute(insertsql)
+
+
+				# insert group into study_group
+				insertNewGroupInto_Study_Group_sql = "INSERT INTO study_group(group_member,group_id,group_name,created_time,member_limit,member_num,intro,private,creator,finished_time) " \
+							"VALUES ('%s','%s','%s','%s','%d','%d','%s','%d','%s','%s')" %(str_user_no,group_id,group_name,created_time,member_limit,member_num,intro,private,creator,finished_time)
+				cursor.execute(insertNewGroupInto_Study_Group_sql)
+
+				# get the group_no
+				get_group_created_no = "SELECT (no) FROM study_group WHERE group_id = '%s'" %(group_id)
+				cursor.execute(get_group_created_no)
+				group_created_no = cursor.fetchone()
+
+				user_join_group = user_join_group + str(group_created_no[0]) + ','
+				print(user_join_group)
+
+
+				# insert the group no to the user
+				update_creator_join_group_sql = "UPDATE user SET join_group = '%s' WHERE no = '%d' " %(user_join_group,user_no)
+				cursor.execute(update_creator_join_group_sql)
+
 				return HttpResponseRedirect('/group/{}'.format(group_id))
 
 			else:
@@ -69,15 +90,16 @@ def index(request):
 		data_list = []
 		for x in group_data:
 			group = {
-				'group_id': x[0],
-				'group_name':x[1],
-				'created_time':x[2],
-				'finished_time':x[3],
-				'member_num':x[4],
-				'member_limit':x[5],
-				'intro': x[6],
-				'private':x[7],
-				'creator': x[8]
+				'group_id': x[1],
+				'group_name':x[2],
+				'created_time':x[3],
+				'finished_time':x[4],
+				'member_num':x[5],
+				'member_limit':x[6],
+				'group_member':x[7],
+				'intro': x[8],
+				'private':x[9],
+				'creator': x[10]
 			}
 			data_list.append(group)
 
@@ -95,15 +117,17 @@ def group_page(request,group_id):
 
 		if group_data:
 			group = {
-					'group_id': group_data[0],
-					'group_name':group_data[1],
-					'created_time':group_data[2],
-					'finished_time':group_data[3],
-					'member_num':group_data[4],
-					'member_limit':group_data[5],
-					'intro': group_data[6],
-					'private':group_data[7],
-					'creator': group_data[8]
+
+					'group_id': group_data[1],
+					'group_name':group_data[2],
+					'created_time':group_data[3],
+					'finished_time':group_data[4],
+					'member_num':group_data[5],
+					'member_limit':group_data[6],
+					'group_member':group_data[7],
+					'intro': group_data[8],
+					'private':group_data[9],
+					'creator': group_data[10]
 			}
 			return render(request,'group_page.html',{'group_page_data':group})
 		else:    # no this group

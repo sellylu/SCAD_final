@@ -109,32 +109,21 @@
 </div>
 
 
-
-
-
-
-
-
-        <!--
-
-           目前 隱私社團不會被顯示出來
-            尚未設定 管理員或成員可以看得到
-           -->
         {% if group_data %}
             {% for group in group_data %}
                 {% if group.private == 0 %}
                     <form action="/group/{{ group.group_id }}" method="GET">
                     <ul>
                         <input type="submit" value="Go to this">
-                        <li> {{ group.group_id }}</li>
-                        <li> {{ group.group_name }}</li>
-                        <li> {{ group.created_time }}</li>
-                        <li> {{ group.finished_time }}</li>
-                        <li> {{ group.member_num }}</li>
-                        <li> {{ group.member_limit }}</li>
-                        <li> {{ group.intro }}</li>
-                        <li> {{ group.private }}</li>
-                        <li> {{ group.creator }}</li>
+                        <li> id :{{ group.group_id }}</li>
+                        <li> name :{{ group.group_name }}</li>
+                        <li> created_time :{{ group.created_time }}</li>
+                        <li> finished_time :{{ group.finished_time }}</li>
+                        <li> member_num :{{ group.member_num }}</li>
+                        <li> member_limit :{{ group.member_limit }}</li>
+                        <li> intro :{{ group.intro }}</li>
+                        <li> private :{{ group.private }}</li>
+                        <li> creator :{{ group.creator }}</li>
                     </ul>
                     </form>
                 {% endif %}
