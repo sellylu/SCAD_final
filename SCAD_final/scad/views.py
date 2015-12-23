@@ -135,5 +135,9 @@ def group_page(request,group_id):
 
 @csrf_exempt
 def user(request):
+	group = {
 
-	return render(request,'user_page.html',{'user_page_data':' '})
+			'group_info': 'my_info',
+			'group_name':'my_name'
+	}
+	return render(request,'user_page.html',{'user_page_data':group})

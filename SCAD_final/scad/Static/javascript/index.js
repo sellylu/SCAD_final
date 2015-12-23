@@ -2,6 +2,14 @@ $.ajaxSetup({
     data: {csrfmiddlewaretoken: '{{ csrf_token }}' },
 });
 
+
+
+function checkshowlogindiv() {
+
+    user_id = Cookies.get('user_id');
+    if(user_id != undefined)
+        $('#about-us').hide();
+}
 function closecal(){
     $("#finished_time_date").attr('disabled','disabled');
 }

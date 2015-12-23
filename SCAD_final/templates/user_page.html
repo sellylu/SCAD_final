@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+    <head>
+		<meta charset="utf-8">
+        <title>Study Group</title>
+        {% load static %}
+        <link href="{% static "stylesheets/bootstrap.css" %}" rel="stylesheet" type="text/css">
+        <link href="{% static "stylesheets/user.css" %}" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    
+        <script src="{% static "javascript/jquery.min.js" %}"></script>
+        <script src="{% static "javascript/index.js" %}"></script>
+        <script src="{% static "javascript/bootstrap.js" %}"></script>    
+
+        <script type="text/javascript">
+            function showGroup() {
+                alert('showGroup');
+                {% if user_page_data %}
+                    var name = '{{ user_page_data.group_name }}';
+                    var info = '{{ user_page_data.group_info }}';
+                    var html = '<h4>' + name + '</h4><p>' + info + '</p>';
+
+                    var div = $('<div/>', {
+                        'class': 'group_div'                   
+                    }).html(html);
+
+                    var img = $('<img/>', {
+                        'class': 'group_img',
+                        src: '{% static 'images/logo.jpg' %}',
+                        width: 180
+                    }).prependTo(div);
+
+                    $('#myContent').append(div);
+                {% endif %}
+            }
+        </script>
+    </head>
+    <body>
+        <div id="myHeader">
+            <nav class="sg-nav">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <a href="/" class="title"><b>Study Group</b></a>
+                    </div>
+                    <div id="navbar-user">
+                        <a href="#" class="navbar-text">My Information</a>
+                        <a href="#" class="navbar-text">Log out</a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        <br>
+        <div class="exp">
+            <b>LV.20</b>
+            <div id="user_exp"></div>            
+        </div>
+        <br>
+        <div id="myContainer">
+            <div id="mySidebar">
+                    <ul>
+                        <h3><li><a href='#' class='myLink' onclick="showGroup()">My Group</a></li></h3>
+                        <h3><li><a href='#' class='myLink'>Progress</a></li></h3>
+                        <h3><li><a href='#' class='myLink'>Achievement</a></li></h3>
+                    </ul>
+             </div>  
+
+            <div id="myBody">
+                <div id="myContent">
+                </div>
+            </div>
+
+            <div id="myFooter">
+                <br>
+                <footer>
+                    <ul>
+                        <li class="copyright" type="none" align="center" style="color: #eee;vertical-align:middle;">Copyright © 2015 Study Group ALL Rights Reserved.</li>
+                    </ul>
+                    <br clear="space">
+                </footer>          
+            </div>        
+        </div>   
+    </body>
+</html>
