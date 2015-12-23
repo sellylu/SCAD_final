@@ -133,11 +133,27 @@ def group_page(request,group_id):
 		else:    # no this group
 			raise PermissionDenied
 
-@csrf_exempt
-def user(request):
-	group = {
 
-			'group_info': 'my_info',
-			'group_name':'my_name'
-	}
-	return render(request,'user_page.html',{'user_page_data':group})
+
+def user_page(request,user_id):
+
+	cursor = connection.cursor()
+	selectsql = "SELECT join_group FROM user WHERE user_id = '%s'" %(user_id)
+	cursor.execute(selectsql)
+	user_group = cursor.fetchone()[0][:-1]
+
+	getgroupinfosql = "SELECT group_id,group_name,intro FROM study_group WHERE no in ("+user_group+")";
+	cursor.execute(getgroupinfosql)
+	group_data = cursor.fetchall()
+	print(group_data)
+
+	data_list = []
+	for x in group_data:
+		group = {
+				'group_id': x[0],
+				'group_name':x[1],
+				'intro': x[2],
+		}
+		data_list.append(group)
+
+	return render(request,'user_page.html',{'user_page_data':data_list})

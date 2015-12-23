@@ -8,7 +8,8 @@
         <link href="{% static "stylesheets/group.css" %}" rel="stylesheet" type="text/css">
         <link href="{% static "stylesheets/fullcalendar.css" %}" rel="stylesheet" type="text/css">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    
+        <script src="{% static "javascript/js_cookie.js"  %}"></script>
+
         <script src="{% static "javascript/jquery.min.js" %}"></script>
         <script src="{% static "javascript/moment.min.js" %}"></script>
         <script src="{% static "javascript/fullcalendar.js" %}"></script>
@@ -46,6 +47,12 @@
                 })
 
             });
+
+            function getMyInfoURL(){
+                user_id = Cookies.get('user_id');
+                alert(user_id);
+                window.location = '/user/'+user_id;
+            }
         </script>
     </head>
     <body>
@@ -56,7 +63,7 @@
                         <a href="/" class="title"><b>Study Group</b></a>
                     </div>
                     <div id="navbar-user">
-                        <a href="#" class="navbar-text">My Information</a>
+                        <a href="#" id="myInfoLink" class="navbar-text" onclick="getMyInfoURL()">My Information</a>
                         <a href="#" class="navbar-text">Log out</a>
                     </div>
                 </div>
