@@ -132,3 +132,8 @@ def group_page(request,group_id):
 			return render(request,'group_page.html',{'group_page_data':group})
 		else:    # no this group
 			raise PermissionDenied
+
+@csrf_exempt
+def user(request):
+
+	return render(request,'user_page.html',{'user_page_data':' '})
