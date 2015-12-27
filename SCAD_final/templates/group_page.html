@@ -62,6 +62,10 @@
                 alert(user_id);
                 window.location = '/user/'+user_id;
             }
+
+            function Group_Member_inf(){
+                $('#myContent').clear();
+            }
         </script>
     </head>
     <body>
@@ -156,11 +160,11 @@
                           <div class="col-md-1 myLink"><a href="#" class="tab">Schedule</a></div>
                           <div class="col-md-1 myLink"><a href="#" class="tab">Materials</a></div>
                           <div class="col-md-1 myLink"><a href="#" class="tab">Thoughts</a></div>
-                          <div class="col-md-1 myLink"><a href="#" class="tab">Members</a></div>
+                          <div class="col-md-1 myLink"><a href="#" class="tab" onclick="Group_Member_inf()">Members</a></div>
                     </div>
                     <br>
                     <div id="myContent">
-                                
+                                hello
                         <div id="calendar"></div>                 
                     </div>
                 </div>
