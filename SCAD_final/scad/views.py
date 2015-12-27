@@ -157,3 +157,7 @@ def user_page(request,user_id):
 		data_list.append(group)
 
 	return render(request,'user_page.html',{'user_page_data':data_list})
+
+
+def group_member(request,group_id):
+	return render(request,'user_page.html')

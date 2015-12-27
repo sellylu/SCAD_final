@@ -210,6 +210,7 @@ nav.colorgy-nav .nav-wrapper {
   border: 1px solid #000;
   margin-bottom: 20px;
   text-align: center;
+  overflow-y: scroll;
 }
 
 .group_img {
