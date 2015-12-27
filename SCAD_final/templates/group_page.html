@@ -8,6 +8,7 @@
         <link href="{% static "stylesheets/group.css" %}" rel="stylesheet" type="text/css">
         <link href="{% static "stylesheets/fullcalendar.css" %}" rel="stylesheet" type="text/css">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link href="{% static "stylesheets/jquery.offcanvas.min.css" %}" rel="stylesheet" type="text/css">
         <script src="{% static "javascript/js_cookie.js"  %}"></script>
 
         <script src="{% static "javascript/jquery.min.js" %}"></script>
@@ -64,7 +65,11 @@
             }
 
             function Group_Member_inf(){
-                $('#myContent').clear();
+                $('#myContent').empty();
+                $.get('/group/{{ group_page_data.group_id }}/member_inf/', function(data){
+                    console.log(data);
+                });
+
             }
         </script>
     </head>
@@ -160,7 +165,7 @@
                           <div class="col-md-1 myLink"><a href="#" class="tab">Schedule</a></div>
                           <div class="col-md-1 myLink"><a href="#" class="tab">Materials</a></div>
                           <div class="col-md-1 myLink"><a href="#" class="tab">Thoughts</a></div>
-                          <div class="col-md-1 myLink"><a href="#" class="tab" onclick="Group_Member_inf()">Members</a></div>
+                          <div class="col-md-1 myLink"><button class="tab" onclick="Group_Member_inf()">Members</button></div>
                     </div>
                     <br>
                     <div id="myContent">

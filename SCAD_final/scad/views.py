@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.http import HttpResponse
 from django.db import connection
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponseRedirect
@@ -158,3 +159,25 @@ def user_page(request,user_id):
 
 	return render(request,'user_page.html',{'user_page_data':data_list})
 
+
+def group_member_inf(request,group_id):
+
+
+	cursor = connection.cursor()
+	getgroup_membersql = "SELECT group_member FROM study_group WHERE group_id ='%s'" % (group_id);
+	cursor.execute(getgroup_membersql)
+	data = cursor.fetchone()[0][:-1]
+
+	group_member_data = data.split(',')
+	user_inf = []
+	for member in group_member_data:
+
+		getuserinfsql = "SELECT name,email FROM user WHERE no = '%d'" %(int(member))
+		cursor.execute(getuserinfsql)
+		tmp = cursor.fetchone()
+		user_inf.append(tmp)
+
+		user_inf.append(tmp)
+
+
+	return HttpResponse(user_inf)
