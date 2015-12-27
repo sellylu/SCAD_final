@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6f51d481-7e89-4710-b784-f6951f4995e6" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SCAD_final/scad/Static/javascript/index.js" afterPath="$PROJECT_DIR$/SCAD_final/scad/Static/javascript/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SCAD_final/scad/Static/stylesheets/index.css" afterPath="$PROJECT_DIR$/SCAD_final/scad/Static/stylesheets/index.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SCAD_final/templates/index.html" afterPath="$PROJECT_DIR$/SCAD_final/templates/index.html" />
-    </list>
+    <list default="true" id="6f51d481-7e89-4710-b784-f6951f4995e6" name="Default" comment="" />
     <ignored path="scad_final_project.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path=".idea/dataSources.local.xml" />
