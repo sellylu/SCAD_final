@@ -72,63 +72,6 @@ header {
     position: relative;
     overflow: hidden;
 }
-/*
-header > .header-mask {
-    position: absolute;
-    top: 0;
-    right: 0;
-    left: 0;
-    bottom: 0;
-    background-color: rgba(150, 175, 200, 0.6);
-}
-
-.arrow-down {
-    text-align: center;
-}
-
-.arrow-down > i {
-    font-size: 2em !important;
-    color: #eee;
-    position: relative;
-}
-*/
-/* Container */
-.container > .row > .col-md-12 > h2 {
-    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
-    text-align: center;
-    position: relative;
-}
-
-nav.sg-nav {
-    background-color: #000;
-    overflow: hidden;
-    height: 80px;
-    width: 90%;
-    position: fixed;
-    z-index: 998;
-}
-
-nav.colorgy-nav .nav-wrapper {
-    z-index: -1;
-    height: auto;
-    margin-top: -1px;
-    padding-left: 20px;
-    transition: all 0.18s;
-    -webkit-transition: all 0.18s;
-    -ms-transition: all 0.18s;
-    -o-transition: all 0.18s;
-    -moz-transition: all 0.18s;
-}
-
-@media screen and (min-width: 992px) {
-    nav.colorgy-nav .nav-wrapper {
-        transform: translateY(0px);
-        -webkit-transform: translateY(0px);
-        -moz-transform: translateY(0px);
-        -o-transform: translateY(0px);
-        -ms-transform: translateY(0px);
-    }
-}
 
 .title {
   font-size: 20pt;
@@ -157,7 +100,7 @@ nav.colorgy-nav .nav-wrapper {
   line-height: 80px;
   margin: 0 auto;
 }
-
+*/
 #myContainer {
   height: 100%;
   width: 90%;
@@ -170,7 +113,7 @@ nav.colorgy-nav .nav-wrapper {
   float: left;
   text-align: center;
 }
-*/
+
 .exp {
   width: 90%;
   height: 18px;
@@ -185,13 +128,13 @@ nav.colorgy-nav .nav-wrapper {
   margin: 0px 20px;
   background-color: #00995c;
 }
-/*
+
 #myBody {
   width: 73%;
   height: 500px;
   float: right;
 }
-
+/*
 .myLink {
   height: 35px;
   line-height: 35px;
@@ -204,7 +147,7 @@ nav.colorgy-nav .nav-wrapper {
   text-decoration: none;
   color: #808080;
 }
-
+*/
 #myContent {
   width: 100%;
   height: 450px;
@@ -213,7 +156,7 @@ nav.colorgy-nav .nav-wrapper {
 
 #myFooter {
   clear: both;
-}*/
+}
 
 .group_div {
   width: 90%;

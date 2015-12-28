@@ -6,10 +6,8 @@
         {% load static %}
         <link href="{% static 'stylesheets/bootstrap.css' %}" rel="stylesheet" type="text/css">
         <link href="{% static 'stylesheets/user.css' %}" rel="stylesheet" type="text/css">
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
+        <script src="{% static 'javascript/js_cookie.js'  %}"></script>
         <script src="{% static 'javascript/jquery.min.js' %}"></script>
-        <!--script src="{% static 'javascript/index.js' %}"></script-->
         <script src="{% static 'javascript/bootstrap.js' %}"></script>
 
         <script type="text/javascript">
@@ -19,7 +17,14 @@
             function creategroup_submit() {
 	            check_group_name = $('#group_name').val();
 	            check_group_intro = $('#intro').val();
+	            check_time = $('#finished_time_date').val();
 	            nosubmit = 0;
+	            if(check_time == '') {
+		            $('#finished_time_date').attr('style','border: 1px solid red');
+		            nosubmit =1;
+	            } else {
+		            $('#finished_time_date').removeAttr('style');
+	            }
 	            if(check_group_intro =='') {
 		            $('#introdiv').attr('class','form-group has-error');
 		            nosubmit =1;
@@ -53,7 +58,10 @@
 				            window.location = '/group/'+group_id;
 			            });
             }
-
+            function logout() {
+	            Cookies.remove('user_id');
+	            window.location = '/index/';
+            }
             function showGroup() {
                 $('#myContent').empty();
                 {% if user_page_data %}
@@ -63,14 +71,14 @@
                         var html = '<h4>' + name + '</h4><p>' + info + '</p>';
 
                         var div = $('<div/>', {
-                            id: '{{ page_data.group_id }}',
-                            'class': 'group_div'
+	                        'id': '{{ page_data.group_id }}',
+	                        'class': 'group_div'
                         }).html(html);
 
                         var img = $('<img/>', {
                             'class': 'group_img',
-                            src: '{% static 'images/logo.jpg' %}',
-                            width: 180
+                            'src': '{% static "images/logo.jpg" %}',
+                            'width': 180
                         }).prependTo(div);
 
                         $('#myContent').append(div);
@@ -99,8 +107,8 @@
 				<div class="collapse navbar-collapse">
 
 					<ul class="nav navbar-nav navbar-right navtabs">
-						<li role="presentation" class="active"><a href="#" onclick="getMyInfoURL();">My Information</a></li>
-						<li role="presentation"><a href="#">Log Out</a></li>
+						<li role="presentation" class="active"><a href="#">My Information</a></li>
+						<li role="presentation"><a href="#" onclick="logout();">Log Out</a></li>
 					</ul>
 					<button type="button" class="btn btn-primary navbar-btn navbar-right" id="create_group_button" data-toggle="modal" data-target="#create_group_Modal">Create Group</button>
 
@@ -122,17 +130,15 @@
         </header>
         <br class="space">
 
-
         <div id="myContainer">
             <div id="mySidebar">
-                    <ul type="none">
-                        <h3><li><a href='#' class='myLink' onclick="showGroup()">My Group</a></li></h3>
-                        <h3><li><a href='#' class='myLink' onclick="showProgress()">Progress</a></li></h3>
-                        <h3><li><a href='#' class='myLink' onclick="showAchievement()">Achievement</a></li></h3>
-                    </ul>
-             </div>  
-
-            <div id="myBody">
+	            <ul type="none">
+		            <h3><li><a href='#' class='myLink' onclick="showGroup()">My Group</a></li></h3>
+		            <h3><li><a href='#' class='myLink' onclick="showProgress()">Progress</a></li></h3>
+		            <h3><li><a href='#' class='myLink' onclick="showAchievement()">Achievement</a></li></h3>
+	            </ul>
+            </div>
+	        <div id="myBody">
                 <div id="myContent"></div>
             </div>
         </div>
@@ -196,12 +202,18 @@
 			</div>
 		</div>
 
-        <footer>
+        <nav class="navbar navbar-inverse navbar-fixed-bottom">
+			<ul>
+		        <li class="copyright" type="none" align="center" style="color: #eee;vertical-align:middle;">Copyright © 2015 Study Group ALL Rights Reserved.</li>
+	        </ul>
+        </nav>
+
+        <!--footer>
 	        <ul>
-		        <li class="copyright" type="none" align="center" style="color: #eee; vertical-align:middle;">Copyright © 2015 Study Group ALL Rights Reserved.</li>
+		        <li class="copyright" type="none" align="center" style="color: #eee;vertical-align:middle;">Copyright © 2015 Study Group ALL Rights Reserved.</li>
 	        </ul>
 	        <br clear="space">
-        </footer>
+        </footer-->
 
     </body>
 </html>
