@@ -71,14 +71,14 @@
                         var html = '<h4>' + name + '</h4><p>' + info + '</p>';
 
                         var div = $('<div/>', {
-	                        'id': '{{ page_data.group_id }}',
+	                        id: '{{ page_data.group_id }}',
 	                        'class': 'group_div'
                         }).html(html);
 
                         var img = $('<img/>', {
                             'class': 'group_img',
-                            'src': '{% static "images/logo.jpg" %}',
-                            'width': 180
+                            src: '{% static "images/logo.jpg" %}',
+                            width: 180
                         }).prependTo(div);
 
                         $('#myContent').append(div);

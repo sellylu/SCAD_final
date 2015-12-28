@@ -1,5 +1,29 @@
-$.ajaxSetup({
-    data: {csrfmiddlewaretoken: '{{ csrf_token }}' },
+$(document).ready(function() {
+// page is now ready, initialize the calendar...
+	$('#calendar').fullCalendar({
+		// put your options and callbacks here
+		events: [
+			{
+				title  : 'event1',
+				start  : '2015-12-01'
+			},
+			{
+				title  : 'event2',
+				start  : '2015-12-05',
+				end    : '2015-12-07'
+			},
+			{
+				title  : 'event3',
+				start  : '2015-12-09T12:30:00',
+				allDay : false // will make the time show
+			}
+		],
+		eventClick: function(calEvent, jsEvent, view) {
+			alert('Event: ' + calEvent.title);
+			// change the border color just for fun
+			$(this).css('border-color', 'red');
+		}
+	})
 });
 
 function checkShowLoginDiv() {
@@ -7,19 +31,18 @@ function checkShowLoginDiv() {
 	if(user_id != undefined)
 		adjustCSS();
 }
-function closecal(){
-    $("#finished_time_date").attr('disabled','disabled');
-}
 
-function opencal(){
-$("#finished_time_date").removeAttr('disabled');
+function adjustCSS() {
+	$('#navbar-button').show();
+	$('#create_group_button').show();
+	$('#navbar-login').hide();
 }
 
 function creategroup_submit() {
-    check_group_name = $('#group_name').val();
-    check_group_intro = $('#intro').val();
+	check_group_name = $('#group_name').val();
+	check_group_intro = $('#intro').val();
 	check_time = $('#finished_time_date').val();
-    nosubmit = 0;
+	nosubmit = 0;
 	if(check_time == '') {
 		$('#finished_time_date').attr('style','border: 1px solid red');
 		nosubmit =1;
@@ -29,72 +52,69 @@ function creategroup_submit() {
 	if(check_group_intro =='') {
 		$('#introdiv').attr('class','form-group has-error');
 		nosubmit =1;
-    } else {
+	} else {
 		$('#introdiv').attr('class','form-group');
 	}
 	if(check_group_name=='') {
 		$('#namediv').attr('class','form-group has-error');
 		nosubmit =1;
-    } else {
+	} else {
 		$('#namediv').attr('class','form-group');
 	}
 	if(nosubmit==1)return false;
 
-    creator_id = Cookies.get('user_id');
-    group_name = document.getElementById("group_name").value;
-    intro = document.getElementById("intro").value;
+	creator_id = Cookies.get('user_id');
+	group_name = document.getElementById("group_name").value;
+	intro = document.getElementById("intro").value;
 	finished_time = document.getElementById("finished_time_date").value;
+	if(document.getElementById("private_op1").checked) {
+		private = 0;
+	} else {
+		private = 1;
+	}
+	date = Date.now();
+	group_id = creator_id + date;
+	member_limit = parseInt(document.getElementsByName("member_limit")[0].value);
 
-    if(document.getElementById("private_op1").checked){
-        private = 0;
-    }else{
-        private = 1;
-    }
-
-    date = Date.now();
-    group_id = creator_id + date;
-    member_limit = parseInt(document.getElementsByName("member_limit")[0].value);
-    $.post( "/index/", { group_id : group_id, group_name : group_name,  member_limit :member_limit,intro:intro,private:private,creator_id:creator_id ,finished_time:finished_time})
-        .then(function () {
-            window.location = '/group/'+group_id;
-        });
+	$.post( "/index/", { group_id : group_id, group_name : group_name,  member_limit :member_limit,intro:intro,private:private,creator_id:creator_id ,finished_time:finished_time})
+		.then(function () {
+			window.location = '/group/'+group_id;
+		});
 }
 
 function getMyInfoURL(){
 	user_id = Cookies.get('user_id');
-	window.location = '/user/'+user_id;
+	window.location = '/user/'+user_id+'/';
 }
-function logout(){
+
+function logout() {
 	Cookies.remove('user_id');
 	window.location = '/index/';
 }
 
-function saveUserInfo() {
-
-	FB.api('/me',{"fields": "name, email"}, function(response) {
-		   if(response && !response.error) {
-
-               $.post("/index/",{
-                   user_id : response.id, user_name: response.name, user_email: response.email})
-                   .then(function(){
-						 adjustCSS();
-						 Cookies.set('user_id',response.id);
-						 console.log('Successful login for: ' + response.name + ' with ' + response.id + ' and ' + response.email);
-                   });
-
-
-            }
-		});
-
+function Group_Member_inf(){
+	$.get('/group/{{ group_page_data.group_id }}/member_inf/', function(data){
+		console.log(data);
+		$('.container').val(data);
+	});
 }
 
-function adjustCSS() {
-	$('body').css('padding-top', '70px');
-	$('#about-us').hide();
-	$('#navbar-button').show();
-	$('#create_group_button').show();
-	$('#NavBar').css('background-color', 'black');
-	$('a.navbar-brand').css('color', '#dddddd');
+function joinGroup() {
+	// TODO: implement the action for user to join the displayed group
+}
+
+function saveUserInfo() {
+	FB.api('/me',{"fields": "name, email"}, function(response) {
+		if(response && !response.error) {
+			$.post("/index/",{
+				user_id : response.id, user_name: response.name, user_email: response.email})
+				.then(function(){
+					adjustCSS();
+					Cookies.set('user_id',response.id);
+					console.log('Successful login for: ' + response.name + ' with ' + response.id + ' and ' + response.email);
+				});
+		}
+	});
 }
 
 (function(d, s, id){

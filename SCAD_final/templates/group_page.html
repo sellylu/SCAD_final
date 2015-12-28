@@ -13,101 +13,10 @@
         <script src="{% static 'javascript/moment.min.js' %}"></script>
         <script src="{% static 'javascript/fullcalendar.js' %}"></script>
         <script src="{% static 'javascript/bootstrap.js' %}"></script>
+        <script src="{% static 'javascript/group.js' %}"></script>
 
-        <script type="text/javascript">
-            $(document).ready(function() {
-                // page is now ready, initialize the calendar...
-                $('#calendar').fullCalendar({
-                    // put your options and callbacks here
-                    events: [
-                        {
-                            title  : 'event1',
-                            start  : '2015-12-01'
-                        },
-                        {
-                            title  : 'event2',
-                            start  : '2015-12-05',
-                            end    : '2015-12-07'
-                        },
-                        {
-                            title  : 'event3',
-                            start  : '2015-12-09T12:30:00',
-                            allDay : false // will make the time show
-                        }
-                    ],
-                    eventClick: function(calEvent, jsEvent, view) {
-
-                        alert('Event: ' + calEvent.title);
-
-                        // change the border color just for fun
-                        $(this).css('border-color', 'red');
-
-                    }                                               
-                })
-
-            });
-            function creategroup_submit() {
-	            check_group_name = $('#group_name').val();
-	            check_group_intro = $('#intro').val();
-	            check_time = $('#finished_time_date').val();
-	            nosubmit = 0;
-	            if(check_time == '') {
-		            $('#finished_time_date').attr('style','border: 1px solid red');
-		            nosubmit =1;
-	            } else {
-		            $('#finished_time_date').removeAttr('style');
-	            }
-	            if(check_group_intro =='') {
-		            $('#introdiv').attr('class','form-group has-error');
-		            nosubmit =1;
-	            } else {
-		            $('#introdiv').attr('class','form-group');
-	            }
-	            if(check_group_name=='') {
-		            $('#namediv').attr('class','form-group has-error');
-		            nosubmit =1;
-	            } else {
-		            $('#namediv').attr('class','form-group');
-	            }
-	            if(nosubmit==1)return false;
-
-	            creator_id = Cookies.get('user_id');
-	            group_name = document.getElementById("group_name").value;
-	            intro = document.getElementById("intro").value;
-	            finished_time = document.getElementById("finished_time_date").value;
-
-	            if(document.getElementById("private_op1").checked) {
-		            private = 0;
-	            } else {
-		            private = 1;
-	            }
-
-	            date = Date.now();
-	            group_id = creator_id + date;
-	            member_limit = parseInt(document.getElementsByName("member_limit")[0].value);
-	            $.post( "/index/", { group_id : group_id, group_name : group_name,  member_limit :member_limit,intro:intro,private:private,creator_id:creator_id ,finished_time:finished_time})
-			            .then(function () {
-				            window.location = '/group/'+group_id;
-			            });
-            }
-            function getMyInfoURL(){
-                user_id = Cookies.get('user_id');
-	            window.location = '/user/'+user_id+'/';
-            }
-
-            function logout() {
-	            Cookies.remove('user_id');
-	            window.location = '/index/';
-			}
-            function Group_Member_inf(){
-                $('#myContent').empty();
-                $.get('/group/{{ group_page_data.group_id }}/member_inf/', function(data){
-                    console.log(data);
-                });
-            }
-        </script>
     </head>
-    <body>
+    <body onload="checkShowLoginDiv();">
 
         <!-- Navigation Bar -->
         <nav class="navbar navbar-inverse navbar-fixed-top" id="NavBar">
@@ -121,15 +30,22 @@
 						<li role="presentation"><a href="#">Schedule</a></li>
 						<li role="presentation"><a href="#">Materials</a></li>
 						<li role="presentation"><a href="#">Thoughts</a></li>
-						<li role="presentation"><a href="#" onclick="Group_Member_inf();">Members</a></li>
+						<li role="presentation"><a href="#" onclick="Group_Member_inf(this);">Members</a></li>
 					</ul>
 
+					<script>    // change active tab
+						$(".nav a").on("click", function(){
+							$('.container').empty();
+							$(".nav").find(".active").removeClass("active");
+							$(this).parent().addClass("active");
+						});
+					</script>
 
-					<ul class="nav navbar-nav navbar-right">
+					<ul class="nav navbar-nav navbar-right" id="navbar-button" style="display: none;">
 						<li><a href="#" onclick="getMyInfoURL();">My Information</a></li>
 						<li><a href="#" onclick="logout();">Log Out</a></li>
 					</ul>
-					<button type="button" class="btn btn-primary navbar-btn navbar-right" id="create_group_button" data-toggle="modal" data-target="#create_group_Modal">Create Group</button>
+					<button type="button" class="btn btn-primary navbar-btn navbar-right" id="create_group_button" data-toggle="modal" data-target="#create_group_Modal" style="display: none;">Create Group</button>
 
 				</div>
             </div>
@@ -165,8 +81,7 @@
 				        {% else %}
 					        <p>Private group</p>
 				        {% endif %}
-		                <!-- TODO: join this group -->
-		                <button class="btn btn-lg  btn-danger">加入</button>
+		                <button class="btn btn-lg  btn-success" onclick="joinGroup();">加入</button>
 			        </div>
 		        </div>
 	            <!--button type="button" class="btn btn-default" id="menu-toggle" aria-label="Left Chevron" style="margin-left: 0px;">

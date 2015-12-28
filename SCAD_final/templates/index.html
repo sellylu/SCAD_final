@@ -8,11 +8,9 @@
         <link href="{% static 'stylesheets/index.css' %}" rel="stylesheet" type="text/css">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <script src="{% static 'javascript/js_cookie.js' %}"></script>
-        <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
-        <script src="{% static 'javascript/index.js' %}"></script>
+        <script src="{% static 'javascript/jquery.min.js' %}"></script>
         <script src="{% static 'javascript/bootstrap.js' %}"></script>
-
-
+        <script src="{% static 'javascript/index.js' %}"></script>
 
         <script type="text/javascript">
             $(document).ready(function(){
@@ -21,7 +19,7 @@
             });
 		</script>
     </head>
-    <body onload="checkshowlogindiv();">
+    <body onload="checkShowLoginDiv();">
 		
 		<!-- Navigation Bar -->
         <nav class="navbar navbar-inverse navbar-fixed-top" id="NavBar" style="background-color: transparent; border: 0px;">
