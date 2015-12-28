@@ -7,8 +7,8 @@ $.ajaxSetup({
 function checkshowlogindiv() {
 
     user_id = Cookies.get('user_id');
-    if(user_id != undefined)
-        $('#about-us').hide();
+	if(user_id != undefined)
+		adjustCSS();
 }
 function closecal(){
     $("#finished_time_date").attr('disabled','disabled');
@@ -64,7 +64,6 @@ function creategroup_submit() {
     $.post( "/index/", { group_id : group_id, group_name : group_name,  member_limit :member_limit,intro:intro,private:private,creator_id:creator_id ,finished_time:finished_time})
         .then(function () {
             window.location = '/group/'+group_id;
-            $("#create_group_Modal").modal('hide');
         });
 
 
@@ -78,15 +77,24 @@ function saveUserInfo() {
                $.post("/index/",{
                    user_id : response.id, user_name: response.name, user_email: response.email})
                    .then(function(){
-                       $('#about-us').hide();
-                       Cookies.set('user_id',response.id);
-                       console.log('Successful login for: ' + response.name + ' with ' + response.id + ' and ' + response.email);
+						 adjustCSS();
+						 Cookies.set('user_id',response.id);
+						 console.log('Successful login for: ' + response.name + ' with ' + response.id + ' and ' + response.email);
                    });
 
 
             }
 		});
 
+}
+
+function adjustCSS() {
+	$('body').css('padding-top', '70px');
+	$('#about-us').hide();
+	$('#navbar-button').show();
+	$('#create_group_button').show();
+	$('#NavBar').css('background-color', 'black');
+	$('a.navbar-brand').css('color', '#dddddd');
 }
 
 (function(d, s, id){
