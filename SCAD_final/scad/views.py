@@ -143,7 +143,7 @@ def user_page(request,user_id):
 	cursor.execute(selectsql)
 	user_group = cursor.fetchone()[0][:-1]
 
-	getgroupinfosql = "SELECT group_id,group_name,intro FROM study_group WHERE no in ("+user_group+")";
+	getgroupinfosql = "SELECT group_id,group_name,intro FROM study_group WHERE no in ('+user_group+')"
 	cursor.execute(getgroupinfosql)
 	group_data = cursor.fetchall()
 	print(group_data)
@@ -164,7 +164,7 @@ def group_member_inf(request,group_id):
 
 
 	cursor = connection.cursor()
-	getgroup_membersql = "SELECT group_member FROM study_group WHERE group_id ='%s'" % (group_id);
+	getgroup_membersql = "SELECT group_member FROM study_group WHERE group_id ='%s'" % (group_id)
 	cursor.execute(getgroup_membersql)
 	data = cursor.fetchone()[0][:-1]
 

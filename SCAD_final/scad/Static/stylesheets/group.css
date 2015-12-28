@@ -1,10 +1,5 @@
 @charset "UTF-8";
 /*! normalize.css v3.0.1 | MIT License | git.io/normalize */
-/* line 3, ../sass/styles.scss */
-.navbar {
-  border-radius: 0px;
-}
-
 /* line 22, ../sass/styles.scss */
 #main-text {
   color: #dddddd;
@@ -13,10 +8,9 @@
 }
 
 /* line 32, ../sass/styles.scss */
-#space {
+.space {
   height: 200px;
 }
-
 
 /* line 40, ../sass/styles.scss */
 .photos-padding {
@@ -50,18 +44,26 @@
   max-height: 200px;
 }
 
+body {
+	background-image: url("../images/bg.png");
+	height: 100%;
+	padding-top: 70px;
+	font-size:14px;
+}
+
 footer {
 	background-color: #000;
 	padding-top: 15px;
 }
+
 /* Header */
 header {
-    min-height: 700px;
+    /*min-height: 700px;*/
     width: 100%;
     position: relative;
     overflow: hidden;
 }
-
+/*
 header > .header-mask {
     position: absolute;
     top: 0;
@@ -80,7 +82,7 @@ header > .header-mask {
     color: #eee;
     position: relative;
 }
-
+*/
 /* Container */
 .container > .row > .col-md-12 > h2 {
     text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
@@ -134,7 +136,7 @@ nav.colorgy-nav .nav-wrapper {
   text-decoration: none;
   color: #dddddd;
 }
-
+/*
 #navbar-user {
   float: right;
   margin-right: 10px;
@@ -152,7 +154,7 @@ nav.colorgy-nav .nav-wrapper {
   width: 90%;
   margin: 0 auto;
 }
-
+*/
 #mySidebar {
   width: 25%;
   height: 500px;
@@ -175,7 +177,7 @@ nav.colorgy-nav .nav-wrapper {
   margin: 0px 20px;
   background-color: #00995c;
 }
-
+/*
 #myBody {
   width: 73%;
   height: 500px;
@@ -221,7 +223,7 @@ nav.colorgy-nav .nav-wrapper {
 #myFooter {
   clear: both;
 }
-
+*/
 #calendar {
   width: 500px;
   height: 500px;

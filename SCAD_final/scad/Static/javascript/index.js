@@ -19,43 +19,32 @@ $("#finished_time_date").removeAttr('disabled');
 }
 
 function creategroup_submit() {
-
-
     check_group_name = $('#group_name').val();
     check_group_intro = $('#intro').val();
     nosubmit = 0;
-    if(check_group_intro ==''){
-
-            $('#introdiv').attr('class','form-group has-error');
-            nosubmit =1;
-    }else{
-            $('#introdiv').attr('class','form-group');
-    }
-    if(check_group_name==''){
-           $('#namediv').attr('class','form-group has-error');
-            nosubmit =1;
-    }else{
-
-            $('#namediv').attr('class','form-group');
-    }
-    if(nosubmit==1)return false;
+	if(check_group_intro =='') {
+		$('#introdiv').attr('class','form-group has-error');
+		nosubmit =1;
+    } else {
+		$('#introdiv').attr('class','form-group');
+	}
+	if(check_group_name=='') {
+		$('#namediv').attr('class','form-group has-error');
+		nosubmit =1;
+    } else {
+		$('#namediv').attr('class','form-group');
+	}
+	if(nosubmit==1)return false;
 
     creator_id = Cookies.get('user_id');
-
     group_name = document.getElementById("group_name").value;
-
     intro = document.getElementById("intro").value;
+	finished_time = document.getElementById("finished_time_date").value;
 
     if(document.getElementById("private_op1").checked){
         private = 0;
     }else{
         private = 1;
-    }
-
-    if(document.getElementById("finished_time_op1").checked){
-        finished_time = '';
-    }else{
-        finished_time = document.getElementById("finished_time_date").value;
     }
 
     date = Date.now();
@@ -65,8 +54,12 @@ function creategroup_submit() {
         .then(function () {
             window.location = '/group/'+group_id;
         });
+}
 
-
+function getMyInfoURL(){
+	user_id = Cookies.get('user_id');
+	//alert(user_id);
+	window.location = '/user/'+user_id;
 }
 
 function saveUserInfo() {
