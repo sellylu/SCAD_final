@@ -21,7 +21,14 @@ $("#finished_time_date").removeAttr('disabled');
 function creategroup_submit() {
     check_group_name = $('#group_name').val();
     check_group_intro = $('#intro').val();
+	check_time = $('#finished_time_date').val();
     nosubmit = 0;
+	if(check_time == ''){
+         $('#finished_time_date').attr('style','border: 1px solid red');
+             nosubmit =1;
+     }else{
+          $('#finished_time_date').removeAttr('style');
+     }
 	if(check_group_intro =='') {
 		$('#introdiv').attr('class','form-group has-error');
 		nosubmit =1;
@@ -60,6 +67,9 @@ function getMyInfoURL(){
 	user_id = Cookies.get('user_id');
 	//alert(user_id);
 	window.location = '/user/'+user_id;
+}
+function logout(){
+	Cookies.remove('user_id');
 }
 
 function saveUserInfo() {

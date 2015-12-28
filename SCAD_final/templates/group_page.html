@@ -95,8 +95,7 @@
             }
             function getMyInfoURL(){
                 user_id = Cookies.get('user_id');
-                //alert(user_id);
-                window.location = '/user/'+user_id;
+	            window.location = '/user/'+user_id+'/';
             }
 
             function Group_Member_inf(){
@@ -136,7 +135,7 @@
             </div>
         </nav>
 
-        <header>
+        <!--header>
 	        <div class="exp">
                 <b>LV.20</b>
                 <div id="user_exp">
@@ -148,11 +147,11 @@
                 </div>
             </div>
         </header>
-        <br class="space">
+        <br class="space"-->
 
         {% if group_page_data %}
 	        {% csrf_token %}
-	        <div id="wrapper">
+	        <!--div id="wrapper"-->
 		        <!-- Sidebar Wrapper -->
 		        <div id="sidebar-wrapper" style="margin-right: 0px;">
 		            <div style="padding: 20px;">
@@ -166,12 +165,14 @@
 				        {% else %}
 					        <p>Private group</p>
 				        {% endif %}
+		                <!-- TODO: join this group -->
+		                <button class="btn btn-lg  btn-danger">加入</button>
 			        </div>
 		        </div>
 	            <button type="button" class="btn btn-default" id="menu-toggle" aria-label="Left Chevron" style="margin-left: 0px;">
                     <span class="glyphicon glyphicon-chevron-left" id="chevLeft" aria-hidden="true"></span>
 				</button>
-	        </div>
+	        <!--/div-->
         {% endif %}
 
 		<!-- Container -->
@@ -246,23 +247,19 @@
 	        });
         </script>
 
-        <footer>
+        <nav class="navbar navbar-inverse navbar-fixed-bottom">
+			<ul>
+		        <li class="copyright" type="none" align="center" style="color: #eee;vertical-align:middle;">Copyright © 2015 Study Group ALL Rights Reserved.</li>
+	        </ul>
+	        <br clear="space">
+        </nav>
+
+        <!--footer>
 	        <ul>
 		        <li class="copyright" type="none" align="center" style="color: #eee;vertical-align:middle;">Copyright © 2015 Study Group ALL Rights Reserved.</li>
 	        </ul>
 	        <br clear="space">
-        </footer>
-        
-        <!--script src="{% static 'javascript/jquery.offcanvas.min.js' %}"></script>
-        
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.2.3/velocity.min.js"></script>
+        </footer-->
 
-        <script>
-        var $el = $("#offcanvas").offcanvas();
-
-        $(".js-toggle-offcanvas").on("click", function() {
-            $el.offcanvas("toggle");
-        });
-        </script-->
     </body>
 </html>

@@ -47,7 +47,7 @@
 body {
 	background-image: url("../images/bg.png");
 	height: 100%;
-	padding-top: 70px;
+	padding-top: 50px;
 	font-size:14px;
 }
 
@@ -177,13 +177,13 @@ nav.colorgy-nav .nav-wrapper {
   margin: 0px 20px;
   background-color: #00995c;
 }
-/*
+
 #myBody {
-  width: 73%;
+  width: 80%;
   height: 500px;
   float: right;
 }
-
+/*
 #myTab {
   width: 100%;
   height: 35px;
@@ -214,7 +214,7 @@ nav.colorgy-nav .nav-wrapper {
   text-decoration: none;
   color: #000;
 }
-
+*/
 #myContent {
   width: 100%;
   height: 450px;
@@ -223,9 +223,9 @@ nav.colorgy-nav .nav-wrapper {
 #myFooter {
   clear: both;
 }
-*/
+
 #calendar {
-  width: 500px;
-  height: 500px;
+  width: 750px;
+  height: 750px;
   margin: 0 auto;
 }
