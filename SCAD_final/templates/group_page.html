@@ -4,18 +4,18 @@
 		<meta charset="utf-8">
         <title>Study Group</title>
         {% load static %}
-        <link href="{% static "stylesheets/bootstrap.css" %}" rel="stylesheet" type="text/css">
-        <link href="{% static "stylesheets/group.css" %}" rel="stylesheet" type="text/css">
-        <link href="{% static "stylesheets/fullcalendar.css" %}" rel="stylesheet" type="text/css">
+        <link href="{% static 'stylesheets/bootstrap.css' %}" rel="stylesheet" type="text/css">
+        <link href="{% static 'stylesheets/group.css' %}" rel="stylesheet" type="text/css">
+        <link href="{% static 'stylesheets/fullcalendar.css' %}" rel="stylesheet" type="text/css">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-        <link href="{% static "stylesheets/jquery.offcanvas.min.css" %}" rel="stylesheet" type="text/css">
-        <script src="{% static "javascript/js_cookie.js"  %}"></script>
+        <link href="{% static 'stylesheets/jquery.offcanvas.min.css' %}" rel="stylesheet" type="text/css">
+        <script src="{% static 'javascript/js_cookie.js'  %}"></script>
 
-        <script src="{% static "javascript/jquery.min.js" %}"></script>
-        <script src="{% static "javascript/moment.min.js" %}"></script>
-        <script src="{% static "javascript/fullcalendar.js" %}"></script>
-        <script src="{% static "javascript/index.js" %}"></script>
-        <script src="{% static "javascript/bootstrap.js" %}"></script>
+        <script src="{% static 'javascript/jquery.min.js' %}"></script>
+        <script src="{% static 'javascript/moment.min.js' %}"></script>
+        <script src="{% static 'javascript/fullcalendar.js' %}"></script>
+        <script src="{% static 'javascript/index.js' %}"></script>
+        <script src="{% static 'javascript/bootstrap.js' %}"></script>
         <style>
             body { font-size:14px; }
             
@@ -78,7 +78,7 @@
             <nav class="sg-nav">
                 <div class="container-fluid">
                     <div class="navbar-header">
-                        <a href="/" class="title"><b>Study Group</b></a>
+                        <a href="/index/" class="title"><b>Study Group</b></a>
                     </div>
                     <div id="navbar-user">
                         <a href="#" id="myInfoLink" class="navbar-text" onclick="getMyInfoURL()">My Information</a>
@@ -186,7 +186,7 @@
             </div>        
         </div>
         
-        <script src="{% static "javascript/jquery.offcanvas.min.js" %}"></script>
+        <script src="{% static 'javascript/jquery.offcanvas.min.js' %}"></script>
         
         <script src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.2.3/velocity.min.js"></script>
 
