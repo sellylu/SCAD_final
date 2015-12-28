@@ -60,8 +60,7 @@
 
             function getMyInfoURL(){
                 user_id = Cookies.get('user_id');
-                alert(user_id);
-                window.location = '/user/'+user_id;
+                window.location = '/user/'+user_id+'/';
             }
 
             function Group_Member_inf(){
@@ -82,7 +81,7 @@
                     </div>
                     <div id="navbar-user">
                         <a href="#" id="myInfoLink" class="navbar-text" onclick="getMyInfoURL()">My Information</a>
-                        <a href="#" class="navbar-text">Log out</a>
+                        <a href="#" class="navbar-text ">Log out</a>
                     </div>
                 </div>
             </nav>
@@ -157,20 +156,31 @@
                         <p>Private group</p>
                     {% endif %}
                 </div>
-                -->  
+                -->
 
-                <div id="myBody">
-                    <div id="myTab">
+               <div id="myBody">
+
+                        <!--
                           <div class="col-md-1 myLink"><a href="#" class="tab">News</a></div>
                           <div class="col-md-1 myLink"><a href="#" class="tab">Schedule</a></div>
                           <div class="col-md-1 myLink"><a href="#" class="tab">Materials</a></div>
                           <div class="col-md-1 myLink"><a href="#" class="tab">Thoughts</a></div>
                           <div class="col-md-1 myLink"><button class="tab" onclick="Group_Member_inf()">Members</button></div>
-                    </div>
+                    -->
+                        <ul class="nav nav-tabs">
+                          <li><a href="#">News</a></li>
+                          <li><a href="#">Schedule</a></li>
+                          <li><a href="#">Materials</a></li>
+                          <li><a href="#">Thoughts</a></li>
+                          <li><a href="#">Members</a></li>
+                        </ul>
+
                     <br>
                     <div id="myContent">
                                 hello
-                        <div id="calendar"></div>                 
+                        <div id="calendar">
+
+                        </div>
                     </div>
                 </div>
             {% endif %}
@@ -192,7 +202,6 @@
 
         <script>
         var $el = $("#offcanvas").offcanvas();
-
         $(".js-toggle-offcanvas").on("click", function() {
             $el.offcanvas("toggle");
         });
