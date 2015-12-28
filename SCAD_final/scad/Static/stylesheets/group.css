@@ -216,9 +216,7 @@ nav.colorgy-nav .nav-wrapper {
 #myContent {
   width: 100%;
   height: 450px;
-  border-color: #000;
-  border-style: solid;
-}
+ }
 
 #myFooter {
   clear: both;
