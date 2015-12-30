@@ -173,6 +173,7 @@ def group_page(request,group_id):
 			print(joined_member)
 			updatejoingroupsql = "UPDATE study_group SET group_member = '%s' WHERE group_id ='%s'" % (joined_member,group_id)
 			cursor.execute(updatejoingroupsql)
+			return HttpResponseRedirect('/group/{}'.format(group_id))
 
 			
 

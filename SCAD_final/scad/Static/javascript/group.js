@@ -28,8 +28,39 @@ $(document).ready(function() {
 			$(this).css('border-color', 'red');
 		}
 	})
-});
 
+
+
+});
+function setuser_no(){
+    id = Cookies.get('user_id');
+    if(id != undefined){
+        str = '/userno/'+id;
+        $.get(str,function(data){
+            Cookies.set('user_no',data);
+        });
+    }
+}
+
+function checkShowAddButton(member){
+	user_no = Cookies.get('user_no');
+	showbutton = 1;
+	var tmp = member.split(',');
+
+	for(i=0;i<tmp.length;i++){
+		if(user_no == tmp[i]){
+			showbutton = 0;
+		}
+	}
+		
+	
+	if(showbutton == 1){
+		document.getElementById('join_group_btn').style.visibility = 'visible';
+	}else{
+		document.getElementById('join_group_btn').style.visibility = 'hidden';
+	
+	}
+}
 function checkShowLoginDiv() {
     user_id = Cookies.get('user_id');
 	if(user_id != undefined)

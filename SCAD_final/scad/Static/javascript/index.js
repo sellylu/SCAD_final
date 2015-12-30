@@ -110,7 +110,15 @@ function logout(){
 	Cookies.remove('user_id');
 	window.location = '/index/';
 }
-
+function setuser_no(){
+    id = Cookies.get('user_id');
+    if(id != undefined){
+        str = '/userno/'+id;
+        $.get(str,function(data){
+            Cookies.set('user_no',data);
+        });
+    }
+}
 function saveUserInfo() {
 
 	FB.api('/me',{"fields": "name, email"}, function(response) {
@@ -123,14 +131,7 @@ function saveUserInfo() {
 						 Cookies.set('user_id',response.id);
 						 console.log('Successful login for: ' + response.name + ' with ' + response.id + ' and ' + response.email);
                     }).then(function(){
-                        id = Cookies.get('user_id');
-                        alert(id);
-                        if(id != undefined){
-                            str = '/userno/'+id;
-                            $.get(str,function(data){
-                                console.log(data);
-                            });
-                        }
+                        setuser_no();                        
                     });
 
 

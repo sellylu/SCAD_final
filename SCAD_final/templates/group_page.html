@@ -16,7 +16,7 @@
         <script src="{% static 'javascript/group.js' %}"></script>
 
     </head>
-    <body onload="checkShowLoginDiv();">
+    <body onload="checkShowLoginDiv();setuser_no();checkShowAddButton('{{group_page_data.group_member}}')">
 
         <!-- Navigation Bar -->
         <nav class="navbar navbar-inverse navbar-fixed-top" id="NavBar">
@@ -81,7 +81,9 @@
 				        {% else %}
 					        <p>Private group</p>
 				        {% endif %}
-		                <button class="btn btn-lg  btn-success" onclick="joinGroup('{{ group_page_data.group_id }}');">加入</button>
+
+
+		                <button id="join_group_btn" class="btn btn-lg  btn-success" onclick="joinGroup('{{ group_page_data.group_id }}');" >加入</button>
 			        </div>
 		        </div>
 	            <!--button type="button" class="btn btn-default" id="menu-toggle" aria-label="Left Chevron" style="margin-left: 0px;">
