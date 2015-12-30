@@ -1,3 +1,7 @@
+$.ajaxSetup({
+    data: {csrfmiddlewaretoken: '{{ csrf_token }}' },
+});
+
 $(document).ready(function() {
 // page is now ready, initialize the calendar...
 	$('#calendar').fullCalendar({
@@ -95,13 +99,21 @@ function logout() {
 function Group_Member_inf(id){
 	var str = '/group/' + id + '/member_inf';
 	$.get(str, function(data){
+		
+		$('#container').val(data);
 		console.log(data);
-		$('.container').val(data);
 	});
 }
 
-function joinGroup() {
+function joinGroup(group_id) {
 	// TODO: implement the action for user to join the displayed group
+	var str = '/group/' + group_id +'/';
+	join_id = Cookies.get('user_id');
+	$.post( str, { group_id : group_id, join_id:join_id })
+		.then(function () {
+			window.location = '/group/'+group_id+'/';
+	});
+
 }
 
 function saveUserInfo() {

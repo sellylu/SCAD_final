@@ -81,7 +81,7 @@
 				        {% else %}
 					        <p>Private group</p>
 				        {% endif %}
-		                <button class="btn btn-lg  btn-success" onclick="joinGroup();">加入</button>
+		                <button class="btn btn-lg  btn-success" onclick="joinGroup('{{ group_page_data.group_id }}');">加入</button>
 			        </div>
 		        </div>
 	            <!--button type="button" class="btn btn-default" id="menu-toggle" aria-label="Left Chevron" style="margin-left: 0px;">
@@ -92,6 +92,7 @@
 
 		<!-- Container -->
         <div class="container">
+        	<p id='container'> </p>
 	        <div id="calendar"></div>
         </div>
 
