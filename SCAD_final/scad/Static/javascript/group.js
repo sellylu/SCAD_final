@@ -93,7 +93,8 @@ function logout() {
 }
 
 function Group_Member_inf(id){
-	$.get('/group/'+id+'/member_inf/', function(data){
+	var str = '/group/' + id + '/member_inf';
+	$.get(str, function(data){
 		console.log(data);
 		$('.container').val(data);
 	});
