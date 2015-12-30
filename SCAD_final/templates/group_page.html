@@ -70,16 +70,16 @@
 	        <!--div id="wrapper"-->
 		        <!-- Sidebar Wrapper -->
 		        <div id="sidebar-wrapper" style="margin-right: 0px;">
-		            <div style="padding: 20px;">
-			            <h3>{{group_page_data.group_name}}</h3>
-			            <p>{{group_page_data.intro}}</p>
+		            <div style="padding: 20px;" align="center">
+			            <h3 align="center">{{group_page_data.group_name}}</h3>
+			            <p align="center">{{group_page_data.intro}}</p>
 			            <br>
-			            <p>Create at {{group_page_data.created_time}}</p>
-			            <p>Members: {{group_page_data.member_num}}</p>
+			            <p align="center">Create at {{group_page_data.created_time}}</p>
+			            <p align="center">Members: {{group_page_data.member_num}}</palign>
 			            {% if group_page_data.private == 0 %}
-					        <p>Public group</p>
+					        <p align="center">Public group</p>
 				        {% else %}
-					        <p>Private group</p>
+					        <p align="center">Private group</p>
 				        {% endif %}
 		                <button class="btn btn-lg  btn-success" onclick="joinGroup();">加入</button>
 			        </div>

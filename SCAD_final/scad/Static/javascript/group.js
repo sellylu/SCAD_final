@@ -80,6 +80,7 @@ function creategroup_submit() {
 		.then(function () {
 			window.location = '/group/'+group_id;
 		});
+	// TODO: display link of the group
 }
 
 function getMyInfoURL(){

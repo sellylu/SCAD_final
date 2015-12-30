@@ -47,6 +47,7 @@
             <div class="header-slogan center">
                 <h1>Work Hard And Play Hard</h1>
                 <hr>
+	            <!-- TODO: text font size and arrow size -->
                 <p>We come up with an idea that will help you and your group members to engage in learning together. We provide a platform you can invite your friends or meet someone you do not know to join the study groups and share the same interests. There are some factors related to gamification such as achievement badges, ranking and levels.</p>
             </div>
 
@@ -66,7 +67,7 @@
                     <br class="space">
                 </div>
 				
-				
+				<!-- TODO: creator name + member number-->
 				{% if group_data %}
 					{% for group in group_data %}
 						{% if group.private == 0 %}
@@ -82,7 +83,7 @@
 									<hr>
 									<p>
 									Period: {{ group.created_time }} ~ {{ group.finished_time }}<br>
-									Member: {{ group.member_num }} / {{ group.member_limit }}x<br>
+									Member: {{ group.member_num }} / {{ group.member_limit }}<br>
 									Creator: {{ group.creator }}
 									</p>
 								</div>
