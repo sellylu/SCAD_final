@@ -88,7 +88,6 @@
 
             function showProgress() {
                 $('#myContent').empty();
-<<<<<<< HEAD
 
                 {% if user_page_data %}
                     {% for group_progress in user_page_data %}
@@ -107,10 +106,11 @@
 
                         var html = '<h4>' + name + '</h4><div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" aria-valuenow="' + progress + '" aria-valuemin="0" aria-valuemax="100" style="width:' + progress + '%"></div>';
 
+                        var html1 = '<h4>hi</h4>';
                         var div = $('<div/>', {
                             id: '{{ group_progress.group_id }}',
                             'class': 'group_div'
-                        }).html(html);
+                        }).html(html1);
 
                         var img = $('<img/>', {
                             'class': 'group_img',
@@ -121,46 +121,42 @@
                         $('#myContent').append(div);
                     {% endfor %}
                 {% endif %}                  
-=======
->>>>>>> 60b02df12680e3d8d572b31f7c3bbf7ed176b526
             }
 
             function showAchievement() {
                 $('#myContent').empty();
 
-<<<<<<< HEAD
                 var div = $('<div/>', {
                     'class': 'login_achievement'
                 }).html('<h4>Login Achievement</h4>');
 
                 var img = $('<img/>', {
                     'class': 'achievement',
-                    src: '.{% static "images/logo.jpg" %}',
+                    src: '{% static "images/logo.jpg" %}',
                     width: 150
                 }).appendTo(div);                
 
                 var img = $('<img/>', {
                     'class': 'achievement',
-                    src: '.{% static "images/logo.jpg" %}',
+                    src: '{% static "images/logo.jpg" %}',
                     width: 150
                 }).appendTo(div);  
 
                 var img = $('<img/>', {
                     'class': 'achievement',
-                    src: '.{% static "images/logo.jpg" %}',
+                    src: '{% static "images/logo.jpg" %}',
                     width: 150
                 }).appendTo(div);  
 
                 var img = $('<img/>', {
                     'class': 'achievement',
-                    src: '.{% static "images/logo.jpg" %}',
+                    src: '{% static "images/logo.jpg" %}',
                     width: 150
                 }).appendTo(div);  
 
-                $('#myContent').append(div);                                                
-=======
->>>>>>> 60b02df12680e3d8d572b31f7c3bbf7ed176b526
-            }
+                $('#myContent').append(div);                    
+            }                     
+
         </script>
     </head>
     <body>

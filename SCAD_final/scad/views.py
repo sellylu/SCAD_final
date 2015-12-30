@@ -177,7 +177,5 @@ def group_member_inf(request,group_id):
 		tmp = cursor.fetchone()
 		user_inf.append(tmp)
 
-		user_inf.append(tmp)
-
 
 	return HttpResponse(user_inf)
