@@ -1,3 +1,7 @@
+$.ajaxSetup({
+    data: {csrfmiddlewaretoken: '{{ csrf_token }}' },
+});
+
 $(document).ready(function() {
 // page is now ready, initialize the calendar...
 	$('#calendar').fullCalendar({
@@ -24,8 +28,53 @@ $(document).ready(function() {
 			$(this).css('border-color', 'red');
 		}
 	})
-});
 
+
+
+});
+function setuser_no(){
+    id = Cookies.get('user_id');
+    if(id != undefined){
+        str = '/userno/'+id;
+        $.get(str,function(data){
+            Cookies.set('user_no',data);
+        });
+    }
+}
+
+function checkShowAddButton(member){
+
+	id = Cookies.get('user_id');
+    if(id != undefined){
+    	
+    	user_no = Cookies.get('user_no');
+    	showbutton = 0;
+		if(user_no != undefined){
+			var tmp = member.split(',');
+			showbutton = 1;
+			for(i=0;i<tmp.length;i++){
+				if(user_no == tmp[i]){
+					showbutton = 0;
+				}
+			}
+		}
+
+	
+	
+		if(showbutton == 1){
+			document.getElementById('join_group_btn').style.visibility = 'visible';
+		}else{
+			document.getElementById('join_group_btn').style.visibility = 'hidden';
+		}
+
+
+    }else{
+    	document.getElementById('join_group_btn').style.visibility = 'hidden';
+	
+    }
+	
+	
+}
 function checkShowLoginDiv() {
     user_id = Cookies.get('user_id');
 	if(user_id != undefined)
@@ -93,15 +142,24 @@ function logout() {
 	window.location = '/index/';
 }
 
-function Group_Member_inf(){
-	$.get('/group/{{ group_page_data.group_id }}/member_inf/', function(data){
+function Group_Member_inf(id){
+	var str = '/group/' + id + '/member_inf';
+	$.get(str, function(data){
+		
+		$('#container').val(data);
 		console.log(data);
-		$('.container').val(data);
 	});
 }
 
-function joinGroup() {
+function joinGroup(group_id) {
 	// TODO: implement the action for user to join the displayed group
+	var str = '/group/' + group_id +'/';
+	join_id = Cookies.get('user_id');
+	$.post( str, { group_id : group_id, join_id:join_id })
+		.then(function () {
+			window.location = '/group/'+group_id+'/';
+	});
+
 }
 
 function saveUserInfo() {

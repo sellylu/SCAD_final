@@ -55,7 +55,7 @@ def index(request):
 
 
 				# insert the group no to the user
-				update_creator_join_group_sql = "UPDATE user SET join_group = '%s' WHERE no = '%d' " %(user_join_group,user_no)
+				update_creator_join_group_sql = "UPDATE user SET created_achieve=1,join_group = '%s' WHERE no = '%d' " %(user_join_group,user_no)
 				cursor.execute(update_creator_join_group_sql)
 
 				return HttpResponseRedirect('/group/{}'.format(group_id))
@@ -133,6 +133,51 @@ def group_page(request,group_id):
 			return render(request,'group_page.html',{'group_page_data':group})
 		else:    # no this group
 			raise PermissionDenied
+	if request.method == 'POST':
+		if 'join_id' in request.POST:
+			join_id = request.POST['join_id']
+			group_id = request.POST['group_id']
+			
+			cursor = connection.cursor()
+			getgroupnosql = "SELECT no FROM study_group WHERE group_id = '%s'" % (group_id)
+			cursor.execute(getgroupnosql)
+			group_no = cursor.fetchone()[0]
+			
+			
+			getjoin_group = "SELECT join_group FROM user WHERE user_id = '%s'" % (join_id)
+			cursor.execute(getjoin_group)
+			join_g = cursor.fetchone()[0]
+		
+			
+			joined_data = join_g + str(group_no) +','
+		
+			updatejoingroupsql = "UPDATE user SET join_group = '%s' WHERE user_id ='%s'" % (joined_data,join_id)
+			cursor.execute(updatejoingroupsql)
+
+
+
+			getgroup_member = "SELECT group_member FROM study_group WHERE group_id = '%s'" % (group_id)
+			cursor.execute(getgroup_member)
+			g_member = cursor.fetchone()[0]
+
+			print(g_member)
+		
+			getuserno = "SELECT no FROM user WHERE user_id = '%s'" % (join_id)
+			cursor.execute(getuserno)
+			user_no = cursor.fetchone()[0]
+			
+			
+
+
+			joined_member = g_member + str(user_no) +','
+			print(joined_member)
+			updatejoingroupsql = "UPDATE study_group SET group_member = '%s' WHERE group_id ='%s'" % (joined_member,group_id)
+			cursor.execute(updatejoingroupsql)
+			return HttpResponseRedirect('/group/{}'.format(group_id))
+
+			
+
+
 
 
 
@@ -179,3 +224,11 @@ def group_member_inf(request,group_id):
 
 
 	return HttpResponse(user_inf)
+
+def userno(request,user_id):
+	cursor = connection.cursor()
+	getuserno = "SELECT no FROM user WHERE user_id ='%s'" % (user_id);
+	cursor.execute(getuserno)
+	data = cursor.fetchone()[0]
+
+	return HttpResponse(data)

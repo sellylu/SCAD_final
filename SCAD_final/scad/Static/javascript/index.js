@@ -52,7 +52,7 @@ function creategroup_submit() {
     date = Date.now();
     group_id = creator_id + date;
     member_limit = parseInt(document.getElementsByName("member_limit")[0].value);
-    $.post( "/", { group_id : group_id, group_name : group_name,  member_limit :member_limit,intro:intro,private:private,creator_id:creator_id ,finished_time:finished_time})
+    $.post( "/index/", { group_id : group_id, group_name : group_name,  member_limit :member_limit,intro:intro,private:private,creator_id:creator_id ,finished_time:finished_time})
         .then(function () {
             window.location = '/group/'+group_id;
         });
@@ -64,7 +64,7 @@ function getMyInfoURL(){
 }
 function logout(){
 	Cookies.remove('user_id');
-	window.location = '/';
+	window.location = '/index/';
 }
 
 function saveUserInfo() {
@@ -72,7 +72,7 @@ function saveUserInfo() {
 	FB.api('/me',{"fields": "name, email"}, function(response) {
 		   if(response && !response.error) {
 
-               $.post("/",{
+               $.post("/index/",{
                    user_id : response.id, user_name: response.name, user_email: response.email})
                    .then(function(){
 						 adjustCSS();
