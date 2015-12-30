@@ -2,9 +2,9 @@ $.ajaxSetup({
     data: {csrfmiddlewaretoken: '{{ csrf_token }}' },
 });
 
-<<<<<<< HEAD
+
 function checkShowLoginDiv() {
-=======
+}
 function getMyInfoURL(){
                 user_id = Cookies.get('user_id');
                 window.location = '/user/'+user_id+'/';
@@ -16,7 +16,6 @@ function logout(){
 }
 function checkshowlogindiv() {
 
->>>>>>> b8ab0fe4baa958dfb05f5401b19e6dd4f756da99
     user_id = Cookies.get('user_id');
 	if(user_id != undefined)
 		adjustCSS();
@@ -32,7 +31,6 @@ $("#finished_time_date").removeAttr('disabled');
 function creategroup_submit() {
     check_group_name = $('#group_name').val();
     check_group_intro = $('#intro').val();
-<<<<<<< HEAD
 	check_time = $('#finished_time_date').val();
     nosubmit = 0;
 	if(check_time == '') {
@@ -54,7 +52,6 @@ function creategroup_submit() {
 		$('#namediv').attr('class','form-group');
 	}
 	if(nosubmit==1)return false;
-=======
     check_time = $('#finished_time_date').val();
     nosubmit = 0;
     if(check_time == ''){
@@ -78,7 +75,6 @@ function creategroup_submit() {
             $('#namediv').attr('class','form-group');
     }
     if(nosubmit==1)return false;
->>>>>>> b8ab0fe4baa958dfb05f5401b19e6dd4f756da99
 
     creator_id = Cookies.get('user_id');
     group_name = document.getElementById("group_name").value;
@@ -91,13 +87,10 @@ function creategroup_submit() {
         private = 1;
     }
 
-<<<<<<< HEAD
-=======
 
     finished_time = document.getElementById("finished_time_date").value;
     alert(finished_time);
 
->>>>>>> b8ab0fe4baa958dfb05f5401b19e6dd4f756da99
     date = Date.now();
     group_id = creator_id + date;
     member_limit = parseInt(document.getElementsByName("member_limit")[0].value);
@@ -187,5 +180,5 @@ window.fbAsyncInit = function() {
 			cookie     : true,
             xfbml      : true,
             version    : 'v2.5'
-            });
-};
+    });
+}

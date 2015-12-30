@@ -92,8 +92,8 @@ function logout() {
 	window.location = '/index/';
 }
 
-function Group_Member_inf(){
-	$.get('/group/{{ group_page_data.group_id }}/member_inf/', function(data){
+function Group_Member_inf(id){
+	$.get('/group/'+id+'/member_inf/', function(data){
 		console.log(data);
 		$('.container').val(data);
 	});
