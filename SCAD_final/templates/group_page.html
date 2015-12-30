@@ -16,7 +16,7 @@
         <script src="{% static 'javascript/group.js' %}"></script>
 
     </head>
-    <body onload="checkShowLoginDiv();">
+    <body onload="checkShowLoginDiv();setuser_no();checkShowAddButton('{{group_page_data.group_member}}')">
 
         <!-- Navigation Bar -->
         <nav class="navbar navbar-inverse navbar-fixed-top" id="NavBar">
@@ -30,7 +30,7 @@
 						<li role="presentation"><a href="#">Schedule</a></li>
 						<li role="presentation"><a href="#">Materials</a></li>
 						<li role="presentation"><a href="#">Thoughts</a></li>
-						<li role="presentation"><a href="#" onclick="Group_Member_inf(this);">Members</a></li>
+						<li role="presentation"><a href="#" onclick="Group_Member_inf('{{ group_page_data.group_id }}');">Members</a></li>
 					</ul>
 
 					<script>    // change active tab
@@ -81,7 +81,9 @@
 				        {% else %}
 					        <p align="center">Private group</p>
 				        {% endif %}
-		                <button class="btn btn-lg  btn-success" onclick="joinGroup();">加入</button>
+
+				        
+		                <button id="join_group_btn" class="btn btn-lg  btn-success" onclick="joinGroup('{{ group_page_data.group_id }}');" >加入</button>
 			        </div>
 		        </div>
 	            <!--button type="button" class="btn btn-default" id="menu-toggle" aria-label="Left Chevron" style="margin-left: 0px;">
@@ -92,6 +94,7 @@
 
 		<!-- Container -->
         <div class="container">
+        	<p id='container'> </p>
 	        <div id="calendar"></div>
         </div>
 
