@@ -91,8 +91,6 @@ function creategroup_submit() {
 
 
     finished_time = document.getElementById("finished_time_date").value;
-    alert(finished_time);
-
     date = Date.now();
     group_id = creator_id + date;
     member_limit = parseInt(document.getElementsByName("member_limit")[0].value);
