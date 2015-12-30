@@ -22,7 +22,7 @@
         <nav class="navbar navbar-inverse navbar-fixed-top" id="NavBar">
             <div class="container-fluid">
                 <div class="navbar-header">
-                    <a href="/index/" class="navbar-brand" style="color: #fff; border: #000 1px;"><b>Study Group</b></a>
+                    <a href="/" class="navbar-brand" style="color: #ddd; border: #000 1px;"><b>Study Group</b></a>
                 </div>
 				<div class="collapse navbar-collapse">
 					<ul class="nav navbar-nav navbar-left navtabs">
@@ -71,11 +71,11 @@
 		        <!-- Sidebar Wrapper -->
 		        <div id="sidebar-wrapper" style="margin-right: 0px;">
 		            <div style="padding: 20px;" align="center">
-			            <h3 align="center">{{group_page_data.group_name}}</h3>
+			            <h3 align="center"><b>{{group_page_data.group_name}}</b></h3>
 			            <p align="center">{{group_page_data.intro}}</p>
 			            <br>
 			            <p align="center">Create at {{group_page_data.created_time}}</p>
-			            <p align="center">Members: {{group_page_data.member_num}}</palign>
+			            <p align="center">Members: {{group_page_data.member_num}}</p>
 			            {% if group_page_data.private == 0 %}
 					        <p align="center">Public group</p>
 				        {% else %}

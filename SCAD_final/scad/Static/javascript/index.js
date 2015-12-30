@@ -2,21 +2,7 @@ $.ajaxSetup({
     data: {csrfmiddlewaretoken: '{{ csrf_token }}' },
 });
 
-<<<<<<< HEAD
 function checkShowLoginDiv() {
-=======
-function getMyInfoURL(){
-                user_id = Cookies.get('user_id');
-                window.location = '/user/'+user_id+'/';
-}
-
-function logout(){
-    Cookies.remove('user_id');
-
-}
-function checkshowlogindiv() {
-
->>>>>>> b8ab0fe4baa958dfb05f5401b19e6dd4f756da99
     user_id = Cookies.get('user_id');
 	if(user_id != undefined)
 		adjustCSS();
@@ -32,7 +18,6 @@ $("#finished_time_date").removeAttr('disabled');
 function creategroup_submit() {
     check_group_name = $('#group_name').val();
     check_group_intro = $('#intro').val();
-<<<<<<< HEAD
 	check_time = $('#finished_time_date').val();
     nosubmit = 0;
 	if(check_time == '') {
@@ -54,54 +39,20 @@ function creategroup_submit() {
 		$('#namediv').attr('class','form-group');
 	}
 	if(nosubmit==1)return false;
-=======
-    check_time = $('#finished_time_date').val();
-    nosubmit = 0;
-    if(check_time == ''){
-        $('#finished_time_date').attr('style','border: 1px solid red');
-            nosubmit =1;
-    }else{
-         $('#finished_time_date').removeAttr('style');
-    }
-    if(check_group_intro ==''){
-
-            $('#introdiv').attr('class','form-group has-error');
-            nosubmit =1;
-    }else{
-            $('#introdiv').attr('class','form-group');
-    }
-    if(check_group_name==''){
-           $('#namediv').attr('class','form-group has-error');
-            nosubmit =1;
-    }else{
-
-            $('#namediv').attr('class','form-group');
-    }
-    if(nosubmit==1)return false;
->>>>>>> b8ab0fe4baa958dfb05f5401b19e6dd4f756da99
 
     creator_id = Cookies.get('user_id');
     group_name = document.getElementById("group_name").value;
     intro = document.getElementById("intro").value;
 	finished_time = document.getElementById("finished_time_date").value;
-
     if(document.getElementById("private_op1").checked){
         private = 0;
     }else{
         private = 1;
     }
-
-<<<<<<< HEAD
-=======
-
-    finished_time = document.getElementById("finished_time_date").value;
-    alert(finished_time);
-
->>>>>>> b8ab0fe4baa958dfb05f5401b19e6dd4f756da99
     date = Date.now();
     group_id = creator_id + date;
     member_limit = parseInt(document.getElementsByName("member_limit")[0].value);
-    $.post( "/index/", { group_id : group_id, group_name : group_name,  member_limit :member_limit,intro:intro,private:private,creator_id:creator_id ,finished_time:finished_time})
+    $.post( "/", { group_id : group_id, group_name : group_name,  member_limit :member_limit,intro:intro,private:private,creator_id:creator_id ,finished_time:finished_time})
         .then(function () {
             window.location = '/group/'+group_id;
         });
@@ -113,7 +64,7 @@ function getMyInfoURL(){
 }
 function logout(){
 	Cookies.remove('user_id');
-	window.location = '/index/';
+	window.location = '/';
 }
 
 function saveUserInfo() {
@@ -121,7 +72,7 @@ function saveUserInfo() {
 	FB.api('/me',{"fields": "name, email"}, function(response) {
 		   if(response && !response.error) {
 
-               $.post("/index/",{
+               $.post("/",{
                    user_id : response.id, user_name: response.name, user_email: response.email})
                    .then(function(){
 						 adjustCSS();

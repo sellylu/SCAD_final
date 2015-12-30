@@ -81,7 +81,7 @@ def index(request):
 			else:
 				updatesql = "UPDATE user SET login_cnt = login_cnt + 1 WHERE user_id = '%s'" % (id)
 				cursor2.execute(updatesql)
-			return HttpResponseRedirect("/index/")
+			return HttpResponseRedirect("/")
 
 	if request.method == 'GET':
 		cursor = connection.cursor()

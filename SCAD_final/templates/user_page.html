@@ -53,36 +53,28 @@
 	            date = Date.now();
 	            group_id = creator_id + date;
 	            member_limit = parseInt(document.getElementsByName("member_limit")[0].value);
-	            $.post( "/index/", { group_id : group_id, group_name : group_name,  member_limit :member_limit,intro:intro,private:private,creator_id:creator_id ,finished_time:finished_time})
+	            $.post( "/", { group_id : group_id, group_name : group_name,  member_limit :member_limit,intro:intro,private:private,creator_id:creator_id ,finished_time:finished_time})
 			            .then(function () {
 				            window.location = '/group/'+group_id;
 			            });
             }
             function logout() {
 	            Cookies.remove('user_id');
-	            window.location = '/index/';
+	            window.location = '/';
             }
             function showGroup() {
                 $('#myContent').empty();
                 {% if user_page_data %}
+	                var groups = '';
                     {% for page_data in user_page_data %}
-                        var name = '{{ page_data.group_name }}';
-                        var info = '{{ page_data.intro }}';
-                        var html = '<h4>' + name + '</h4><p>' + info + '</p>';
+	                    var img = '<img src="{% static "images/logo.jpg" %}" class="group_img col-md-2"></img>';
+                        var name = '<a href="/group/{{ page_data.group_id }}" class="col-md-10"><h4 align="center">{{ page_data.group_name }}</h4></a>';
+                        var info = '<p align="center">{{ page_data.intro }}</p>';
 
-                        var div = $('<div/>', {
-	                        id: '{{ page_data.group_id }}',
-	                        'class': 'group_div'
-                        }).html(html);
+	                    groups += '<div class="list-group-item row">' + img + name + info + '</div>';
 
-                        var img = $('<img/>', {
-                            'class': 'group_img',
-                            src: '{% static "images/logo.jpg" %}',
-                            width: 180
-                        }).prependTo(div);
-
-                        $('#myContent').append(div);
                     {% endfor %}
+	                $('#myContent').append('<div class="list-group">' + groups + '</div>');
                 {% endif %}
             }
 
@@ -165,7 +157,7 @@
         <nav class="navbar navbar-inverse navbar-fixed-top" id="NavBar">
             <div class="container-fluid">
                 <div class="navbar-header">
-                    <a href="/index/" class="navbar-brand" style="color: #fff; border: #000 1px;"><b>Study Group</b></a>
+                    <a href="/" class="navbar-brand" style="color: #ddd; border: #000 1px;"><b>Study Group</b></a>
                 </div>
 				<div class="collapse navbar-collapse">
 
@@ -193,15 +185,15 @@
         </header>
         <br class="space">
 
-        <div id="myContainer">
-            <div id="mySidebar">
+        <div class="row" id="myContainer">
+            <div class="col-md-3" id="mySidebar">
 	            <ul type="none">
 		            <h3><li><a href='#' class='myLink' onclick="showGroup()">My Group</a></li></h3>
 		            <h3><li><a href='#' class='myLink' onclick="showProgress()">Progress</a></li></h3>
 		            <h3><li><a href='#' class='myLink' onclick="showAchievement()">Achievement</a></li></h3>
 	            </ul>
             </div>
-	        <div id="myBody">
+	        <div class="col-md-9" id="myBody">
                 <div id="myContent"></div>
             </div>
         </div>
