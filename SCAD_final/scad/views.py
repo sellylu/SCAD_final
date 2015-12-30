@@ -223,3 +223,11 @@ def group_member_inf(request,group_id):
 
 
 	return HttpResponse(user_inf)
+
+def userno(request,user_id):
+	cursor = connection.cursor()
+	getuserno = "SELECT no FROM user WHERE user_id ='%s'" % (user_id);
+	cursor.execute(getuserno)
+	data = cursor.fetchone()[0]
+
+	return HttpResponse(data)

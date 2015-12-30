@@ -17,8 +17,10 @@ function logout(){
 function checkshowlogindiv() {
 
     user_id = Cookies.get('user_id');
-	if(user_id != undefined)
+	if(user_id != undefined){
 		adjustCSS();
+    }
+
 }
 function closecal(){
     $("#finished_time_date").attr('disabled','disabled');
@@ -120,11 +122,20 @@ function saveUserInfo() {
 						 adjustCSS();
 						 Cookies.set('user_id',response.id);
 						 console.log('Successful login for: ' + response.name + ' with ' + response.id + ' and ' + response.email);
-                   });
+                    }).then(function(){
+                        id = Cookies.get('user_id');
+                        alert(id);
+                        if(id != undefined){
+                            str = '/userno/'+id;
+                            $.get(str,function(data){
+                                console.log(data);
+                            });
+                        }
+                    });
 
 
             }
-		});
+	});
 
 }
 
