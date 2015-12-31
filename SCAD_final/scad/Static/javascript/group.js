@@ -4,34 +4,12 @@ $.ajaxSetup({
 
 $(document).ready(function() {
 // page is now ready, initialize the calendar...
-	$('#calendar').fullCalendar({
-		// put your options and callbacks here
-		events: [
-			{
-				title  : 'event1',
-				start  : '2015-12-01'
-			},
-			{
-				title  : 'event2',
-				start  : '2015-12-05',
-				end    : '2015-12-07'
-			},
-			{
-				title  : 'event3',
-				start  : '2015-12-09T12:30:00',
-				allDay : false // will make the time show
-			}
-		],
-		eventClick: function(calEvent, jsEvent, view) {
-			alert('Event: ' + calEvent.title);
-			// change the border color just for fun
-			$(this).css('border-color', 'red');
-		}
-	})
+
 
 
 
 });
+
 function setuser_no(){
     id = Cookies.get('user_id');
     if(id != undefined){
@@ -142,11 +120,48 @@ function logout() {
 	window.location = '/index/';
 }
 
+function showSchedule() {
+	$('#myContent').empty();
+
+	var div = $('<div/>', {id: 'calender'});
+
+	div.fullCalendar({
+		// put your options and callbacks here
+		events: [
+			{
+				title  : 'event1',
+				start  : '2015-12-01'
+			},
+			{
+				title  : 'event2',
+				start  : '2015-12-05',
+				end    : '2015-12-07'
+			},
+			{
+				title  : 'event3',
+				start  : '2015-12-09T12:30:00',
+				allDay : false // will make the time show
+			}
+		],
+		eventClick: function(calEvent, jsEvent, view) {
+			alert('Event: ' + calEvent.title);
+			// change the border color just for fun
+			$(this).css('border-color', 'red');
+		}
+	});
+	$('#myContent').append(div);
+}
+
 function Group_Member_inf(id){
+	$('#myContent').empty();
 	var str = '/group/' + id + '/member_inf';
 	$.get(str, function(data){
-		
-		$('#container').val(data);
+		var tmp = data.split(",");
+		var member = '';
+		for(var i = 0; i < tmp.length; i+=2) {
+			member += '<tr><td>' + tmp[i] + '</td><td>' + tmp[i+1] + '</td></tr>';
+		}
+		$('#myContent').append('<table class="table table-striped table-hover"><thead><tr><td>NAME</td><td>EMAIL</td></tr></thead><tbody>' + member + '</tbody></table>');
 		console.log(data);
 	});
 }
@@ -157,9 +172,9 @@ function joinGroup(group_id) {
 	join_id = Cookies.get('user_id');
 	$.post( str, { group_id : group_id, join_id:join_id })
 		.then(function () {
-			window.location = '/group/'+group_id+'/';
-	});
-
+			$('#join_group_btn').hide();
+			alert("Join group success!");
+		});
 }
 
 function saveUserInfo() {

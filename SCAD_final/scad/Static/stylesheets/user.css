@@ -57,6 +57,7 @@ body {
 	background-image: url("../images/bg.png");
 	height: 100%;
 	padding-top: 70px;
+	padding-bottom: 70px;
 	font-size:14px;
 }
 
@@ -88,27 +89,8 @@ header {
   text-decoration: none;
   color: #dddddd;
 }
-/*
-#navbar-user {
-  float: right;
-  margin-right: 10px;
-}
-
-#myHeader {
-  width: 90%;
-  height: 80px;
-  line-height: 80px;
-  margin: 0 auto;
-}
-*/
-#myContainer {
-  height: 100%;
-  width: 90%;
-  margin: 0 auto;
-}
 
 #mySidebar {
-  width: 25%;
   height: 500px;
   float: left;
   text-align: center;
@@ -130,7 +112,6 @@ header {
 }
 
 #myBody {
-  width: 73%;
   height: 500px;
   float: right;
 }

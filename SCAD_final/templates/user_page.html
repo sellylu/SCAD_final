@@ -6,6 +6,7 @@
         {% load static %}
         <link href="{% static 'stylesheets/bootstrap.css' %}" rel="stylesheet" type="text/css">
         <link href="{% static 'stylesheets/user.css' %}" rel="stylesheet" type="text/css">
+        <link href="{% static 'stylesheets/simple-sidebar.css' %}" rel="stylesheet" type="text/css">
         <script src="{% static 'javascript/js_cookie.js'  %}"></script>
         <script src="{% static 'javascript/jquery.min.js' %}"></script>
         <script src="{% static 'javascript/bootstrap.js' %}"></script>
@@ -53,14 +54,14 @@
 	            date = Date.now();
 	            group_id = creator_id + date;
 	            member_limit = parseInt(document.getElementsByName("member_limit")[0].value);
-	            $.post( "/", { group_id : group_id, group_name : group_name,  member_limit :member_limit,intro:intro,private:private,creator_id:creator_id ,finished_time:finished_time})
+	            $.post( "/index/", { group_id : group_id, group_name : group_name,  member_limit :member_limit,intro:intro,private:private,creator_id:creator_id ,finished_time:finished_time})
 			            .then(function () {
 				            window.location = '/group/'+group_id;
 			            });
             }
             function logout() {
 	            Cookies.remove('user_id');
-	            window.location = '/';
+	            window.location = '/index/';
             }
             function showGroup() {
                 $('#myContent').empty();
@@ -81,12 +82,13 @@
             function showProgress() {
                 $('#myContent').empty();
 
+                // TODO: Typesetting
                 {% if user_page_data %}
                     {% for group_progress in user_page_data %}
                         var name = '{{ group_progress.group_name }}';
                         var created_time = '{{ group_progress.created_time }}';
                         var finished_time = '{{ group_progress.finished_time }}';
-                        
+
                         var d1 = new Date(finished_time);
                         var d2 = new Date();
                         var gap = d1.getTime() - d2.getTime();  //millisecond to day
@@ -112,7 +114,7 @@
 
                         $('#myContent').append(div);
                     {% endfor %}
-                {% endif %}                  
+                {% endif %}
             }
 
             function showAchievement() {
@@ -126,28 +128,28 @@
                     'class': 'achievement',
                     src: '{% static "images/logo.jpg" %}',
                     width: 150
-                }).appendTo(div);                
+                }).appendTo(div);
 
                 var img = $('<img/>', {
                     'class': 'achievement',
                     src: '{% static "images/logo.jpg" %}',
                     width: 150
-                }).appendTo(div);  
+                }).appendTo(div);
 
                 var img = $('<img/>', {
                     'class': 'achievement',
                     src: '{% static "images/logo.jpg" %}',
                     width: 150
-                }).appendTo(div);  
+                }).appendTo(div);
 
                 var img = $('<img/>', {
                     'class': 'achievement',
                     src: '{% static "images/logo.jpg" %}',
                     width: 150
-                }).appendTo(div);  
+                }).appendTo(div);
 
-                $('#myContent').append(div);                    
-            }                     
+                $('#myContent').append(div);
+            }
 
         </script>
     </head>
@@ -157,7 +159,7 @@
         <nav class="navbar navbar-inverse navbar-fixed-top" id="NavBar">
             <div class="container-fluid">
                 <div class="navbar-header">
-                    <a href="/" class="navbar-brand" style="color: #ddd; border: #000 1px;"><b>Study Group</b></a>
+                    <a href="/index/" class="navbar-brand" style="color: #ddd; border: #000 1px;"><b>Study Group</b></a>
                 </div>
 				<div class="collapse navbar-collapse">
 
@@ -185,17 +187,21 @@
         </header>
         <br class="space">
 
-        <div class="row" id="myContainer">
-            <div class="col-md-3" id="mySidebar">
+        <div id="wrapper" style="width: 95%" align="center">
+	        <!-- Sidebar Wrapper -->
+	        <div id="sidebar-wrapper" style="background: transparent;">
 	            <ul type="none">
 		            <h3><li><a href='#' class='myLink' onclick="showGroup()">My Group</a></li></h3>
 		            <h3><li><a href='#' class='myLink' onclick="showProgress()">Progress</a></li></h3>
 		            <h3><li><a href='#' class='myLink' onclick="showAchievement()">Achievement</a></li></h3>
 	            </ul>
-            </div>
-	        <div class="col-md-9" id="myBody">
-                <div id="myContent"></div>
-            </div>
+	        </div>
+	        <div id="page-content-wrapper" style="width: 100%">
+		        <!-- Container -->
+		        <div class="container-fluid row">
+			        <div id="myContent"></div>
+		        </div>
+	        </div>
         </div>
 
         <!-- Modal -->
@@ -257,7 +263,7 @@
 			</div>
 		</div>
 
-        <nav class="navbar navbar-inverse navbar-fixed-bottom">
+        <nav class="navbar navbar-inverse navbar-fixed-bottom" >
 			<ul>
 		        <li class="copyright" type="none" align="center" style="color: #eee;vertical-align:middle;">Copyright © 2015 Study Group ALL Rights Reserved.</li>
 	        </ul>

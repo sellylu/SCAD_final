@@ -81,7 +81,7 @@ def index(request):
 			else:
 				updatesql = "UPDATE user SET login_cnt = login_cnt + 1 WHERE user_id = '%s'" % (id)
 				cursor2.execute(updatesql)
-			return HttpResponseRedirect("/")
+			return HttpResponseRedirect("/index/")
 
 	if request.method == 'GET':
 		cursor = connection.cursor()
@@ -220,10 +220,9 @@ def group_member_inf(request,group_id):
 		getuserinfsql = "SELECT name,email FROM user WHERE no = '%d'" %(int(member))
 		cursor.execute(getuserinfsql)
 		tmp = cursor.fetchone()
-		user_inf.append(tmp)
+		user_inf.extend(list(tmp))
 
-
-	return HttpResponse(user_inf)
+	return HttpResponse(",".join(user_inf))
 
 def userno(request,user_id):
 	cursor = connection.cursor()
