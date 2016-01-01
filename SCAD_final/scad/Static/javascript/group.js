@@ -106,7 +106,7 @@ function creategroup_submit() {
 	$.post( "/index/", { group_id : group_id, group_name : group_name,  member_limit :member_limit,intro:intro,private:private,creator_id:creator_id ,finished_time:finished_time})
 		.then(function () {
 			window.location = '/group/'+group_id;
-		});
+	});
 	// TODO: display link of the group
 }
 
@@ -120,12 +120,20 @@ function logout() {
 	window.location = '/index/';
 }
 
-function showSchedule() {
+function showSchedule(group_id) {
 	$('#myContent').empty();
 
-	var div = $('<div/>', {id: 'calender'});
+	var calendarurl = '/group/' + group_id + '/calendar';
+	$.get(calendarurl, function(data){
+		
+		console.log(data);
+	});
 
-	div.fullCalendar({
+
+	var div = $('<div/>', {id: 'calendar'});
+
+	$('#myContent').append(div);
+	$('#calendar').fullCalendar({
 		// put your options and callbacks here
 		events: [
 			{
@@ -147,9 +155,26 @@ function showSchedule() {
 			alert('Event: ' + calEvent.title);
 			// change the border color just for fun
 			$(this).css('border-color', 'red');
-		}
+		},
+		
+		dayClick: function(date, allDay, jsEvent, view) {
+		    var title = prompt('Add new event');
+		    
+		    /**
+		     * again : ajax call to store event in DB
+		     */
+
+			$.post('/postcalendarevent/'+group_id+'/', { title: "aaa",start: this.date,allDay:this.allDay }).
+			then(function(){
+				showSchedule(group_id);
+			});
+
+			
+		}    
 	});
-	$('#myContent').append(div);
+
+
+
 }
 
 function Group_Member_inf(id){

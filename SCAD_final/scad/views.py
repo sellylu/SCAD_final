@@ -133,6 +133,8 @@ def group_page(request,group_id):
 			return render(request,'group_page.html',{'group_page_data':group})
 		else:    # no this group
 			raise PermissionDenied
+
+	#join into a group
 	if request.method == 'POST':
 		if 'join_id' in request.POST:
 			join_id = request.POST['join_id']
@@ -165,17 +167,12 @@ def group_page(request,group_id):
 			getuserno = "SELECT no FROM user WHERE user_id = '%s'" % (join_id)
 			cursor.execute(getuserno)
 			user_no = cursor.fetchone()[0]
-			
-			
-
 
 			joined_member = g_member + str(user_no) +','
 			print(joined_member)
 			updatejoingroupsql = "UPDATE study_group SET group_member = '%s' WHERE group_id ='%s'" % (joined_member,group_id)
 			cursor.execute(updatejoingroupsql)
 			return HttpResponseRedirect('/group/{}'.format(group_id))
-
-			
 
 
 
@@ -231,3 +228,22 @@ def userno(request,user_id):
 	data = cursor.fetchone()[0]
 
 	return HttpResponse(data)
+
+def getcalendarevent(request,group_id):
+	cursor = connection.cursor()
+	getcalendarsql = "SELECT * FROM calendar WHERE group_id ='%s'" % (group_id);
+	cursor.execute(getcalendarsql)
+	data = cursor.fetchone()
+	print(data)
+	return HttpResponse(data)
+
+
+
+@csrf_exempt
+def postcalendarevent(request,group_id):
+	print('ffff')
+	st = "{title  : 'event1',start  : '2015-12-01'},{title  : 'event2',start  : '2015-12-05',end    : '2015-12-07'}"
+	sql = "INSERT INTO calendar(group_id, file) VALUES('%s','%s')" % (group_id,"fff") 
+	cursor = connection.cursor()	
+	cursor.execute(sql)
+	return HttpResponseRedirect('/group/{}'.format(group_id))
