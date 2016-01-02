@@ -5,10 +5,29 @@ $.ajaxSetup({
 $(document).ready(function() {
 // page is now ready, initialize the calendar...
 
-
-
-
 });
+
+
+function showprogress(created_time,finish_time){
+	
+	var ct = new Date(created_time);
+	var ft = new Date(finish_time);
+	var nt = new Date();
+
+	var alltime = ((ft - ct) / (1000 * 60 * 60 * 24));
+	var passtime = Math.floor(((nt - ct) / (1000 * 60 * 60 * 24)));
+
+	// limit has pass
+	if(alltime ==0 ){
+		
+		$('progress-bar').attr('style','width:100%');
+	}else{
+
+		perc = passtime / alltime * 100;
+		str = 'width:' + perc + '%';
+		$('#progress-bar').attr('style',str);
+	}
+}
 
 function setuser_no(){
     id = Cookies.get('user_id');

@@ -34,7 +34,7 @@ def index(request):
 				private = int(request.POST['private'])
 				finished_time = request.POST['finished_time']
 				t = time.time()
-				created_time = datetime.datetime.fromtimestamp(t).strftime('%Y%m%d%H%M')
+				created_time = datetime.datetime.fromtimestamp(t).strftime('%Y-%m-%d')
 				member_limit = int(request.POST['member_limit'])
 				member_num = 1
 				group_id = request.POST['group_id']
