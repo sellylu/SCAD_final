@@ -10,6 +10,8 @@ $(document).ready(function() {
 
 function showNews(group_id) {
 	$('#myContent').empty();
+
+        $('#myContent').append('<button type="button" class="btn btn-primary" id="add_news_button" data-toggle="modal" data-target="#add_news_Modal">Add News</button>');
 	var str = '/get_group_news/' + group_id;
 
 	$.get(str, function(data){
@@ -20,12 +22,59 @@ function showNews(group_id) {
 			news_date = tmp2[0];
 			news_title = tmp2[1];
 			news_content = tmp2[2];
-			news += '<tr><td>' + news_date + '</td><td>' + news_title + '</td></tr>' + '<tr class="news_content"><td colspan="2">' + news_content + '</td></tr>';
+			news += '<tr onclick="displayContent(' + i + ')"><td>' + news_date + '</td><td>' + news_title + '</td></tr>' + '<tr class="news_content" id=' + i + '><td colspan="2">' + news_content + '</td></tr>';
 		}
-		$('#myContent').append('<table class="table table-striped table-hover"><thead><tr><td>DATE</td><td>TITLE</td></tr></thead><tbody>' + news + '</tbody></table>');
+
+		$('#myContent').append('<table class="table table-striped table-hover"><thead><tr><td>DATE</td><td>CONTENT</td></tr></thead><tbody>' + news + '</tbody></table>');
 		console.log(data);
 	});
 }
+
+
+function add_group_news(group_id) {
+	check_news_title = $('#news_title').val();
+	check_news_content = $('#news_content').val();
+	
+	nosubmit = 0;
+	
+	if(check_news_content =='') {
+		$('#contentdiv').attr('class','form-group has-error');
+		nosubmit =1;
+	} else {
+		$('#contentdiv').attr('class','form-group');
+	}
+	if(check_news_title=='') {
+		$('#namediv').attr('class','form-group has-error');
+		nosubmit =1;
+	} else {
+		$('#namediv').attr('class','form-group');
+	}
+	if(nosubmit==1)return false;
+
+	//creator_id = Cookies.get('user_id');
+	title = document.getElementById("news_title").value;
+	content = document.getElementById("news_content").value;
+	
+	url = '/post_group_news/' + group_id +'/';
+	$.post( url, {title : title, content: content})
+		.then(function () {
+			window.location = '/group/'+group_id;
+	});
+}
+
+
+
+function displayContent(id) {
+	if(document.getElementById(id).style.display == "none") {
+
+		$('#'+id).show();
+	}
+	else {
+		document.getElementById(id).style.display = "none";	
+	}
+}
+
+
 function showprogress(created_time,finish_time){
 	
 	var ct = new Date(created_time);
@@ -142,7 +191,7 @@ function creategroup_submit() {
 
 	$.post( "/index/", { group_id : group_id, group_name : group_name,  member_limit :member_limit,intro:intro,private:private,creator_id:creator_id ,finished_time:finished_time})
 		.then(function () {
-			window.location = '/group/'+group_id;
+			window.location = '/group/' + group_id;
 	});
 	// TODO: display link of the group
 }
@@ -209,20 +258,21 @@ function showSchedule(group_id) {
 		
 		dayClick: function(date, allDay, jsEvent, view) {
 		    var title = prompt('Add new event');
-		   
-		    var d = new Date(date);
-		    var year = d.getFullYear();
-		    var month = (d.getMonth()+1);
-		    var date = d.getDate();
-		    if(month<10) month='0'+month;
-		    if(date<10)date='0'+date;
-		    var datetime = year + '-' + month + '-' + date;
-		   
-		    url = '/postcalendarevent/' + group_id +'/';
-		    $.post(url, { title:title,start: datetime}).
-				then(function(){
-					showSchedule(group_id);
-			});
+		   	if(title!=null){
+			    var d = new Date(date);
+			    var year = d.getFullYear();
+			    var month = (d.getMonth()+1);
+			    var date = d.getDate();
+			    if(month<10) month='0'+month;
+			    if(date<10)date='0'+date;
+			    var datetime = year + '-' + month + '-' + date;
+			   
+			    url = '/postcalendarevent/' + group_id +'/';
+			    $.post(url, { title:title,start: datetime}).
+					then(function(){
+						showSchedule(group_id);
+				});
+			}
 		}	    
 	});
 

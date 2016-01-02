@@ -266,12 +266,27 @@ def deletecalendarevent(request,group_id):
 
 def get_group_news(request,group_id):
 	cursor = connection.cursor()
-	get_group_newssql = "SELECT * FROM news WHERE group_id ='%s'" % (group_id);
+	get_group_newssql = "SELECT * FROM news WHERE group_id ='%s' ORDER BY no DESC" % (group_id);
 	cursor.execute(get_group_newssql)
 	data = cursor.fetchall()
 	
 	news_str = ''
 	for news in data:
-		news_str = news_str + news[1]+',' +news[2] + ',' + news[3] + ';'
+		news_str = news_str + news[2]+',' +news[3] + ',' + news[4] + ';'
 
 	return HttpResponse(news_str)
+
+
+@csrf_exempt
+def post_group_news(request,group_id):
+	print('aaaa');
+	title = request.POST['title']
+	content = request.POST['content']
+	t = time.time()
+	date = datetime.datetime.fromtimestamp(t).strftime('%Y-%m-%d')
+	cursor = connection.cursor()
+
+	post_group_newssql = "INSERT INTO news(group_id,title,content,created_time) VALUES('%s','%s','%s','%s')" % (group_id,title,content,date);
+	cursor.execute(post_group_newssql)
+	
+	return HttpResponseRedirect('/group/{}'.format(group_id))

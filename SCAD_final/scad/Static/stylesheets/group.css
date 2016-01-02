@@ -90,5 +90,7 @@ header {
 }
 
 .news_content {
-  border-top-style: none;
+  text-align: center;
+  display: none;
+
 }
