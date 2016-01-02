@@ -6,9 +6,95 @@ $(document).ready(function() {
 // page is now ready, initialize the calendar...
 
 
-
-
 });
+
+function showNews(group_id) {
+	$('#myContent').empty();
+
+        $('#myContent').append('<button type="button" class="btn btn-primary" id="add_news_button" data-toggle="modal" data-target="#add_news_Modal">Add News</button>');
+	var str = '/get_group_news/' + group_id;
+
+	$.get(str, function(data){
+		var tmp = data.split(";");
+		var news = '';
+		for(var i = 0; i < tmp.length-1; i++) {
+			tmp2 = tmp[i].split(',');
+			news_date = tmp2[0];
+			news_title = tmp2[1];
+			news_content = tmp2[2];
+			news += '<tr onclick="displayContent(' + i + ')"><td>' + news_date + '</td><td>' + news_title + '</td></tr>' + '<tr class="news_content" id=' + i + '><td colspan="2">' + news_content + '</td></tr>';
+		}
+
+		$('#myContent').append('<table class="table table-striped table-hover"><thead><tr><td>DATE</td><td>CONTENT</td></tr></thead><tbody>' + news + '</tbody></table>');
+		console.log(data);
+	});
+}
+
+
+function add_group_news(group_id) {
+	check_news_title = $('#news_title').val();
+	check_news_content = $('#news_content').val();
+	
+	nosubmit = 0;
+	
+	if(check_news_content =='') {
+		$('#contentdiv').attr('class','form-group has-error');
+		nosubmit =1;
+	} else {
+		$('#contentdiv').attr('class','form-group');
+	}
+	if(check_news_title=='') {
+		$('#namediv').attr('class','form-group has-error');
+		nosubmit =1;
+	} else {
+		$('#namediv').attr('class','form-group');
+	}
+	if(nosubmit==1)return false;
+
+	//creator_id = Cookies.get('user_id');
+	title = document.getElementById("news_title").value;
+	content = document.getElementById("news_content").value;
+	
+	url = '/post_group_news/' + group_id +'/';
+	$.post( url, {title : title, content: content})
+		.then(function () {
+			window.location = '/group/'+group_id;
+	});
+}
+
+
+
+function displayContent(id) {
+	if(document.getElementById(id).style.display == "none") {
+
+		$('#'+id).show();
+	}
+	else {
+		document.getElementById(id).style.display = "none";	
+	}
+}
+
+
+function showprogress(created_time,finish_time){
+	
+	var ct = new Date(created_time);
+	var ft = new Date(finish_time);
+	var nt = new Date();
+
+	var alltime = ((ft - ct) / (1000 * 60 * 60 * 24));
+	var passtime = Math.floor(((nt - ct) / (1000 * 60 * 60 * 24)));
+
+	// limit has pass
+	if(alltime ==0 ){
+		
+		$('progress-bar').attr('style','width:100%');
+	}else{
+
+		perc = passtime / alltime * 100;
+		str = 'width:' + perc + '%';
+		$('#progress-bar').attr('style',str);
+	}
+}
 
 function setuser_no(){
     id = Cookies.get('user_id');
@@ -105,8 +191,8 @@ function creategroup_submit() {
 
 	$.post( "/index/", { group_id : group_id, group_name : group_name,  member_limit :member_limit,intro:intro,private:private,creator_id:creator_id ,finished_time:finished_time})
 		.then(function () {
-			window.location = '/group/'+group_id;
-		});
+			window.location = '/group/' + group_id;
+	});
 	// TODO: display link of the group
 }
 
@@ -120,36 +206,79 @@ function logout() {
 	window.location = '/index/';
 }
 
-function showSchedule() {
+function showSchedule(group_id) {
 	$('#myContent').empty();
 
-	var div = $('<div/>', {id: 'calender'});
+	var calendarurl = '/group/' + group_id + '/calendar';
+	var div = $('<div/>', {id: 'calendar'});
 
-	div.fullCalendar({
-		// put your options and callbacks here
-		events: [
-			{
-				title  : 'event1',
-				start  : '2015-12-01'
-			},
-			{
-				title  : 'event2',
-				start  : '2015-12-05',
-				end    : '2015-12-07'
-			},
-			{
-				title  : 'event3',
-				start  : '2015-12-09T12:30:00',
-				allDay : false // will make the time show
-			}
-		],
-		eventClick: function(calEvent, jsEvent, view) {
-			alert('Event: ' + calEvent.title);
-			// change the border color just for fun
-			$(this).css('border-color', 'red');
-		}
-	});
 	$('#myContent').append(div);
+	$('#calendar').fullCalendar({
+		// put your options and callbacks here
+		events: function( start, end, callback ) {
+			$.get(calendarurl, function(data){
+		
+		
+			tmp = data.split(';');
+			for(var i=0;i<tmp.length-1;i++){
+				tmp2 = tmp[i].split(',');
+				event_title = tmp2[0];
+				event_start = tmp2[1];
+				myevent = {title: event_title,start: event_start,allDay:true};
+				$('#calendar').fullCalendar( 'renderEvent', myevent);
+			}
+			});
+
+       },
+
+		eventClick: function(calEvent, jsEvent, view) {
+			var c = confirm('Delete it?');
+			if(c==true){
+				
+				title = calEvent.title;
+
+				var d = new Date(calEvent.start);
+			    var year = d.getFullYear();
+			    var month = (d.getMonth()+1);
+			    var date = d.getDate();
+			    if(month<10) month='0'+month;
+			    if(date<10)date='0'+date;
+			    var datetime = year + '-' + month + '-' + date;
+			   
+				
+				url = '/deletecalendarevent/' + group_id +'/';
+		     	$.post(url, { title:title,start: datetime}).then(function(){
+				 	showSchedule(group_id);
+				});
+
+
+
+			}
+		},
+		
+		dayClick: function(date, allDay, jsEvent, view) {
+		    var title = prompt('Add new event');
+		   	if(title!=null){
+			    var d = new Date(date);
+			    var year = d.getFullYear();
+			    var month = (d.getMonth()+1);
+			    var date = d.getDate();
+			    if(month<10) month='0'+month;
+			    if(date<10)date='0'+date;
+			    var datetime = year + '-' + month + '-' + date;
+			   
+			    url = '/postcalendarevent/' + group_id +'/';
+			    $.post(url, { title:title,start: datetime}).
+					then(function(){
+						showSchedule(group_id);
+				});
+			}
+		}	    
+	});
+
+
+
+
 }
 
 function Group_Member_inf(id){
@@ -173,7 +302,7 @@ function joinGroup(group_id) {
 	$.post( str, { group_id : group_id, join_id:join_id })
 		.then(function () {
 			$('#join_group_btn').hide();
-			alert("Join group success!");
+			window.location = '/group/'+group_id;
 		});
 }
 

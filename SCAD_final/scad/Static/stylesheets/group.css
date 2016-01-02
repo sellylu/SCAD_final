@@ -88,3 +88,9 @@ header {
   width: inherit;
   margin: auto;
 }
+
+.news_content {
+  text-align: center;
+  display: none;
+
+}
