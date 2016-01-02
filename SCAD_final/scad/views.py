@@ -24,11 +24,9 @@ def index(request):
 
 			if(len(user_data)) > 0:
 				user_no = user_data[0]
-				print(user_no)
 				str_user_no = str(user_no)+','
 				user_join_group = user_data[4]
-				print(user_join_group)
-
+				
 				group_name = request.POST['group_name']
 				intro = request.POST['intro']
 				private = int(request.POST['private'])
@@ -51,8 +49,7 @@ def index(request):
 				group_created_no = cursor.fetchone()
 
 				user_join_group = user_join_group + str(group_created_no[0]) + ','
-				print(user_join_group)
-
+				
 
 				# insert the group no to the user
 				update_creator_join_group_sql = "UPDATE user SET created_achieve=1,join_group = '%s' WHERE no = '%d' " %(user_join_group,user_no)
@@ -87,7 +84,6 @@ def index(request):
 		cursor = connection.cursor()
 		cursor.execute("SELECT * FROM study_group")
 		group_data = cursor.fetchall()
-		print(group_data)
 		data_list = []
 		for x in group_data:
 			group = {
@@ -162,14 +158,12 @@ def group_page(request,group_id):
 			cursor.execute(getgroup_member)
 			g_member = cursor.fetchone()[0]
 
-			print(g_member)
 		
 			getuserno = "SELECT no FROM user WHERE user_id = '%s'" % (join_id)
 			cursor.execute(getuserno)
 			user_no = cursor.fetchone()[0]
 
 			joined_member = g_member + str(user_no) +','
-			print(joined_member)
 			updatejoingroupsql = "UPDATE study_group SET group_member = '%s' WHERE group_id ='%s'" % (joined_member,group_id)
 			cursor.execute(updatejoingroupsql)
 			return HttpResponseRedirect('/group/{}'.format(group_id))
@@ -188,7 +182,7 @@ def user_page(request,user_id):
 	getgroupinfosql = "SELECT group_id,group_name,intro FROM study_group WHERE no in ("+user_group+")";
 	cursor.execute(getgroupinfosql)
 	group_data = cursor.fetchall()
-	print(group_data)
+	
 
 	data_list = []
 	for x in group_data:
@@ -237,7 +231,7 @@ def getcalendarevent(request,group_id):
 	returnstr = ''
 	for a in date:
 		returnstr = returnstr + a[1] +';'
-	print(returnstr)
+	
 	return HttpResponse(returnstr)
 
 
@@ -259,7 +253,21 @@ def deletecalendarevent(request,group_id):
 	date = request.POST['start']
 	content = event + ',' +date
 	sql = "DELETE FROM calendar WHERE group_id ='%s' AND event='%s' " % (group_id,content)
-	cursor = connection.cursor()	
+	cursor = connection.cursor()
 	cursor.execute(sql)
 	
 	return HttpResponseRedirect('/group/{}'.format(group_id))
+
+
+
+def get_group_news(request,group_id):
+	cursor = connection.cursor()
+	get_group_newssql = "SELECT * FROM news WHERE group_id ='%s'" % (group_id);
+	cursor.execute(get_group_newssql)
+	data = cursor.fetchall()
+	
+	news_str = ''
+	for news in data:
+		news_str = news_str + news[1]+',' +news[2] + ',' + news[3] + ';'
+
+	return HttpResponse(news_str)

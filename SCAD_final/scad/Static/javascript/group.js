@@ -5,9 +5,27 @@ $.ajaxSetup({
 $(document).ready(function() {
 // page is now ready, initialize the calendar...
 
+
 });
 
+function showNews(group_id) {
+	$('#myContent').empty();
+	var str = '/get_group_news/' + group_id;
 
+	$.get(str, function(data){
+		var tmp = data.split(";");
+		var news = '';
+		for(var i = 0; i < tmp.length-1; i++) {
+			tmp2 = tmp[i].split(',');
+			news_date = tmp2[0];
+			news_title = tmp2[1];
+			news_content = tmp2[2];
+			news += '<tr><td>' + news_date + '</td><td>' + news_title + '</td></tr>' + '<tr class="news_content"><td colspan="2">' + news_content + '</td></tr>';
+		}
+		$('#myContent').append('<table class="table table-striped table-hover"><thead><tr><td>DATE</td><td>TITLE</td></tr></thead><tbody>' + news + '</tbody></table>');
+		console.log(data);
+	});
+}
 function showprogress(created_time,finish_time){
 	
 	var ct = new Date(created_time);

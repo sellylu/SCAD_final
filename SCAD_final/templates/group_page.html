@@ -16,7 +16,7 @@
         <script src="{% static 'javascript/group.js' %}"></script>
 
     </head>
-    <body onload="checkShowLoginDiv();setuser_no();checkShowAddButton('{{group_page_data.group_member}}');showprogress('{{group_page_data.created_time}}','{{ group_page_data.finished_time}}')">
+    <body onload="checkShowLoginDiv();setuser_no();checkShowAddButton('{{group_page_data.group_member}}');showprogress('{{group_page_data.created_time}}','{{ group_page_data.finished_time}}');showNews('{{group_page_data.group_id}}')">
 
         <!-- Navigation Bar -->
         <nav class="navbar navbar-inverse navbar-fixed-top" id="NavBar">
@@ -26,7 +26,7 @@
                 </div>
 				<div class="collapse navbar-collapse">
 					<ul class="nav navbar-nav navbar-left navtabs">
-						<li role="presentation" class="active"><a href="#">News</a></li>
+						<li role="presentation" class="active"><a href="#" onclick="showNews('{{group_page_data.group_id}}')">News</a></li>
 						<li role="presentation"><a href="#" onclick="showSchedule('{{group_page_data.group_id}}')">Schedule</a></li>
 						<li role="presentation"><a href="#">Materials</a></li>
 						<li role="presentation"><a href="#">Thoughts</a></li>
@@ -74,6 +74,7 @@
 			            <p align="center">{{group_page_data.intro}}</p>
 			            <br>
 			            <p align="center">Create at {{group_page_data.created_time}}</p>
+			            <p align="center">Finish at {{group_page_data.finished_time}}</p>
 			            <p align="center">Members: {{group_page_data.member_num}}</p>
 			            {% if group_page_data.private == 0 %}
 					        <p align="center">Public group</p>
