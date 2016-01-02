@@ -123,34 +123,30 @@ function logout() {
 function showSchedule(group_id) {
 	$('#myContent').empty();
 
-	var calendarurl = '/group/' + group_id + '/calendar';
-	$.get(calendarurl, function(data){
-		
-		console.log(data);
-	});
-
-
+	
 	var div = $('<div/>', {id: 'calendar'});
 
 	$('#myContent').append(div);
 	$('#calendar').fullCalendar({
 		// put your options and callbacks here
-		events: [
-			{
-				title  : 'event1',
-				start  : '2015-12-01'
-			},
-			{
-				title  : 'event2',
-				start  : '2015-12-05',
-				end    : '2015-12-07'
-			},
-			{
-				title  : 'event3',
-				start  : '2015-12-09T12:30:00',
-				allDay : false // will make the time show
+		events: function( start, end, callback ) {
+			$.get(calendarurl, function(data){
+		
+		
+			tmp = data.split(';');
+			console.log('tmp = ' + tmp);
+			for(var i=0;i<tmp.length-1;i++){
+				tmp2 = tmp[i].split(',');
+				console.log('tmp2 = ' + tmp2);
+				event_title = tmp2[0];
+				event_start = tmp2[1];
+				myevent = {title: event_title,start: event_start,allDay:true};
+				$('#calendar').fullCalendar( 'renderEvent', myevent);
 			}
-		],
+			});
+
+       },
+
 		eventClick: function(calEvent, jsEvent, view) {
 			alert('Event: ' + calEvent.title);
 			// change the border color just for fun
@@ -159,18 +155,37 @@ function showSchedule(group_id) {
 		
 		dayClick: function(date, allDay, jsEvent, view) {
 		    var title = prompt('Add new event');
-		    
-		    /**
-		     * again : ajax call to store event in DB
-		     */
+		   
+		    var d = new Date(date);
+		    var year = d.getFullYear();
+		    var month = (d.getMonth()+1);
+		    var date = d.getDate();
+		    if(month<10) month='0'+month;
+		    if(date<10)date='0'+date;
+		    var datetime = year + '-' + month + '-' + date;
+		   
+		    url = '/postcalendarevent/' + group_id +'/';
+		    $.post(url, { title:title,start: datetime}).
+				then(function(){
+					showSchedule(group_id);
+				});
+		}	    
+	});
 
-			$.post('/postcalendarevent/'+group_id+'/', { title: "aaa",start: this.date,allDay:this.allDay }).
-			then(function(){
-				showSchedule(group_id);
-			});
-
-			
-		}    
+	var calendarurl = '/group/' + group_id + '/calendar';
+	$.get(calendarurl, function(data){
+		
+		
+		tmp = data.split(';');
+		console.log('tmp = ' + tmp);
+		for(var i=0;i<tmp.length-1;i++){
+			tmp2 = tmp[i].split(',');
+			console.log('tmp2 = ' + tmp2);
+			event_title = tmp2[0];
+			event_start = tmp2[1];
+			myevent = {title: event_title,start: event_start,end:event_start,allDay:true};
+			$('#calendar').fullCalendar( 'renderEvent', myevent);
+		}
 	});
 
 

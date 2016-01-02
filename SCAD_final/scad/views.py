@@ -233,17 +233,21 @@ def getcalendarevent(request,group_id):
 	cursor = connection.cursor()
 	getcalendarsql = "SELECT * FROM calendar WHERE group_id ='%s'" % (group_id);
 	cursor.execute(getcalendarsql)
-	data = cursor.fetchone()
-	print(data)
-	return HttpResponse(data)
+	date = cursor.fetchall()
+	returnstr = ''
+	for a in date:
+		returnstr = returnstr + a[1] +';'
+	print(returnstr)
+	return HttpResponse(returnstr)
 
 
 
 @csrf_exempt
 def postcalendarevent(request,group_id):
-	print('ffff')
-	st = "{title  : 'event1',start  : '2015-12-01'},{title  : 'event2',start  : '2015-12-05',end    : '2015-12-07'}"
-	sql = "INSERT INTO calendar(group_id, file) VALUES('%s','%s')" % (group_id,"fff") 
+	event = request.POST['title']
+	date = request.POST['start']
+	st = event+ ',' + date
+	sql = "INSERT INTO calendar(group_id, file) VALUES('%s','%s')" % (group_id,st) 
 	cursor = connection.cursor()	
 	cursor.execute(sql)
 	return HttpResponseRedirect('/group/{}'.format(group_id))
