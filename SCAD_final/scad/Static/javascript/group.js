@@ -252,7 +252,7 @@ function joinGroup(group_id) {
 	$.post( str, { group_id : group_id, join_id:join_id })
 		.then(function () {
 			$('#join_group_btn').hide();
-			alert("Join group success!");
+			window.location = '/group/'+group_id;
 		});
 }
 
