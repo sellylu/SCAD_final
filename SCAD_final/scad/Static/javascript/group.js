@@ -123,7 +123,7 @@ function logout() {
 function showSchedule(group_id) {
 	$('#myContent').empty();
 
-	
+	var calendarurl = '/group/' + group_id + '/calendar';
 	var div = $('<div/>', {id: 'calendar'});
 
 	$('#myContent').append(div);
@@ -134,10 +134,8 @@ function showSchedule(group_id) {
 		
 		
 			tmp = data.split(';');
-			console.log('tmp = ' + tmp);
 			for(var i=0;i<tmp.length-1;i++){
 				tmp2 = tmp[i].split(',');
-				console.log('tmp2 = ' + tmp2);
 				event_title = tmp2[0];
 				event_start = tmp2[1];
 				myevent = {title: event_title,start: event_start,allDay:true};
@@ -148,9 +146,28 @@ function showSchedule(group_id) {
        },
 
 		eventClick: function(calEvent, jsEvent, view) {
-			alert('Event: ' + calEvent.title);
-			// change the border color just for fun
-			$(this).css('border-color', 'red');
+			var c = confirm('Delete it?');
+			if(c==true){
+				
+				title = calEvent.title;
+
+				var d = new Date(calEvent.start);
+			    var year = d.getFullYear();
+			    var month = (d.getMonth()+1);
+			    var date = d.getDate();
+			    if(month<10) month='0'+month;
+			    if(date<10)date='0'+date;
+			    var datetime = year + '-' + month + '-' + date;
+			   
+				
+				url = '/deletecalendarevent/' + group_id +'/';
+		     	$.post(url, { title:title,start: datetime}).then(function(){
+				 	showSchedule(group_id);
+				});
+
+
+
+			}
 		},
 		
 		dayClick: function(date, allDay, jsEvent, view) {
@@ -168,25 +185,10 @@ function showSchedule(group_id) {
 		    $.post(url, { title:title,start: datetime}).
 				then(function(){
 					showSchedule(group_id);
-				});
+			});
 		}	    
 	});
 
-	var calendarurl = '/group/' + group_id + '/calendar';
-	$.get(calendarurl, function(data){
-		
-		
-		tmp = data.split(';');
-		console.log('tmp = ' + tmp);
-		for(var i=0;i<tmp.length-1;i++){
-			tmp2 = tmp[i].split(',');
-			console.log('tmp2 = ' + tmp2);
-			event_title = tmp2[0];
-			event_start = tmp2[1];
-			myevent = {title: event_title,start: event_start,end:event_start,allDay:true};
-			$('#calendar').fullCalendar( 'renderEvent', myevent);
-		}
-	});
 
 
 

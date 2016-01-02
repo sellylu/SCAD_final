@@ -247,7 +247,19 @@ def postcalendarevent(request,group_id):
 	event = request.POST['title']
 	date = request.POST['start']
 	st = event+ ',' + date
-	sql = "INSERT INTO calendar(group_id, file) VALUES('%s','%s')" % (group_id,st) 
+	sql = "INSERT INTO calendar(group_id, event) VALUES('%s','%s')" % (group_id,st) 
 	cursor = connection.cursor()	
 	cursor.execute(sql)
+	return HttpResponseRedirect('/group/{}'.format(group_id))
+
+
+@csrf_exempt
+def deletecalendarevent(request,group_id):
+	event = request.POST['title']
+	date = request.POST['start']
+	content = event + ',' +date
+	sql = "DELETE FROM calendar WHERE group_id ='%s' AND event='%s' " % (group_id,content)
+	cursor = connection.cursor()	
+	cursor.execute(sql)
+	
 	return HttpResponseRedirect('/group/{}'.format(group_id))

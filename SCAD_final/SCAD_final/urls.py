@@ -7,6 +7,7 @@ from scad.views import group_member_inf
 from scad.views import userno
 from scad.views import getcalendarevent
 from scad.views import postcalendarevent
+from scad.views import deletecalendarevent
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
@@ -17,5 +18,5 @@ urlpatterns = [
     url(r'^userno/(?P<user_id>[0-9]+)/$',userno),
     url(r'^group/(?P<group_id>[0-9]+)/calendar/$',getcalendarevent),
     url(r'^postcalendarevent/(?P<group_id>[0-9]+)/$',postcalendarevent),
-
+    url(r'^deletecalendarevent/(?P<group_id>[0-9]+)/$',deletecalendarevent),
 ]
