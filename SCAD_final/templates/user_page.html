@@ -97,7 +97,7 @@
                         var last_time = d3.getTime() - d2.getTime();
 
                         var progress = (1 - ((gap / last_time) / (1000*60*60*24))) * 100;
-
+                        
                         var html = '<h4>' + name + '</h4><div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" aria-valuenow="' + progress + '" aria-valuemin="0" aria-valuemax="100" style="width:' + progress + '%"></div>';
 
                         var html1 = '<h4>hi</h4>';
