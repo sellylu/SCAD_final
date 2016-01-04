@@ -101,3 +101,10 @@ header {
 textarea#editor, div#editor, span#editor{
 	min-height:100px;
 }
+
+
+.news_content {
+  text-align: center;
+  display: none;
+
+}

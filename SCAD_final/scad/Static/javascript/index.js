@@ -78,11 +78,8 @@ function saveUserInfo() {
 						 Cookies.set('user_id',response.id);
 						 console.log('Successful login for: ' + response.name + ' with ' + response.id + ' and ' + response.email);
                    });
-
-
             }
 		});
-
 }
 
 function adjustCSS() {
