@@ -8,6 +8,7 @@ import datetime
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import redirect
 
+
 @csrf_exempt
 def index(request):
 
@@ -28,7 +29,9 @@ def index(request):
 				user_join_group = user_data[4]
 				
 				group_name = request.POST['group_name']
+				group_name = strcheck(group_name)
 				intro = request.POST['intro']
+				intro = strcheck(intro)
 				private = int(request.POST['private'])
 				finished_time = request.POST['finished_time']
 				t = time.time()
@@ -244,6 +247,9 @@ def getcalendarevent(request,group_id):
 def postcalendarevent(request,group_id):
 	event = request.POST['title']
 	date = request.POST['start']
+
+	event = strcheck(event)
+
 	st = event+ ',' + date
 	sql = "INSERT INTO calendar(group_id, event) VALUES('%s','%s')" % (group_id,st) 
 	cursor = connection.cursor()	
@@ -279,14 +285,30 @@ def get_group_news(request,group_id):
 
 @csrf_exempt
 def post_group_news(request,group_id):
-	print('aaaa');
+	
 	title = request.POST['title']
 	content = request.POST['content']
 	t = time.time()
 	date = datetime.datetime.fromtimestamp(t).strftime('%Y-%m-%d')
 	cursor = connection.cursor()
 
+	title = strcheck(title)
+	content = strcheck(content)
+	print(title)
+	print(content)
 	post_group_newssql = "INSERT INTO news(group_id,title,content,created_time) VALUES('%s','%s','%s','%s')" % (group_id,title,content,date);
 	cursor.execute(post_group_newssql)
 	
 	return HttpResponseRedirect('/group/{}'.format(group_id))
+
+def strcheck(string):
+
+	if '"' in string:
+		a = string.replace('"', '\\\"')
+	elif "'"  in string:
+		a = string.replace("'", '\\\'')
+	elif '\\' in string:
+		a = string.replace("'", '\\\\')
+	else:
+		a = string
+	return a
