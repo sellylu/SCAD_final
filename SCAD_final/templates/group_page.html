@@ -89,9 +89,7 @@
 				        
 		               
 				        <div class="progress">
-		                <div id="progress-bar" class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">
-                            
-                        </div>
+		                    <div id="progress-bar" class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
 		                <button id="join_group_btn" class="btn btn-lg  btn-success" onclick="joinGroup('{{ group_page_data.group_id }}');" >JOIN</button>
 			        </div>
@@ -100,6 +98,21 @@
 		            <!-- Container -->
                     <div class="container-fluid" id="myContent">
                     </div>
+
+		            <div class="shine">Shine...</div>
+
+<script>
+
+$(function(){
+	var i = 14;
+    setInterval(flicker,1500);//迴圈閃爍，間隔1秒
+})
+function flicker(){//閃爍函數
+    $('.shine').fadeOut(750).fadeIn(750);
+	$('.shine').css('font-size', $('.shine').css('font-size')+1);
+}
+
+</script>
 	            </div>
 	        </div>
         {% endif %}

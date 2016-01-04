@@ -70,52 +70,24 @@
                 {% if user_page_data %}
 	                var groups = '';
                     {% for page_data in user_page_data %}
+	                    // calculate progress
+	                    var ct = new Date({{ page_data.created_time }});
+						var ft = new Date({{  page_data.finish_time }});
+						var nt = new Date();
+	                    var alltime = ((ft - ct) / (1000 * 60 * 60 * 24));
+	                    var perc = Math.floor(((nt - ct) / (1000 * 60 * 60 * 24))) / alltime;
+	                    if(alltime == 0)
+		                    perc = 100;
+
+
 	                    var img = '<img src="{% static "images/logo.jpg" %}" class="group_img col-md-2"></img>';
                         var name = '<a href="/group/{{ page_data.group_id }}" class="col-md-10"><h4 align="center">{{ page_data.group_name }}</h4></a>';
                         var info = '<p align="center">{{ page_data.intro }}</p>';
-
-	                    groups += '<div class="list-group-item row">' + img + name + info + '</div>';
+						var progress = '<div class="progress"><div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: ' + perc + '%"></div></div>'
+	                    groups += '<div class="list-group-item row">' + img + name + info + progress + '</div>';
 
                     {% endfor %}
 	                $('#myContent').append('<div class="list-group">' + groups + '</div>');
-                {% endif %}
-            }
-
-            function showProgress() {
-                $('#myContent').empty();
-
-                // TODO: Typesetting
-                {% if user_page_data %}
-                    {% for group_progress in user_page_data %}
-                        var name = '{{ group_progress.group_name }}';
-                        var created_time = '{{ group_progress.created_time }}';
-                        var finished_time = '{{ group_progress.finished_time }}';
-
-                        var d1 = new Date(finished_time);
-                        var d2 = new Date();
-                        var gap = d1.getTime() - d2.getTime();  //millisecond to day
-                        var start_time = created_time.substring(0,4) + '-' + created_time.substring(4,6) + '-' + created_time.substring(6,8);
-                        var d3 = new Date(start_time);
-                        var last_time = d3.getTime() - d2.getTime();
-
-                        var progress = (1 - ((gap / last_time) / (1000*60*60*24))) * 100;
-
-                        var html = '<h4>' + name + '</h4><div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" aria-valuenow="' + progress + '" aria-valuemin="0" aria-valuemax="100" style="width:' + progress + '%"></div>';
-
-                        var html1 = '<h4>hi</h4>';
-                        var div = $('<div/>', {
-                            id: '{{ group_progress.group_id }}',
-                            'class': 'group_div'
-                        }).html(html1);
-
-                        var img = $('<img/>', {
-                            'class': 'group_img',
-                            src: '{% static "images/logo.jpg" %}',
-                            width: 180
-                        }).prependTo(div);
-
-                        $('#myContent').append(div);
-                    {% endfor %}
                 {% endif %}
             }
 
@@ -152,6 +124,16 @@
 
                 $('#myContent').append(div);
             }
+
+        function showMission() {
+	        $('#myContent').empty();
+			// TODO:
+        }
+
+        function showMailbox() {
+	        $('#myContent').empty();
+	        // TODO:
+        }
 
         </script>
     </head>
@@ -194,8 +176,9 @@
 	        <div id="sidebar-wrapper" style="background: transparent;">
 	            <ul type="none">
 		            <h3><li><a href='#' class='myLink' onclick="showGroup()">My Group</a></li></h3>
-		            <h3><li><a href='#' class='myLink' onclick="showProgress()">Progress</a></li></h3>
+		            <h3><li><a href="#" class="myLink" onclick="showMission()">Mission</a></li></h3>
 		            <h3><li><a href='#' class='myLink' onclick="showAchievement()">Achievement</a></li></h3>
+		            <h3><li><a href="#" class="myLink" onclick="showMailbox()">MailBox</a></li></h3>
 	            </ul>
 	        </div>
 	        <div id="page-content-wrapper" style="width: 100%">
