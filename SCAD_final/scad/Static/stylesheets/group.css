@@ -88,3 +88,16 @@ header {
   width: inherit;
   margin: auto;
 }
+
+#editor {
+	display:block;
+	margin:0 0 10px;
+	padding:6px;
+	width:95%;
+	background:#FFF;
+	border:#AAA 1px solid;
+	font-size:13px;
+}
+textarea#editor, div#editor, span#editor{
+	min-height:100px;
+}

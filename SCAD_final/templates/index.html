@@ -4,17 +4,20 @@
 		<meta charset="utf-8">
         <title>Study Group</title>
         {% load static %}
+	    <link href="{% static 'stylesheets/jquery-ui.css' %}" rel="stylesheet" type="text/css">
         <link href="{% static 'stylesheets/bootstrap.css' %}" rel="stylesheet" type="text/css">
         <link href="{% static 'stylesheets/index.css' %}" rel="stylesheet" type="text/css">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <script src="{% static 'javascript/js_cookie.js' %}"></script>
-        <script src="{% static 'javascript/jquery.min.js' %}"></script>
+        <script src="{% static 'javascript/jquery.js' %}"></script>
+	    <script src="{% static 'javascript/jquery-ui.js' %}"></script>
         <script src="{% static 'javascript/bootstrap.js' %}"></script>
         <script src="{% static 'javascript/index.js' %}"></script>
 
         <script type="text/javascript">
             $(document).ready(function(){
-				document.getElementById('finished_time_date').valueAsDate = new Date();
+				//document.getElementById('finished_time_date').valueAsDate = new Date();
+	            $('#datepicker').datepicker({dateFormat:'yy-mm-dd', changeMonth:true, changeYear:true});
 	            checkShowLoginDiv();
             });
 		</script>
@@ -123,7 +126,7 @@
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
 						<div id="namediv">
 							<h4 class="modal-title">Group Name</h4>
-							<input type="text" class="form-control" name="group_name" id="group_name" placeholder="要將讀書會取作什麼呢？">
+							<input type="text" class="form-control" name="group_name" id="group_name" placeholder="要將讀書會取作什麼呢？" autofocus>
 								</div>
 					</div>
 					<div class="modal-body">
@@ -144,7 +147,7 @@
 							<div id="timediv" class="col-md-4">
 								<label>結束時間</label>
 								<div>
-									<input id="finished_time_date" type="date">
+									<input id="datepicker" type="text">
 								</div>
 							</div>
 						</div>

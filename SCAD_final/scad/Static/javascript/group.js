@@ -152,6 +152,13 @@ function showSchedule() {
 	$('#myContent').append(div);
 }
 
+function showThoughts() {
+	$('#myContent').empty();
+	var textarea = $('<textarea/>', {id: 'editor'});
+	$('#myContent').append(textarea);
+	$('#editor').jqte();
+}
+
 function Group_Member_inf(id){
 	$('#myContent').empty();
 	var str = '/group/' + id + '/member_inf';

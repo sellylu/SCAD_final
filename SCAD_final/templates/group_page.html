@@ -4,12 +4,16 @@
 		<meta charset="utf-8">
         <title>Study Group</title>
         {% load static %}
+	    <link href="{% static 'stylesheets/jquery-ui.css' %}" rel="stylesheet" type="text/css">
+	    <link href="{% static 'stylesheets/jquery-te-1.4.0.css' %}" rel="stylesheet" type="text/css">
         <link href="{% static 'stylesheets/bootstrap.css' %}" rel="stylesheet" type="text/css">
         <link href="{% static 'stylesheets/group.css' %}" rel="stylesheet" type="text/css">
         <link href="{% static 'stylesheets/fullcalendar.css' %}" rel="stylesheet" type="text/css">
 	    <link href="{% static 'stylesheets/simple-sidebar.css' %}" rel="stylesheet">
         <script src="{% static 'javascript/js_cookie.js'  %}"></script>
-        <script src="{% static 'javascript/jquery.min.js' %}"></script>
+        <script src="{% static 'javascript/jquery.js' %}"></script>
+	    <script src="{% static 'javascript/jquery-ui.js' %}"></script>
+	    <script src="{% static 'javascript/jquery-te-1.4.0.js' %}"></script>
         <script src="{% static 'javascript/moment.min.js' %}"></script>
         <script src="{% static 'javascript/fullcalendar.js' %}"></script>
         <script src="{% static 'javascript/bootstrap.js' %}"></script>
@@ -29,7 +33,7 @@
 						<li role="presentation" class="active"><a href="#">News</a></li>
 						<li role="presentation"><a href="#" onclick="showSchedule()">Schedule</a></li>
 						<li role="presentation"><a href="#">Materials</a></li>
-						<li role="presentation"><a href="#">Thoughts</a></li>
+						<li role="presentation"><a href="#" onclick="showThoughts()">Thoughts</a></li>
 						<li role="presentation"><a href="#" onclick="Group_Member_inf('{{ group_page_data.group_id }}');">Members</a></li>
 					</ul>
 

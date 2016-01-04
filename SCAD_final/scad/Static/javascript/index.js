@@ -7,24 +7,24 @@ function checkShowLoginDiv() {
 	if(user_id != undefined)
 		adjustCSS();
 }
-function closecal(){
+/*function closecal(){
     $("#finished_time_date").attr('disabled','disabled');
 }
 
 function opencal(){
 $("#finished_time_date").removeAttr('disabled');
 }
-
+*/
 function creategroup_submit() {
     check_group_name = $('#group_name').val();
     check_group_intro = $('#intro').val();
-	check_time = $('#finished_time_date').val();
+	check_time = $('#datepicker').val();
     nosubmit = 0;
 	if(check_time == '') {
-		$('#finished_time_date').attr('style','border: 1px solid red');
+		$('#datepicker').attr('style','border: 1px solid red');
 		nosubmit =1;
 	} else {
-		$('#finished_time_date').removeAttr('style');
+		$('#datepicker').removeAttr('style');
 	}
 	if(check_group_intro =='') {
 		$('#introdiv').attr('class','form-group has-error');
@@ -43,7 +43,7 @@ function creategroup_submit() {
     creator_id = Cookies.get('user_id');
     group_name = document.getElementById("group_name").value;
     intro = document.getElementById("intro").value;
-	finished_time = document.getElementById("finished_time_date").value;
+	finished_time = document.getElementById("datepicker").value;
     if(document.getElementById("private_op1").checked){
         private = 0;
     }else{
@@ -51,7 +51,6 @@ function creategroup_submit() {
     }
     date = Date.now();
     group_id = creator_id + date;
-    member_limit = parseInt(document.getElementsByName("member_limit")[0].value);
     $.post( "/index/", { group_id : group_id, group_name : group_name,  member_limit :member_limit,intro:intro,private:private,creator_id:creator_id ,finished_time:finished_time})
         .then(function () {
             window.location = '/group/'+group_id;
