@@ -303,6 +303,43 @@ def post_group_news(request,group_id):
 	
 	return HttpResponseRedirect('/group/{}'.format(group_id))
 
+
+
+def get_group_materials(request,group_id):
+	print('aaa')
+	cursor = connection.cursor()
+	get_group_materialssql = "SELECT * FROM material WHERE group_id ='%s' ORDER BY no DESC" % (group_id);
+	cursor.execute(get_group_materialssql)
+	data = cursor.fetchall()
+	
+	post_content = ''
+	for content in data:
+		post_content = content[1] + content[2]+',' +content[3] + ',' + content[4] + ';'
+
+	return HttpResponse(post_content)
+
+
+@csrf_exempt
+def post_group_materials(request,group_id):
+	print('aa')
+	title = request.POST['title']
+	content = request.POST['content']
+	t = time.time()
+	date = datetime.datetime.fromtimestamp(t).strftime('%Y-%m-%d')
+	cursor = connection.cursor()
+
+	title = strcheck(title)
+	content = strcheck(content)
+	print(title)
+	print(content)
+	post_group_materialsql = "INSERT INTO material(group_id,title,content,created_time) VALUES('%s','%s','%s','%s')" % (group_id,title,content,date);
+	cursor.execute(post_group_materialsql)
+	
+	return HttpResponseRedirect('/group/{}'.format(group_id))
+
+
+
+
 def strcheck(string):
 
 	if '"' in string:

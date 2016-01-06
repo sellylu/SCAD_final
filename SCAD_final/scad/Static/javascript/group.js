@@ -118,6 +118,7 @@ function showNews(group_id) {
 	});
 }
 
+
 function add_group_news(group_id) {
 	check_news_title = $('#news_title').val();
 	check_news_content = $('#news_content').val();
@@ -143,6 +144,60 @@ function add_group_news(group_id) {
 	content = document.getElementById("news_content").value;
 	
 	url = '/post_group_news/' + group_id +'/';
+	$.post( url, {title : title, content: content})
+		.then(function () {
+			window.location = '/group/'+group_id;
+	});
+}
+
+
+function showMaterials(group_id) {
+	$('#myContent').empty();
+
+        $('#myContent').append('<button type="button" class="btn btn-primary" id="add_materials_button" data-toggle="modal" data-target="#add_materials_Modal">Add Materials</button>');
+	var str = '/get_group_materials/' + group_id;
+
+	$.get(str, function(data){
+		var tmp = data.split(";");
+		var materials = '';
+		for(var i = 0; i < tmp.length-1; i++) {
+			tmp2 = tmp[i].split(',');
+			materials_date = tmp2[0];
+			materials_title = tmp2[1];
+			materials_content = tmp2[2];
+			materials += '<tr onclick="displayContent(' + i + ')"><td>' + materials_date + '</td><td>' + materials_title + '</td></tr>' + '<tr class="news_content" id=' + i + '><td colspan="2">' + materials_content + '</td></tr>';
+		}
+
+		$('#myContent').append('<table class="table table-striped table-hover"><thead><tr><td>DATE</td><td>CONTENT</td></tr></thead><tbody>' + materials + '</tbody></table>');
+		console.log(data);
+	});
+}
+
+function add_materials(group_id) {
+	check_materials_title = $('#materials_title').val();
+	check_materials_content = $('#materials_content').val();
+	
+	nosubmit = 0;
+	
+	if(check_materials_content =='') {
+		$('#contentdiv').attr('class','form-group has-error');
+		nosubmit =1;
+	} else {
+		$('#contentdiv').attr('class','form-group');
+	}
+	if(check_materials_title=='') {
+		$('#namediv').attr('class','form-group has-error');
+		nosubmit =1;
+	} else {
+		$('#namediv').attr('class','form-group');
+	}
+	if(nosubmit==1)return false;
+
+	//creator_id = Cookies.get('user_id');
+	title = document.getElementById("materials_title").value;
+	content = document.getElementById("materials_content").value;
+	
+	url = '/post_group_materials/' + group_id +'/';
 	$.post( url, {title : title, content: content})
 		.then(function () {
 			window.location = '/group/'+group_id;

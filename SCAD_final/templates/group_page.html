@@ -32,7 +32,7 @@
 					<ul class="nav navbar-nav navbar-left navtabs">
 						<li role="presentation" class="active"><a href="#" onclick="showNews('{{group_page_data.group_id}}')">News</a></li>
 						<li role="presentation"><a href="#" onclick="showSchedule('{{group_page_data.group_id}}')">Schedule</a></li>
-						<li role="presentation"><a href="#">Materials</a></li>
+						<li role="presentation"><a href="#" onclick="showMaterials('{{group_page_data.group_id}}')">Materials</a></li>
 						<li role="presentation"><a href="#" onclick="showThoughts()">Thoughts</a></li>
 						<li role="presentation"><a href="#" onclick="Group_Member_inf('{{ group_page_data.group_id }}');">Members</a></li>
 					</ul>
@@ -147,6 +147,33 @@ function flicker(){//閃爍函數
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 						<button type="button" class="btn btn-primary" onclick="add_group_news('{{group_page_data.group_id}}')">Post</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<div id="add_materials_Modal" class="modal fade" role="dialog">
+			<div class="modal-dialog">
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<div id="namediv">
+							<h4 class="modal-title">Title</h4>
+							<input type="text" class="form-control" name="materials_title" id="materials_title" placeholder="Title">
+						</div>
+					</div>
+					<div class="modal-body">
+						<div id="contentdiv">
+							<label>Content</label>
+							<textarea class="form-control" name="materials_content" id="materials_content" rows="3"></textarea>
+							<hr>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-primary" onclick="add_materials('{{group_page_data.group_id}}')">Post</button>
 					</div>
 				</div>
 			</div>
