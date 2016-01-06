@@ -68,18 +68,18 @@ function logout(){
 
 function saveUserInfo() {
 
-	FB.api('/me',{"fields": "name, email"}, function(response) {
-		   if(response && !response.error) {
+    FB.api('/me',{"fields": "name, email, picture"}, function(response) {
+           if(response && !response.error) {
 
                $.post("/index/",{
-                   user_id : response.id, user_name: response.name, user_email: response.email})
+                   user_id : response.id, user_name: response.name, user_email: response.email, user_pic: response.picture.data.url})
                    .then(function(){
-						 adjustCSS();
-						 Cookies.set('user_id',response.id);
-						 console.log('Successful login for: ' + response.name + ' with ' + response.id + ' and ' + response.email);
+                         adjustCSS();
+                         Cookies.set('user_id',response.id);
+                         console.log('Successful login for: ' + response.name + ' with ' + response.id + ' and ' + response.email + 'and ' + response.picture.data.url);
                    });
             }
-		});
+        });
 }
 
 function adjustCSS() {

@@ -69,13 +69,14 @@ def index(request):
 			id = request.POST['user_id']
 			email = request.POST['user_email']
 			name = request.POST['user_name']
+			pic = request.POST['user_pic']
 			cursor = connection.cursor()
 			selectsql = "SELECT * FROM user WHERE user_id = '%s'" %(id)
 			cursor.execute(selectsql)
 			user_data = cursor.fetchall()
 			cursor2 = connection.cursor()
 			if len(user_data) == 0:
-				insertsql = "INSERT INTO user(name,user_id,email,login_cnt) VALUES ('%s','%s','%s',1)" %(name,id,email)
+				insertsql = "INSERT INTO user(name,user_id,email,login_cnt,pic) VALUES ('%s','%s','%s',1,'%s')" %(name,id,email,pic)
 				cursor2.execute(insertsql)
 
 			else:
@@ -205,24 +206,29 @@ def user_page(request,user_id):
 	return render(request,'user_page.html',{'user_page_data':data_list})
 
 
+
+
 def group_member_inf(request,group_id):
-
-
+	print('d')
 	cursor = connection.cursor()
 	getgroup_membersql = "SELECT group_member FROM study_group WHERE group_id ='%s'" % (group_id);
 	cursor.execute(getgroup_membersql)
 	data = cursor.fetchone()[0][:-1]
-
+	print('f')
 	group_member_data = data.split(',')
-	user_inf = []
+	print(group_member_data)
+	user_inf = ''
 	for member in group_member_data:
-
-		getuserinfsql = "SELECT name,email FROM user WHERE no = '%d'" %(int(member))
+		print('s')
+		getuserinfsql = "SELECT name,email,pic FROM user WHERE no = '%s'" %(member)
 		cursor.execute(getuserinfsql)
 		tmp = cursor.fetchone()
-		user_inf.extend(list(tmp))
+		print('s')
+		print(tmp)
+		user_inf = user_inf + tmp[0] + ',' + tmp[1] + ',' + tmp[2] + ';'
+	print('f')
+	return HttpResponse(user_inf)
 
-	return HttpResponse(",".join(user_inf))
 
 def userno(request,user_id):
 	cursor = connection.cursor()
@@ -306,7 +312,7 @@ def post_group_news(request,group_id):
 
 
 def get_group_materials(request,group_id):
-	print('aaa')
+
 	cursor = connection.cursor()
 	get_group_materialssql = "SELECT * FROM material WHERE group_id ='%s' ORDER BY no DESC" % (group_id);
 	cursor.execute(get_group_materialssql)
@@ -321,7 +327,7 @@ def get_group_materials(request,group_id):
 
 @csrf_exempt
 def post_group_materials(request,group_id):
-	print('aa')
+	
 	title = request.POST['title']
 	content = request.POST['content']
 	t = time.time()
@@ -330,8 +336,7 @@ def post_group_materials(request,group_id):
 
 	title = strcheck(title)
 	content = strcheck(content)
-	print(title)
-	print(content)
+
 	post_group_materialsql = "INSERT INTO material(group_id,title,content,created_time) VALUES('%s','%s','%s','%s')" % (group_id,title,content,date);
 	cursor.execute(post_group_materialsql)
 	

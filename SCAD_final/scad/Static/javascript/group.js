@@ -307,12 +307,15 @@ function Group_Member_inf(id){
 	$('#myContent').empty();
 	var str = '/group/' + id + '/member_inf';
 	$.get(str, function(data){
-		var tmp = data.split(",");
+		console.log(data);
+		var tmp = data.split(";");
 		var member = '';
-		for(var i = 0; i < tmp.length; i+=2) {
-			member += '<tr><td>' + tmp[i] + '</td><td>' + tmp[i+1] + '</td></tr>';
+		for(var i = 0; i < tmp.length-1; i++) {
+			tmp2 = tmp[i].split(',');
+			img = '<img src="' + tmp2[2] + '"/>';
+			member += '<tr><td>' + tmp2[0] + '</td><td>' + tmp2[1] + '</td><td>' + img + '</td></tr>';
 		}
-		$('#myContent').append('<table class="table table-striped table-hover"><thead><tr><td>NAME</td><td>EMAIL</td></tr></thead><tbody>' + member + '</tbody></table>');
+		$('#myContent').append('<table class="table table-striped table-hover"><thead><tr><td>NAME</td><td>EMAIL</td><td>PHOTO</td></tr></thead><tbody>' + member + '</tbody></table>');
 		console.log(data);
 	});
 }
