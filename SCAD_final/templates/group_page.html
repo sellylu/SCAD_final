@@ -92,6 +92,8 @@
 		                    <div id="progress-bar" class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
 		                <button id="join_group_btn" class="btn btn-lg  btn-success" onclick="joinGroup('{{ group_page_data.group_id }}');" >JOIN</button>
+
+		                <button type="button" class="btn btn-primary navbar-btn navbar-right" id="send_mail_button" data-toggle="modal" data-target="#send_mail_Modal">Send Mail</button>
 			        </div>
 		        </div>
 	            <div id="page-content-wrapper">
@@ -126,6 +128,34 @@ function flicker(){//閃爍函數
 
 
         <!-- Modal -->
+
+
+        <div id="send_mail_Modal" class="modal fade" role="dialog">
+			<div class="modal-dialog">
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<div id="titlediv">
+							<h4 class="modal-title">Title</h4>
+							<input type="text" class="form-control" name="title" id="title" placeholder="Title">
+						</div>
+					</div>
+					<div class="modal-body">
+						<div id="contentdiv">
+							<label>Content</label>
+							<textarea class="form-control" name="content" id="content" rows="3"></textarea>
+							<hr>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-primary" onclick="send_mail_submit('{{ group_page_data.group_id }}')">Create</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
 		<div id="add_news_Modal" class="modal fade" role="dialog">
 			<div class="modal-dialog">
 				<!-- Modal content-->

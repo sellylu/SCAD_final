@@ -307,8 +307,7 @@ def post_group_news(request,group_id):
 
 	title = strcheck(title)
 	content = strcheck(content)
-	print(title)
-	print(content)
+	
 	post_group_newssql = "INSERT INTO news(group_id,title,content,created_time) VALUES('%s','%s','%s','%s')" % (group_id,title,content,date);
 	cursor.execute(post_group_newssql)
 	
@@ -347,8 +346,51 @@ def post_group_materials(request,group_id):
 	
 	return HttpResponseRedirect('/group/{}'.format(group_id))
 
+@csrf_exempt
+def send_mail(request,group_id):
+	if request.method == 'POST':
+		
+		creator_id = request.POST['creator_id']
+		
+		title = request.POST['title']
+		content = request.POST['content']
+		title = strcheck(title)
+		content = strcheck(content)
+		
+		t = time.time()
+		created_time = datetime.datetime.fromtimestamp(t).strftime('%Y-%m-%d')
+		
+		cursor = connection.cursor()
+		insertmailboxsql = "INSERT INTO mailbox(creator_id,title,content,created_time,group_id) VALUES('%s','%s','%s','%s','%s')" % (creator_id,title,content,created_time,group_id)
+		cursor.execute(insertmailboxsql)
+
+		get_mail_no = "SELECT no FROM mailbox WHERE group_id = '%s' " % (group_id)
+		cursor.execute(get_mail_no)
+		mail_no = cursor.fetchall()
+		
+		no_str = ''
+		for no in mail_no:
+			no_str = no_str + str(no[0])+ ','
+		
 
 
+		getgroup_member_sql = "SELECT group_member FROM study_group WHERE group_id = '%s'" % (group_id)
+		cursor.execute(getgroup_member_sql)
+		tmp_member = cursor.fetchone()[0][:-1]
+		group_member = tmp_member.split(',')
+		
+		
+		for member in group_member:
+			update_mail_sql = "UPDATE user SET mail = '%s' WHERE no = '%d' " %(no_str,int(member))
+			cursor.execute(update_mail_sql)
+
+		return HttpResponseRedirect('/group/{}'.format(group_id))
+
+
+def get_mail(request,user_id):
+
+	date = ''
+	return HttpResponse(data)
 
 def strcheck(string):
 

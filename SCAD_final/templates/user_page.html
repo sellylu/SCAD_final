@@ -89,7 +89,15 @@
                     {% endfor %}
 	                $('#myContent').append('<div class="list-group">' + groups + '</div>');
                 {% endif %}
+
             }
+
+
+            function showMission() {
+	        $('#myContent').empty();
+
+			}
+
 
             function showAchievement() {
                 $('#myContent').empty();
@@ -125,15 +133,14 @@
                 $('#myContent').append(div);
             }
 
-        function showMission() {
-	        $('#myContent').empty();
-			// TODO:
-        }
+        
 
         function showMailbox() {
 	        $('#myContent').empty();
 	        // TODO:
         }
+
+        
 
         </script>
     </head>
@@ -190,6 +197,12 @@
         </div>
 
         <!-- Modal -->
+
+
+
+        
+
+
 		<div id="create_group_Modal" class="modal fade" role="dialog">
 			<div class="modal-dialog">
 				<!-- Modal content-->

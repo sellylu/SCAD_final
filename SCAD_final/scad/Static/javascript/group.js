@@ -6,6 +6,38 @@ $(document).ready(function() {
 // page is now ready, initialize the calendar...
 });
 
+function send_mail_submit(group_id) {
+	            check_title = $('#title').val();
+	            check_content = $('#content').val();
+
+	            nosubmit = 0;
+	            if(check_content =='') {
+		            $('#contentdiv').attr('class','form-group has-error');
+		            nosubmit =1;
+	            } else {
+		            $('#contentdiv').attr('class','form-group');
+	            }
+	            if(check_title=='') {
+		            $('#titlediv').attr('class','form-group has-error');
+		            nosubmit =1;
+	            } else {
+		            $('#titlediv').attr('class','form-group');
+	            }
+	            if(nosubmit==1)return false;
+
+	            creator_id = Cookies.get('user_id');
+	            title = document.getElementById("title").value;
+	            content = document.getElementById("content").value;
+
+	            str = '/send_mail/' + group_id + '/';
+	            $.post( str, { title : title,  content : content, creator_id: creator_id})
+			            .then(function () {
+				            window.location = '/group/'+group_id;
+			    });
+  }
+
+
+
 function checkShowLoginDiv() {
     user_id = Cookies.get('user_id');
 	if(user_id != undefined)
