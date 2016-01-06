@@ -10,6 +10,10 @@ from scad.views import postcalendarevent
 from scad.views import deletecalendarevent
 from scad.views import get_group_news
 from scad.views import post_group_news
+from scad.views import get_group_materials
+from scad.views import post_group_materials
+from scad.views import send_mail
+from scad.views import get_mail
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
@@ -23,4 +27,8 @@ urlpatterns = [
     url(r'^deletecalendarevent/(?P<group_id>[0-9]+)/$',deletecalendarevent),
     url(r'^get_group_news/(?P<group_id>[0-9]+)/$',get_group_news),
     url(r'^post_group_news/(?P<group_id>[0-9]+)/$',post_group_news),
+    url(r'^get_group_materials/(?P<group_id>[0-9]+)/$',get_group_materials),
+    url(r'^post_group_materials/(?P<group_id>[0-9]+)/$',post_group_materials),
+    url(r'^send_mail/(?P<group_id>[0-9]+)/$',send_mail),
+    url(r'^get_mail/(?P<user_id>[0-9]+)/$',get_mail),
 ]

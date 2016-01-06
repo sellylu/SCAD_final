@@ -69,13 +69,14 @@ def index(request):
 			id = request.POST['user_id']
 			email = request.POST['user_email']
 			name = request.POST['user_name']
+			pic = request.POST['user_pic']
 			cursor = connection.cursor()
 			selectsql = "SELECT * FROM user WHERE user_id = '%s'" %(id)
 			cursor.execute(selectsql)
 			user_data = cursor.fetchall()
 			cursor2 = connection.cursor()
 			if len(user_data) == 0:
-				insertsql = "INSERT INTO user(name,user_id,email,login_cnt) VALUES ('%s','%s','%s',1)" %(name,id,email)
+				insertsql = "INSERT INTO user(name,user_id,email,login_cnt,pic) VALUES ('%s','%s','%s',1,'%s')" %(name,id,email,pic)
 				cursor2.execute(insertsql)
 
 			else:
@@ -185,44 +186,54 @@ def user_page(request,user_id):
 	selectsql = "SELECT join_group FROM user WHERE user_id = '%s'" %(user_id)
 	cursor.execute(selectsql)
 	user_group = cursor.fetchone()[0][:-1]
-
-	getgroupinfosql = "SELECT group_id,group_name,intro,created_time,finished_time FROM study_group WHERE no in ("+user_group+")";
-	cursor.execute(getgroupinfosql)
-	group_data = cursor.fetchall()
 	
+	if user_group == '':
+		return render(request,'user_page.html')
 
-	data_list = []
-	for x in group_data:
-		group = {
-				'group_id': x[0],
-				'group_name':x[1],
-				'intro': x[2],
-				'created_time':x[3],
-				'finished_time':x[4],
-		}
-		data_list.append(group)
 
-	return render(request,'user_page.html',{'user_page_data':data_list})
+	else:
+		getgroupinfosql = "SELECT group_id,group_name,intro,created_time,finished_time FROM study_group WHERE no in ("+user_group+")";
+		cursor.execute(getgroupinfosql)
+		group_data = cursor.fetchall()
+		
+
+		data_list = []
+		for x in group_data:
+			group = {
+					'group_id': x[0],
+					'group_name':x[1],
+					'intro': x[2],
+					'created_time':x[3],
+					'finished_time':x[4],
+			}
+			data_list.append(group)
+		
+		return render(request,'user_page.html',{'user_page_data':data_list})
+
+
 
 
 def group_member_inf(request,group_id):
-
-
+	print('d')
 	cursor = connection.cursor()
 	getgroup_membersql = "SELECT group_member FROM study_group WHERE group_id ='%s'" % (group_id);
 	cursor.execute(getgroup_membersql)
 	data = cursor.fetchone()[0][:-1]
-
+	print('f')
 	group_member_data = data.split(',')
-	user_inf = []
+	print(group_member_data)
+	user_inf = ''
 	for member in group_member_data:
-
-		getuserinfsql = "SELECT name,email FROM user WHERE no = '%d'" %(int(member))
+		print('s')
+		getuserinfsql = "SELECT name,email,pic FROM user WHERE no = '%s'" %(member)
 		cursor.execute(getuserinfsql)
 		tmp = cursor.fetchone()
-		user_inf.extend(list(tmp))
+		print('s')
+		print(tmp)
+		user_inf = user_inf + tmp[0] + ',' + tmp[1] + ',' + tmp[2] + ';'
+	print('f')
+	return HttpResponse(user_inf)
 
-	return HttpResponse(",".join(user_inf))
 
 def userno(request,user_id):
 	cursor = connection.cursor()
@@ -296,12 +307,106 @@ def post_group_news(request,group_id):
 
 	title = strcheck(title)
 	content = strcheck(content)
-	print(title)
-	print(content)
+	
 	post_group_newssql = "INSERT INTO news(group_id,title,content,created_time) VALUES('%s','%s','%s','%s')" % (group_id,title,content,date);
 	cursor.execute(post_group_newssql)
 	
 	return HttpResponseRedirect('/group/{}'.format(group_id))
+
+
+
+def get_group_materials(request,group_id):
+
+	cursor = connection.cursor()
+	get_group_materialssql = "SELECT * FROM material WHERE group_id ='%s' ORDER BY no DESC" % (group_id);
+	cursor.execute(get_group_materialssql)
+	data = cursor.fetchall()
+	
+	post_content = ''
+	for content in data:
+		post_content = content[1] + content[2]+',' +content[3] + ',' + content[4] + ';'
+
+	return HttpResponse(post_content)
+
+
+@csrf_exempt
+def post_group_materials(request,group_id):
+	
+	title = request.POST['title']
+	content = request.POST['content']
+	t = time.time()
+	date = datetime.datetime.fromtimestamp(t).strftime('%Y-%m-%d')
+	cursor = connection.cursor()
+
+	title = strcheck(title)
+	content = strcheck(content)
+
+	post_group_materialsql = "INSERT INTO material(group_id,title,content,created_time) VALUES('%s','%s','%s','%s')" % (group_id,title,content,date);
+	cursor.execute(post_group_materialsql)
+	
+	return HttpResponseRedirect('/group/{}'.format(group_id))
+
+@csrf_exempt
+def send_mail(request,group_id):
+	if request.method == 'POST':
+		
+		creator_id = request.POST['creator_id']
+		
+		title = request.POST['title']
+		content = request.POST['content']
+		title = strcheck(title)
+		content = strcheck(content)
+		
+		t = time.time()
+		created_time = datetime.datetime.fromtimestamp(t).strftime('%Y-%m-%d')
+		
+		cursor = connection.cursor()
+		insertmailboxsql = "INSERT INTO mailbox(creator_id,title,content,created_time,group_id) VALUES('%s','%s','%s','%s','%s')" % (creator_id,title,content,created_time,group_id)
+		cursor.execute(insertmailboxsql)
+
+		get_mail_no = "SELECT no FROM mailbox WHERE group_id = '%s' " % (group_id)
+		cursor.execute(get_mail_no)
+		mail_no = cursor.fetchall()
+		
+		no_str = ''
+		for no in mail_no:
+			no_str = no_str + str(no[0])+ ','
+		
+
+
+		getgroup_member_sql = "SELECT group_member FROM study_group WHERE group_id = '%s'" % (group_id)
+		cursor.execute(getgroup_member_sql)
+		tmp_member = cursor.fetchone()[0][:-1]
+		group_member = tmp_member.split(',')
+		
+		
+		for member in group_member:
+			update_mail_sql = "UPDATE user SET mail = '%s' WHERE no = '%d' " %(no_str,int(member))
+			cursor.execute(update_mail_sql)
+
+		return HttpResponseRedirect('/group/{}'.format(group_id))
+
+
+def get_mail(request,user_id):
+
+	cursor = connection.cursor()
+	get_all_mail_no_sql = "SELECT mail FROM user WHERE user_id = '%s'" %(user_id)
+	
+	cursor.execute(get_all_mail_no_sql)
+	all_mail_no = cursor.fetchone()[0][:-1]
+	split_no = all_mail_no.split(',')
+	data = ''
+	for no in split_no:
+		get_mail_content_sql = "SELECT * FROM mailbox WHERE no = '%d'" %(int(no))
+		cursor.execute(get_mail_content_sql)
+
+		tmp_data = cursor.fetchone()
+		tmp2_data = tmp_data[3]+','+tmp_data[4]+','+tmp_data[5] +';'
+		
+		data = data + tmp2_data
+	
+
+	return HttpResponse(data)
 
 def strcheck(string):
 
