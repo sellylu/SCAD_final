@@ -186,24 +186,29 @@ def user_page(request,user_id):
 	selectsql = "SELECT join_group FROM user WHERE user_id = '%s'" %(user_id)
 	cursor.execute(selectsql)
 	user_group = cursor.fetchone()[0][:-1]
-
-	getgroupinfosql = "SELECT group_id,group_name,intro,created_time,finished_time FROM study_group WHERE no in ("+user_group+")";
-	cursor.execute(getgroupinfosql)
-	group_data = cursor.fetchall()
 	
+	if user_group == '':
+		return render(request,'user_page.html')
 
-	data_list = []
-	for x in group_data:
-		group = {
-				'group_id': x[0],
-				'group_name':x[1],
-				'intro': x[2],
-				'created_time':x[3],
-				'finished_time':x[4],
-		}
-		data_list.append(group)
 
-	return render(request,'user_page.html',{'user_page_data':data_list})
+	else:
+		getgroupinfosql = "SELECT group_id,group_name,intro,created_time,finished_time FROM study_group WHERE no in ("+user_group+")";
+		cursor.execute(getgroupinfosql)
+		group_data = cursor.fetchall()
+		
+
+		data_list = []
+		for x in group_data:
+			group = {
+					'group_id': x[0],
+					'group_name':x[1],
+					'intro': x[2],
+					'created_time':x[3],
+					'finished_time':x[4],
+			}
+			data_list.append(group)
+		
+		return render(request,'user_page.html',{'user_page_data':data_list})
 
 
 
