@@ -389,7 +389,23 @@ def send_mail(request,group_id):
 
 def get_mail(request,user_id):
 
-	date = ''
+	cursor = connection.cursor()
+	get_all_mail_no_sql = "SELECT mail FROM user WHERE user_id = '%s'" %(user_id)
+	
+	cursor.execute(get_all_mail_no_sql)
+	all_mail_no = cursor.fetchone()[0][:-1]
+	split_no = all_mail_no.split(',')
+	data = ''
+	for no in split_no:
+		get_mail_content_sql = "SELECT * FROM mailbox WHERE no = '%d'" %(int(no))
+		cursor.execute(get_mail_content_sql)
+
+		tmp_data = cursor.fetchone()
+		tmp2_data = tmp_data[3]+','+tmp_data[4]+','+tmp_data[5] +';'
+		
+		data = data + tmp2_data
+	
+
 	return HttpResponse(data)
 
 def strcheck(string):
